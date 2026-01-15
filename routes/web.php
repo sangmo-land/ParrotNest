@@ -1,0 +1,71 @@
+<?php
+
+use App\Http\Controllers\ParrotController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SpeciesController;
+use App\Http\Controllers\AdoptionApplicationController;
+use App\Models\Parrot;
+use App\Models\Species;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+
+// Homepage
+Route::get('/', function () {
+    $featuredParrots = Parrot::with('species')
+        ->where('is_featured', true)
+        ->where('status', 'available')
+        ->limit(6)
+        ->get();
+
+    $stats = [
+        'total_parrots' => Parrot::where('status', 'available')->count(),
+        'species_count' => Species::where('is_active', true)->count(),
+        'total_adopted' => Parrot::where('status', 'adopted')->count(),
+    ];
+
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'featuredParrots' => $featuredParrots,
+        'stats' => $stats,
+    ]);
+})->name('home');
+
+// Public Parrot Routes
+Route::get('/parrots', [ParrotController::class, 'index'])->name('parrots.index');
+Route::get('/parrots/{parrot}', [ParrotController::class, 'show'])->name('parrots.show');
+
+// Species Routes (Mapped to /about-breeds as requested, keeping /species alias for backward compat if needed)
+Route::get('/about-breeds', [SpeciesController::class, 'index'])->name('species.index');
+Route::get('/species', [SpeciesController::class, 'index']); // Alias
+Route::get('/about-breeds/{species}', [SpeciesController::class, 'show'])->name('species.show');
+
+// Static / Info Pages (Placeholders)
+Route::get('/reviews', function() { return Inertia::render('Welcome'); })->name('reviews');
+Route::get('/health-guarantee', function() { return Inertia::render('Welcome'); })->name('health');
+Route::get('/delivery-shipping', function() { return Inertia::render('Welcome'); })->name('delivery');
+Route::get('/care-guide', function() { return Inertia::render('Welcome'); })->name('care');
+Route::get('/feeding-tips', function() { return Inertia::render('Welcome'); })->name('feeding');
+Route::get('/about-us', function() { return Inertia::render('Welcome'); })->name('about');
+Route::get('/contact', function() { return Inertia::render('Welcome'); })->name('contact');
+
+// Authenticated Routes
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+
+    // Profile Routes
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Adoption Application Routes
+    Route::get('/apply/{parrot}', [AdoptionApplicationController::class, 'create'])->name('applications.create');
+    Route::post('/apply', [AdoptionApplicationController::class, 'store'])->name('applications.store');
+    Route::get('/my-applications', [AdoptionApplicationController::class, 'index'])->name('applications.index');
+    Route::get('/my-applications/{application}', [AdoptionApplicationController::class, 'show'])->name('applications.show');
+});
+
+require __DIR__.'/auth.php';
