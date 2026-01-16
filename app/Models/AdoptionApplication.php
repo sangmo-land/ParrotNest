@@ -21,6 +21,7 @@ class AdoptionApplication extends Model
         'city',
         'state',
         'zip_code',
+'country',
         'housing_type',
         'owns_home',
         'has_outdoor_space',

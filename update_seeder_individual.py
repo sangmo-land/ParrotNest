@@ -1,4 +1,7 @@
-<?php
+import os
+
+file_path = r"c:\xampp\htdocs\ParrotNest\database\seeders\ParrotSeeder.php"
+new_content = r"""<?php
 
 namespace Database\Seeders;
 
@@ -85,3 +88,7 @@ class ParrotSeeder extends Seeder
         }
     }
 }
+"""
+
+with open(file_path, "w", encoding="utf-8") as f:
+    f.write(new_content)
