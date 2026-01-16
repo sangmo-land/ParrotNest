@@ -41,14 +41,13 @@ Route::get('/about-breeds', [SpeciesController::class, 'index'])->name('species.
 Route::get('/species', [SpeciesController::class, 'index']); // Alias
 Route::get('/about-breeds/{species}', [SpeciesController::class, 'show'])->name('species.show');
 
-// Static / Info Pages (Placeholders)
-Route::get('/reviews', function() { return Inertia::render('Welcome'); })->name('reviews');
+Route::get('/contact', function() { return Inertia::render('ContactUs'); })->name('contact');
 Route::get('/health-guarantee', function() { return Inertia::render('Welcome'); })->name('health');
-Route::get('/delivery-shipping', function() { return Inertia::render('Welcome'); })->name('delivery');
-Route::get('/care-guide', function() { return Inertia::render('Welcome'); })->name('care');
-Route::get('/feeding-tips', function() { return Inertia::render('Welcome'); })->name('feeding');
-Route::get('/about-us', function() { return Inertia::render('Welcome'); })->name('about');
-Route::get('/contact', function() { return Inertia::render('Welcome'); })->name('contact');
+Route::get('/delivery-shipping', function() { return Inertia::render('DeliveryShipping'); })->name('delivery');
+Route::get('/care-guide', function() { return Inertia::render('CareGuide'); })->name('care');
+Route::get('/feeding-tips', function() { return Inertia::render('FeedingTips'); })->name('feeding');
+Route::get('/about-us', function() { return Inertia::render('AboutUs'); })->name('about');
+// End of Static Routes
 
 // Authenticated Routes
 Route::middleware(['auth', 'verified'])->group(function () {
