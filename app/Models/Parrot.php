@@ -23,6 +23,7 @@ class Parrot extends Model
         'special_needs_description',
         'status',
         'adoption_fee',
+'comes_with_cage',
         'images',
         'location',
         'intake_date',
@@ -36,6 +37,7 @@ class Parrot extends Model
     protected $casts = [
         'images' => 'array',
         'is_special_needs' => 'boolean',
+'comes_with_cage' => 'boolean',
         'good_with_children' => 'boolean',
         'good_with_other_birds' => 'boolean',
         'is_featured' => 'boolean',

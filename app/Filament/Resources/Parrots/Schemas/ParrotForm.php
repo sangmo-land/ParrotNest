@@ -7,6 +7,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Schema;
 
 class ParrotForm
@@ -54,8 +55,12 @@ class ParrotForm
                     ->required()
                     ->numeric()
                     ->default(0.0),
-                Textarea::make('images')
-                    ->default(null)
+Toggle::make('comes_with_cage')
+                ->default(false),
+                FileUpload::make('images')
+                ->image()
+                ->multiple()
+                ->directory('parrots')
                     ->columnSpanFull(),
                 TextInput::make('location')
                     ->default(null),
