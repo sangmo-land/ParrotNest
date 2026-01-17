@@ -1,5 +1,6 @@
 import { Head, Link, router } from '@inertiajs/react';
 import PublicNavbar from "@/Components/PublicNavbar";
+import Footer from "@/Components/Footer";
 
 export default function Index({ auth, parrots, species, filters }) {
     const handleFilterChange = (key, value) => {
@@ -347,48 +348,7 @@ export default function Index({ auth, parrots, species, filters }) {
                 )}
             </div>
 
-            {/* Footer Simple */}
-            <footer className="bg-white border-t border-stone-100 py-16">
-                <div className="max-w-7xl mx-auto px-4 text-center">
-                    <div className="mb-8 flex flex-col items-center">
-                        <img
-                            src="/images/LogoParrot.jpeg"
-                            alt="Logo"
-                            className="w-24 h-24 rounded-full mb-2"
-                        />
-                        <h3 className="text-2xl font-serif font-bold text-stone-900 mt-2">
-                            ParrotNest
-                        </h3>
-                        <p className="text-stone-400 text-sm mt-2">
-                            Ethical Breeding • Lifelong Support
-                        </p>
-                    </div>
-                    <div className="flex justify-center gap-8 mb-8 text-xs font-bold uppercase tracking-widest text-stone-500">
-                        <Link
-                            href="/"
-                            className="hover:text-[#D4AF37] transition-colors"
-                        >
-                            Home
-                        </Link>
-                        <Link
-                            href="/contact"
-                            className="hover:text-[#D4AF37] transition-colors"
-                        >
-                            Contact
-                        </Link>
-                        <Link
-                            href="/about-us"
-                            className="hover:text-[#D4AF37] transition-colors"
-                        >
-                            About Us
-                        </Link>
-                    </div>
-                    <p className="text-stone-300 text-xs">
-                        &copy; {new Date().getFullYear()} ParrotNest. All Rights
-                        Reserved.
-                    </p>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 }
