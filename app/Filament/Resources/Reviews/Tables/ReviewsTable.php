@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Filament\Resources\Reviews\Tables;
+
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\IconColumn;
+
+class ReviewsTable
+{
+    public static function configure(Table $table): Table
+    {
+        return $table
+            ->columns([
+                ImageColumn::make('image_path')
+                    ->disk('public')
+                    ->circular(),
+                TextColumn::make('reviewer_name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('rating')
+                    ->numeric()
+                    ->sortable(),
+                IconColumn::make('is_approved')
+                    ->boolean(),
+                TextColumn::make('parrot_species')
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                //
+            ])
+            ->recordActions([
+                EditAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+}

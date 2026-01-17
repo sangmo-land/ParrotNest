@@ -94,7 +94,7 @@ export default function Index({ auth, parrots, species, filters }) {
                                 onClick={() =>
                                     handleFilterChange(
                                         "gender",
-                                        filters.gender === g ? "" : g
+                                        filters.gender === g ? "" : g,
                                     )
                                 }
                                 className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
@@ -182,7 +182,7 @@ export default function Index({ auth, parrots, species, filters }) {
                                         <span className="bg-stone-900/90 backdrop-blur-md text-white px-4 py-2 rounded-xl text-lg font-bold shadow-lg border border-white/10 group-hover:bg-[#D4AF37] transition-colors duration-300">
                                             $
                                             {Number(
-                                                parrot.adoption_fee
+                                                parrot.adoption_fee,
                                             ).toLocaleString()}
                                         </span>
                                     </div>
@@ -201,7 +201,7 @@ export default function Index({ auth, parrots, species, filters }) {
                                             <Link
                                                 href={route(
                                                     "parrots.show",
-                                                    parrot
+                                                    parrot,
                                                 )}
                                             >
                                                 {parrot.name}
@@ -259,7 +259,7 @@ export default function Index({ auth, parrots, species, filters }) {
                                                 >
                                                     {parrot.personality
                                                         ? parrot.personality.split(
-                                                              ","
+                                                              ",",
                                                           )[0]
                                                         : "Sweet"}
                                                 </span>
@@ -340,7 +340,7 @@ export default function Index({ auth, parrots, species, filters }) {
                                         }}
                                         className="w-10 h-10 flex items-center justify-center rounded-full text-sm font-bold text-stone-300 cursor-not-allowed opacity-50"
                                     />
-                                )
+                                ),
                             )}
                         </div>
                     </div>
@@ -350,8 +350,12 @@ export default function Index({ auth, parrots, species, filters }) {
             {/* Footer Simple */}
             <footer className="bg-white border-t border-stone-100 py-16">
                 <div className="max-w-7xl mx-auto px-4 text-center">
-                    <div className="mb-8">
-                        <span className="text-4xl">🦜</span>
+                    <div className="mb-8 flex flex-col items-center">
+                        <img
+                            src="/images/LogoParrot.jpeg"
+                            alt="Logo"
+                            className="w-24 h-24 rounded-full mb-2"
+                        />
                         <h3 className="text-2xl font-serif font-bold text-stone-900 mt-2">
                             ParrotNest
                         </h3>

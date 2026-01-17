@@ -1,9 +1,24 @@
 import { Head, Link } from '@inertiajs/react';
 import PublicNavbar from "@/Components/PublicNavbar";
-
+import Footer from "@/Components/Footer";
+import { motion } from "framer-motion";
 
 export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
+    // Animation Variants
+    const fadeInUp = {
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+    };
 
+    const staggerContainer = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.2,
+            },
+        },
+    };
 
     return (
         <>
@@ -17,7 +32,12 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                     <div className="absolute inset-0 bg-[url('/images/hero.jpg')] bg-cover bg-center opacity-40 scale-x-[-1]"></div>
                     <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/90 to-transparent"></div>
                     <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-48">
-                        <div className="text-center md:text-left max-w-3xl">
+                        <motion.div
+                            initial="hidden"
+                            animate="visible"
+                            variants={fadeInUp}
+                            className="text-center md:text-left max-w-3xl"
+                        >
                             <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight drop-shadow-md">
                                 Find Your Feathered <br />
                                 Friend with the <br />
@@ -30,7 +50,12 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                                 <br className="hidden md:block" />
                                 Adoption is a beautiful journey.
                             </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                            <motion.div
+                                className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.4, duration: 0.8 }}
+                            >
                                 <Link
                                     href="/parrots"
                                     className="bg-emerald-600 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-emerald-500 transition shadow-lg hover:shadow-emerald-500/50 transform hover:-translate-y-1"
@@ -43,47 +68,59 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                                 >
                                     Learn About Species
                                 </Link>
-                            </div>
-                        </div>
+                            </motion.div>
+                        </motion.div>
                     </div>
                 </div>
 
                 {/* Stats Section */}
                 <div className="bg-white py-12 border-b">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                            <div>
+                        <motion.div
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, margin: "-100px" }}
+                            variants={staggerContainer}
+                            className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center"
+                        >
+                            <motion.div variants={fadeInUp}>
                                 <div className="text-4xl font-bold text-emerald-600">
                                     {stats.total_parrots || 0}
                                 </div>
                                 <div className="text-gray-600 mt-2">
                                     Parrots Available
                                 </div>
-                            </div>
-                            <div>
+                            </motion.div>
+                            <motion.div variants={fadeInUp}>
                                 <div className="text-4xl font-bold text-emerald-600">
                                     {stats.species_count || 0}
                                 </div>
                                 <div className="text-gray-600 mt-2">
                                     Species
                                 </div>
-                            </div>
-                            <div>
+                            </motion.div>
+                            <motion.div variants={fadeInUp}>
                                 <div className="text-4xl font-bold text-emerald-600">
                                     {stats.total_adopted || 0}
                                 </div>
                                 <div className="text-gray-600 mt-2">
                                     Successfully Adopted
                                 </div>
-                            </div>
-                        </div>
+                            </motion.div>
+                        </motion.div>
                     </div>
                 </div>
 
                 {/* Featured Parrots Section */}
                 <div className="py-16 bg-gray-50">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center mb-12">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="text-center mb-12"
+                        >
                             <h2 className="text-3xl font-bold text-gray-900 mb-4">
                                 Featured Parrots
                             </h2>
@@ -91,14 +128,22 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                                 Meet some of our wonderful birds looking for
                                 homes
                             </p>
-                        </div>
+                        </motion.div>
 
                         {featuredParrots.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <motion.div
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, margin: "-50px" }}
+                                variants={staggerContainer}
+                                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                            >
                                 {featuredParrots.map((parrot) => (
-                                    <div
+                                    <motion.div
+                                        variants={fadeInUp}
                                         key={parrot.id}
                                         className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition group"
+                                        whileHover={{ y: -5 }}
                                     >
                                         <div className="h-64 bg-gray-100 overflow-hidden relative">
                                             {parrot.images &&
@@ -139,7 +184,7 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                                                 <span className="text-lg font-bold text-emerald-600">
                                                     $
                                                     {parseFloat(
-                                                        parrot.adoption_fee
+                                                        parrot.adoption_fee,
                                                     ).toFixed(2)}
                                                 </span>
                                                 <Link
@@ -150,42 +195,66 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                                                 </Link>
                                             </div>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                 ))}
-                            </div>
+                            </motion.div>
                         ) : (
-                            <div className="text-center py-12 bg-white rounded-lg">
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="text-center py-12 bg-white rounded-lg"
+                            >
                                 <p className="text-gray-500 text-lg">
                                     No featured parrots available at the moment.
                                 </p>
-                            </div>
+                            </motion.div>
                         )}
 
-                        <div className="text-center mt-12">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="text-center mt-12"
+                        >
                             <Link
                                 href="/parrots"
                                 className="inline-block bg-emerald-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-emerald-700 transition"
                             >
                                 View All Parrots
                             </Link>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
 
                 {/* How It Works Section */}
                 <div className="py-16 bg-white">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center mb-12">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-center mb-12"
+                        >
                             <h2 className="text-3xl font-bold text-gray-900 mb-4">
                                 How Adoption Works
                             </h2>
                             <p className="text-gray-600 text-lg">
                                 Simple steps to welcome a parrot into your home
                             </p>
-                        </div>
+                        </motion.div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                            <div className="text-center">
+                        <motion.div
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, margin: "-100px" }}
+                            variants={staggerContainer}
+                            className="grid grid-cols-1 md:grid-cols-4 gap-8"
+                        >
+                            <motion.div
+                                variants={fadeInUp}
+                                className="text-center"
+                            >
                                 <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                                     <span className="text-2xl font-bold text-emerald-600">
                                         1
@@ -198,8 +267,11 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                                     Explore our available parrots and find your
                                     perfect match
                                 </p>
-                            </div>
-                            <div className="text-center">
+                            </motion.div>
+                            <motion.div
+                                variants={fadeInUp}
+                                className="text-center"
+                            >
                                 <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                                     <span className="text-2xl font-bold text-emerald-600">
                                         2
@@ -212,8 +284,11 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                                     Submit an adoption application with your
                                     details
                                 </p>
-                            </div>
-                            <div className="text-center">
+                            </motion.div>
+                            <motion.div
+                                variants={fadeInUp}
+                                className="text-center"
+                            >
                                 <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                                     <span className="text-2xl font-bold text-emerald-600">
                                         3
@@ -225,8 +300,11 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                                 <p className="text-gray-600">
                                     Our team reviews your application carefully
                                 </p>
-                            </div>
-                            <div className="text-center">
+                            </motion.div>
+                            <motion.div
+                                variants={fadeInUp}
+                                className="text-center"
+                            >
                                 <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                                     <span className="text-2xl font-bold text-emerald-600">
                                         4
@@ -239,8 +317,8 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                                     Welcome your new feathered family member
                                     home!
                                 </p>
-                            </div>
-                        </div>
+                            </motion.div>
+                        </motion.div>
                     </div>
                 </div>
 
@@ -250,17 +328,29 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                     <div className="absolute top-0 right-0 w-64 h-64 bg-teal-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
 
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                        <div className="text-center mb-16">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                            className="text-center mb-16"
+                        >
                             <span className="text-emerald-600 font-bold tracking-widest uppercase text-sm">
                                 Success Stories
                             </span>
                             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mt-2">
                                 Happy Tails
                             </h2>
-                        </div>
+                        </motion.div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition duration-300 border border-emerald-50">
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.1 }}
+                                className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition duration-300 border border-emerald-50"
+                            >
                                 <div className="flex text-emerald-500 mb-4">
                                     {[...Array(5)].map((_, i) => (
                                         <svg
@@ -291,9 +381,15 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                                         </p>
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
 
-                            <div className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition duration-300 border border-emerald-50">
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.3 }}
+                                className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition duration-300 border border-emerald-50"
+                            >
                                 <div className="flex text-emerald-500 mb-4">
                                     {[...Array(5)].map((_, i) => (
                                         <svg
@@ -323,9 +419,15 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                                         </p>
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
 
-                            <div className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition duration-300 border border-emerald-50">
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.5 }}
+                                className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition duration-300 border border-emerald-50"
+                            >
                                 <div className="flex text-emerald-500 mb-4">
                                     {[...Array(5)].map((_, i) => (
                                         <svg
@@ -355,7 +457,7 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                                         </p>
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         </div>
                     </div>
                 </div>
@@ -460,85 +562,7 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                 </div>
 
                 {/* Footer */}
-                <footer className="bg-gray-800 text-white py-12">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div>
-                                <h3 className="text-xl font-bold mb-4">
-                                    🦜 ParrotNest
-                                </h3>
-                                <p className="text-gray-300">
-                                    Connecting rescued parrots with loving
-                                    forever homes.
-                                </p>
-                            </div>
-                            <div>
-                                <h4 className="font-semibold mb-4">
-                                    Quick Links
-                                </h4>
-                                <ul className="space-y-2">
-                                    <li>
-                                        <Link
-                                            href="/parrots"
-                                            className="text-gray-300 hover:text-white"
-                                        >
-                                            Browse Parrots
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            href="/species"
-                                            className="text-gray-300 hover:text-white"
-                                        >
-                                            Species Guide
-                                        </Link>
-                                    </li>
-                                    {auth.user ? (
-                                        <li>
-                                            <Link
-                                                href="/dashboard"
-                                                className="text-gray-300 hover:text-white"
-                                            >
-                                                Dashboard
-                                            </Link>
-                                        </li>
-                                    ) : (
-                                        <>
-                                            <li>
-                                                <Link
-                                                    href="/login"
-                                                    className="text-gray-300 hover:text-white"
-                                                >
-                                                    Login
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link
-                                                    href="/register"
-                                                    className="text-gray-300 hover:text-white"
-                                                >
-                                                    Register
-                                                </Link>
-                                            </li>
-                                        </>
-                                    )}
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 className="font-semibold mb-4">Contact</h4>
-                                <p className="text-gray-300">
-                                    Email: info@parrotnest.com
-                                </p>
-                                <p className="text-gray-300 mt-2">
-                                    Phone: (555) 123-4567
-                                </p>
-                            </div>
-                        </div>
-                        <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                            <p>&copy; 2026 ParrotNest. All rights reserved.</p>
-                        </div>
-                    </div>
-                </footer>
+                <Footer />
             </div>
         </>
     );

@@ -33,5 +33,7 @@ class DatabaseSeeder extends Seeder
             SpeciesSeeder::class,
             ParrotSeeder::class,
         ]);
+// Seed Reviews
+\App\Models\Review::factory(30)->create();
     }
 }

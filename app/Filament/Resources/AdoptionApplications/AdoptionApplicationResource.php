@@ -22,7 +22,7 @@ class AdoptionApplicationResource extends Resource
 {
     protected static ?string $model = AdoptionApplication::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-check';
 
     public static function form(Schema $schema): Schema
     {

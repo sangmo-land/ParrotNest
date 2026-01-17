@@ -25,7 +25,16 @@ export default function Register() {
         <GuestLayout>
             <Head title="Register" />
 
-            <form onSubmit={submit}>
+            <div className="mb-10">
+                <h2 className="text-3xl font-bold tracking-tight text-gray-900">
+                    Create an account
+                </h2>
+                <p className="mt-2 text-sm text-gray-600">
+                    Join our community of parrot lovers today.
+                </p>
+            </div>
+
+            <form onSubmit={submit} className="space-y-6">
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 
@@ -36,7 +45,7 @@ export default function Register() {
                         className="mt-1 block w-full"
                         autoComplete="name"
                         isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
+                        onChange={(e) => setData("name", e.target.value)}
                         required
                     />
 
@@ -53,7 +62,7 @@ export default function Register() {
                         value={data.email}
                         className="mt-1 block w-full"
                         autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
+                        onChange={(e) => setData("email", e.target.value)}
                         required
                     />
 
@@ -70,7 +79,7 @@ export default function Register() {
                         value={data.password}
                         className="mt-1 block w-full"
                         autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
+                        onChange={(e) => setData("password", e.target.value)}
                         required
                     />
 
@@ -91,7 +100,7 @@ export default function Register() {
                         className="mt-1 block w-full"
                         autoComplete="new-password"
                         onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
+                            setData("password_confirmation", e.target.value)
                         }
                         required
                     />
@@ -102,19 +111,25 @@ export default function Register() {
                     />
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
-                    <Link
-                        href={route('login')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                <div className="flex items-center justify-end mt-4">
+                    <PrimaryButton
+                        className="w-full justify-center py-3"
+                        disabled={processing}
                     >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
                         Register
                     </PrimaryButton>
                 </div>
             </form>
+
+            <div className="mt-6 text-center text-sm text-gray-500">
+                Already have an account?{" "}
+                <Link
+                    href={route("login")}
+                    className="font-semibold text-emerald-600 hover:text-emerald-500"
+                >
+                    Log in
+                </Link>
+            </div>
         </GuestLayout>
     );
 }

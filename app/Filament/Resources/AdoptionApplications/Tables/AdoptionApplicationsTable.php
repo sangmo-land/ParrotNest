@@ -8,6 +8,8 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Tables\Actions\Action;
+use App\Models\AdoptionApplication;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
@@ -89,6 +91,34 @@ class AdoptionApplicationsTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+Action::make('approve')
+                ->label('Approve')
+                ->icon('heroicon-o-check-circle')
+                ->color('success')
+                ->requiresConfirmation()
+                ->visible(fn (AdoptionApplication $record) => $record->status === 'pending')
+                ->action(function (AdoptionApplication $record) {
+                $record->update([
+                'status' => 'approved',
+                'reviewed_at' => now(),
+                'reviewed_by' => auth()->id(),
+                ]);
+                
+                $record->parrot()->update(['status' => 'adopted']);
+                }),
+                Action::make('reject')
+                ->label('Reject')
+                ->icon('heroicon-o-x-circle')
+                ->color('danger')
+                ->requiresConfirmation()
+                ->visible(fn (AdoptionApplication $record) => $record->status === 'pending')
+                ->action(function (AdoptionApplication $record) {
+                $record->update([
+                'status' => 'rejected',
+                'reviewed_at' => now(),
+                'reviewed_by' => auth()->id(),
+                ]);
+                }),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

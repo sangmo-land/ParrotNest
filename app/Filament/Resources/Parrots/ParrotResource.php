@@ -22,7 +22,7 @@ class ParrotResource extends Resource
 {
     protected static ?string $model = Parrot::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-heart';
 
     protected static ?string $recordTitleAttribute = '´╗┐name';
 

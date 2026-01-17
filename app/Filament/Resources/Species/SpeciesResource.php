@@ -18,7 +18,7 @@ class SpeciesResource extends Resource
 {
     protected static ?string $model = Species::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-tag';
 
     public static function form(Schema $schema): Schema
     {

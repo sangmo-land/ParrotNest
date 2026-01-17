@@ -1,6 +1,8 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from "@inertiajs/react";
 
 export default function PublicNavbar({ auth }) {
+    const { contact } = usePage().props;
+
     return (
         <header className="bg-white shadow-sm sticky top-0 z-50">
             {/* Row 1: Brand & User Actions */}
@@ -13,9 +15,11 @@ export default function PublicNavbar({ auth }) {
                                 href="/"
                                 className="flex items-center gap-3 group"
                             >
-                                <div className="bg-emerald-100 p-2 rounded-full group-hover:bg-emerald-200 transition-colors">
-                                    <span className="text-4xl">🦜</span>
-                                </div>
+                                <img
+                                    src="/images/LogoParrot.jpeg"
+                                    alt="ParrotNest Logo"
+                                    className="h-24 w-24 object-contain"
+                                />
                                 <div className="flex flex-col">
                                     <span className="text-3xl font-bold text-gray-900 tracking-tight leading-none">
                                         ParrotNest
@@ -34,7 +38,7 @@ export default function PublicNavbar({ auth }) {
                                     Support & Inquiries
                                 </p>
                                 <p className="text-sm font-bold text-gray-900">
-                                    (555) 123-4567
+                                    {contact?.phone}
                                 </p>
                             </div>
 
@@ -58,7 +62,7 @@ export default function PublicNavbar({ auth }) {
                                             href={route("register")}
                                             className="bg-emerald-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-emerald-700 shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5"
                                         >
-                                            Adopt a Parrot
+                                            Register
                                         </Link>
                                     </>
                                 )}
@@ -260,6 +264,31 @@ export default function PublicNavbar({ auth }) {
                         >
                             Contact Us
                         </Link>
+
+                        {/* Mobile Auth Links */}
+                        {auth.user ? (
+                            <Link
+                                href={route("dashboard")}
+                                className="font-montserrat px-5 py-2.5 text-sm font-bold uppercase tracking-widest text-white bg-emerald-900 hover:bg-emerald-800 rounded-full transition-all duration-300 border border-transparent"
+                            >
+                                Dashboard
+                            </Link>
+                        ) : (
+                            <>
+                                <Link
+                                    href={route("login")}
+                                    className="font-montserrat px-5 py-2.5 text-sm font-bold uppercase tracking-widest text-white hover:bg-white/10 rounded-full transition-all duration-300 border border-transparent hover:border-white/20"
+                                >
+                                    Log In
+                                </Link>
+                                <Link
+                                    href={route("register")}
+                                    className="font-montserrat px-5 py-2.5 text-sm font-bold uppercase tracking-widest text-emerald-800 bg-white hover:bg-gray-100 rounded-full transition-all duration-300 border border-transparent"
+                                >
+                                    Register
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
