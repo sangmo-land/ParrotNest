@@ -194,7 +194,7 @@ export default function Index({ auth, parrots, species, filters }) {
                                 {/* Content */}
                                 <div className="p-8 flex flex-col flex-1 relative">
                                     <div className="mb-6 text-center">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4AF37] mb-2">
+                                        <p className="text-sm font-bold uppercase tracking-[0.2em] text-emerald-600 mb-2">
                                             {parrot.species?.name}
                                         </p>
                                         <h2 className="text-3xl font-serif font-bold text-stone-900 group-hover:text-[#D4AF37] transition-colors mb-4 leading-none">
