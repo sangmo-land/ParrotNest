@@ -6,6 +6,7 @@ use App\Models\Parrot;
 use App\Models\Species;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class ParrotSeeder extends Seeder
 {
@@ -14,6 +15,11 @@ class ParrotSeeder extends Seeder
      */
     public function run(): void
     {
+// Disable foreign key checks to allow truncation if needed, OR just delete
+        // Using DB::statement to disable checks is safer for truncation
+        \Illuminate\Support\Facades\Schema::disableForeignKeyConstraints();
+        Parrot::truncate();
+        \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
         $africanGrey = Species::where('name', 'African Grey')->first();
         $cockatiel = Species::where('name', 'Cockatiel')->first();
         $macaw = Species::where('name', 'Blue and Gold Macaw')->first();
@@ -28,7 +34,18 @@ class ParrotSeeder extends Seeder
         $sunConure ??= Species::create(['name' => 'Sun Conure', 'scientific_name' => 'Aratinga solstitialis', 'description' => 'Colorful', 'lifespan' => '20-30 years', 'size' => 'Medium', 'noise_level' => 'High', 'care_level' => 'Tntermediate', 'is_active' => true]);
 
 
-        $images = [
+// Get all images from storage/app/public/parrots
+        // Note: The public disk usually points to storage/app/public
+        $files = Storage::disk('public')->files('parrots');
+        
+        // Filter out non-image files if any
+        $images = array_filter($files, function($file) {
+        return preg_match('/\.(jpg|jpeg|png|gif|webp)$/i', $file);
+        });
+        
+        // If no images found using Storage facade (maybe config issue?), fallback to the known list
+        if (empty($images)) {
+$images = [
             'parrots/IMG_5465.jpeg',
             'parrots/WhatsApp Image 2026-01-16 at 22.31.50.jpeg',
             'parrots/WhatsApp Image 2026-01-16 at 22.31.52.jpeg',
@@ -51,14 +68,23 @@ class ParrotSeeder extends Seeder
             'parrots/WhatsApp Image 2026-01-16 at 22.31.59 (2).jpeg',
             'parrots/WhatsApp Image 2026-01-16 at 22.31.59.jpeg',
             'parrots/WhatsApp Image 2026-01-16 at 22.32.00.jpeg',
-        ];
+            ];
+} else {
+        // Reset array keys
+        $images = array_values($images);
+        }
         
-        $names = ['Charlie', 'Peaches', 'Rio', 'Kiwi', 'Sunny', 'Mango', 'Bella', 'Max', 'Luna', 'Coco', 'Buddy', 'Ruby', 'Lola', 'Pepper', 'Oliver', 'Oscar', 'Cleo', 'Ziggy', 'Blue', 'Skye', 'Echo', 'Tiki'];
+$names = ['Charlie', 'Peaches', 'Rio', 'Kiwi', 'Sunny', 'Mango', 'Bella', 'Max', 'Luna', 'Coco', 'Buddy', 'Ruby',
+        'Lola', 'Pepper', 'Oliver', 'Oscar', 'Cleo', 'Ziggy', 'Blue', 'Skye', 'Echo', 'Tiki', 'Jasper', 'Merlin', 'Angel',
+        'Lucky', 'Cookie', 'Rocky', 'Harley', 'Bailey', 'Peanut', 'Mojo', 'Zazu', 'Pikachu', 'Yoshi', 'Snowball'];
         $speciesList = [$africanGrey, $cockatiel, $macaw, $budgie, $sunConure];
         $genders = ['Male', 'Female'];
 
         foreach ($images as $index => $image) {
-            $name = $names[$index] ?? 'Parrot ' . ($index + 1);
+$name = $names[$index % count($names)];
+            if ($index >= count($names)) {
+            $name .= ' (' . ($index + 1) . ')';
+            }
             $species = $speciesList[$index % count($speciesList)];
             $gender = $genders[$index % 2];
             

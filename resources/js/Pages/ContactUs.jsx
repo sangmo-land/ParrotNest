@@ -1,5 +1,5 @@
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import PublicNavbar from "@/Components/PublicNavbar";
 import Footer from "@/Components/Footer";
 
@@ -13,9 +13,38 @@ export default function ContactUs({ auth }) {
 
     const [successMessage, setSuccessMessage] = useState(null);
 
+    const nameInput = useRef(null);
+    const emailInput = useRef(null);
+    const messageInput = useRef(null);
+
     const submit = (e) => {
         e.preventDefault();
-        
+
+        if (!data.name) {
+            nameInput.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+            nameInput.current.focus();
+            return;
+        }
+        if (!data.email) {
+            emailInput.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+            emailInput.current.focus();
+            return;
+        }
+        if (!data.message) {
+            messageInput.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+            messageInput.current.focus();
+            return;
+        }
+
         post(route("contact.store"), {
             onSuccess: () => {
                 reset();
@@ -217,8 +246,8 @@ export default function ContactUs({ auth }) {
                                                 Full Name
                                             </label>
                                             <input
+                                                ref={nameInput}
                                                 type="text"
-                                                required
                                                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 transition-colors bg-gray-50 focus:bg-white"
                                                 placeholder="John Doe"
                                                 value={data.name}
@@ -236,8 +265,8 @@ export default function ContactUs({ auth }) {
                                                 Email Address
                                             </label>
                                             <input
+                                                ref={emailInput}
                                                 type="email"
-                                                required
                                                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 transition-colors bg-gray-50 focus:bg-white"
                                                 placeholder="john@example.com"
                                                 value={data.email}
@@ -255,7 +284,7 @@ export default function ContactUs({ auth }) {
                                                 Message
                                             </label>
                                             <textarea
-                                                required
+                                                ref={messageInput}
                                                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 transition-colors bg-gray-50 focus:bg-white h-32 resize-none"
                                                 placeholder="How can we help you?"
                                                 value={data.message}

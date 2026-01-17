@@ -60,6 +60,7 @@ Toggle::make('comes_with_cage')
                 FileUpload::make('images')
                 ->image()
                 ->multiple()
+->disk('public')
                 ->directory('parrots')
                     ->columnSpanFull(),
                 TextInput::make('location')

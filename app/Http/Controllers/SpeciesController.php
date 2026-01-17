@@ -77,6 +77,30 @@ $speciesInfo = [
                 'icon' => "🦜",
                 'color_class' => "from-emerald-500 to-green-700",
             ],
+'quaker_parrot' => [
+            'name' => "Quaker Parrot",
+            'scientific_name' => "Myiopsitta monachus",
+            'description' => "Social, intelligent, and known for their nest-building abilities. They are excellent talkers but can
+            be territorial.",
+            'size' => "Medium (11-12 inches)",
+            'average_lifespan' => "20-30 years",
+            'noise_level' => "Moderate",
+            'care_level' => "Intermediate",
+            'icon' => "🦜",
+            'color_class' => "from-green-500 to-blue-400",
+            ],
+            'ringneck_parakeet' => [
+            'name' => "Ringneck Parakeet",
+            'scientific_name' => "Psittacula krameri",
+            'description' => "Elegant, intelligent, and excellent talkers. They are independent and need consistent socialization to
+            remain tame.",
+            'size' => "Medium (16 inches)",
+            'average_lifespan' => "20-30 years",
+            'noise_level' => "Moderate-High",
+            'care_level' => "Intermediate",
+            'icon' => "🦜",
+            'color_class' => "from-green-400 to-yellow-300",
+            ],
         ];
 
         $files = \Illuminate\Support\Facades\Storage::disk('public')->files('breeds');
