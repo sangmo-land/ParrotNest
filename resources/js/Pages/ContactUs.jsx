@@ -218,6 +218,7 @@ export default function ContactUs({ auth }) {
                                             </label>
                                             <input
                                                 type="text"
+                                                required
                                                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 transition-colors bg-gray-50 focus:bg-white"
                                                 placeholder="John Doe"
                                                 value={data.name}
@@ -236,6 +237,7 @@ export default function ContactUs({ auth }) {
                                             </label>
                                             <input
                                                 type="email"
+                                                required
                                                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 transition-colors bg-gray-50 focus:bg-white"
                                                 placeholder="john@example.com"
                                                 value={data.email}
@@ -253,6 +255,7 @@ export default function ContactUs({ auth }) {
                                                 Message
                                             </label>
                                             <textarea
+                                                required
                                                 className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 transition-colors bg-gray-50 focus:bg-white h-32 resize-none"
                                                 placeholder="How can we help you?"
                                                 value={data.message}
