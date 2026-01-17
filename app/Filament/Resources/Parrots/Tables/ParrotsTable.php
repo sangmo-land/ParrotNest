@@ -9,6 +9,8 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -19,8 +21,18 @@ class ParrotsTable
     {
         return $table
             ->columns([
-                TextColumn::make('species.name')
-                    ->searchable(),
+ImageColumn::make('images')
+                ->square()
+                ->height(150)
+                ->width(150)
+                ->stacked()
+                ->limit(3)
+                ->disk('public'),
+                SelectColumn::make('species_id')
+                ->options(\App\Models\Species::pluck('name', 'id'))
+                ->searchable()
+                ->sortable()
+                ->grow(false), // Optional: Keep it compact
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('age')
