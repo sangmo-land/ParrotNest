@@ -3,7 +3,7 @@ import PublicNavbar from "@/Components/PublicNavbar";
 import Footer from "@/Components/Footer";
 import { motion } from "framer-motion";
 
-export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
+export default function Welcome({ auth, featuredParrots = [], stats = {}, successStories = [] }) {
     // Animation Variants
     const fadeInUp = {
         hidden: { opacity: 0, y: 30 },
@@ -344,120 +344,64 @@ export default function Welcome({ auth, featuredParrots = [], stats = {} }) {
                         </motion.div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.1 }}
-                                className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition duration-300 border border-emerald-50"
-                            >
-                                <div className="flex text-emerald-500 mb-4">
-                                    {[...Array(5)].map((_, i) => (
-                                        <svg
-                                            key={i}
-                                            className="w-5 h-5 fill-current"
-                                            viewBox="0 0 20 20"
-                                        >
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                        </svg>
-                                    ))}
-                                </div>
-                                <p className="text-gray-600 italic mb-6">
-                                    "Adopting Rio (Macaw) was a journey, but
-                                    ParrotNest supported us every step of the
-                                    way with behavioral training tips. He's the
-                                    light of our home now!"
-                                </p>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-xl">
-                                        👩
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-gray-900">
-                                            Sarah Jenkins
-                                        </h4>
-                                        <p className="text-xs text-gray-500">
-                                            Adopted Rio (Blue & Gold Macaw)
+                            {successStories.length > 0 ? (
+                                successStories.map((review, index) => (
+                                    <motion.div
+                                        key={review.id}
+                                        initial={{ opacity: 0, y: 30 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: 0.1 * (index + 1) }}
+                                        className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition duration-300 border border-emerald-50"
+                                    >
+                                        <div className="flex text-emerald-500 mb-4">
+                                            {[...Array(5)].map((_, i) => (
+                                                <svg
+                                                    key={i}
+                                                    className={`w-5 h-5 ${
+                                                        i < review.rating
+                                                            ? "fill-current"
+                                                            : "text-gray-300 fill-current"
+                                                    }`}
+                                                    viewBox="0 0 20 20"
+                                                >
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                </svg>
+                                            ))}
+                                        </div>
+                                        <p className="text-gray-600 italic mb-6">
+                                            "{review.comment}"
                                         </p>
-                                    </div>
+                                        <div className="flex items-center gap-4">
+                                            {review.image_path ? (
+                                                <img
+                                                    src={`/storage/${review.image_path}`}
+                                                    alt={review.reviewer_name}
+                                                    className="w-12 h-12 rounded-full object-cover"
+                                                />
+                                            ) : (
+                                                <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-xl">
+                                                    👤
+                                                </div>
+                                            )}
+                                            <div>
+                                                <h4 className="font-bold text-gray-900">
+                                                    {review.reviewer_name}
+                                                </h4>
+                                                <p className="text-xs text-gray-500">
+                                                    {review.parrot_species
+                                                        ? `Adopted ${review.parrot_species}`
+                                                        : review.location}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))
+                            ) : (
+                                <div className="col-span-3 text-center text-gray-500 italic">
+                                    No success stories yet. Check back soon!
                                 </div>
-                            </motion.div>
-
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.3 }}
-                                className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition duration-300 border border-emerald-50"
-                            >
-                                <div className="flex text-emerald-500 mb-4">
-                                    {[...Array(5)].map((_, i) => (
-                                        <svg
-                                            key={i}
-                                            className="w-5 h-5 fill-current"
-                                            viewBox="0 0 20 20"
-                                        >
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                        </svg>
-                                    ))}
-                                </div>
-                                <p className="text-gray-600 italic mb-6">
-                                    "I never knew a Grey could be so cuddly. The
-                                    health guarantee gave us peace of mind, and
-                                    the vet records were impeccable."
-                                </p>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-xl">
-                                        👨
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-gray-900">
-                                            David Chen
-                                        </h4>
-                                        <p className="text-xs text-gray-500">
-                                            Adopted Gandalf (African Grey)
-                                        </p>
-                                    </div>
-                                </div>
-                            </motion.div>
-
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.5 }}
-                                className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition duration-300 border border-emerald-50"
-                            >
-                                <div className="flex text-emerald-500 mb-4">
-                                    {[...Array(5)].map((_, i) => (
-                                        <svg
-                                            key={i}
-                                            className="w-5 h-5 fill-current"
-                                            viewBox="0 0 20 20"
-                                        >
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                        </svg>
-                                    ))}
-                                </div>
-                                <p className="text-gray-600 italic mb-6">
-                                    "We drove 4 hours to pick up Bella. The
-                                    facility is clean, spacious, and the staff
-                                    truly cares about every single bird."
-                                </p>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center text-xl">
-                                        👩
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-gray-900">
-                                            Elena Rodriguez
-                                        </h4>
-                                        <p className="text-xs text-gray-500">
-                                            Adopted Bella (Cockatoo)
-                                        </p>
-                                    </div>
-                                </div>
-                            </motion.div>
+                            )}
                         </div>
                     </div>
                 </div>

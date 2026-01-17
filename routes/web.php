@@ -7,6 +7,7 @@ use App\Http\Controllers\AdoptionApplicationController;
 use App\Http\Controllers\ReviewController;
 use App\Models\Parrot;
 use App\Models\Species;
+use App\Models\Review;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,11 +26,17 @@ Route::get('/', function () {
         'total_adopted' => Parrot::where('status', 'adopted')->count(),
     ];
 
+    $successStories = Review::where('is_approved', true)
+        ->inRandomOrder()
+        ->limit(3)
+        ->get();
+
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'featuredParrots' => $featuredParrots,
         'stats' => $stats,
+        'successStories' => $successStories,
     ]);
 })->name('home');
 
