@@ -15,17 +15,15 @@ export default function ContactUs({ auth }) {
 
     const submit = (e) => {
         e.preventDefault();
-        // Since we don't have a backend endpoint yet, we'll just simulate a success message
-        // post(route('contact.store'), {
-        //     onSuccess: () => {
-        //         reset();
-        //         setSuccessMessage("Thank you for reaching out! We will get back to you shortly.");
-        //     },
-        // });
-        setSuccessMessage(
-            "Thank you for reaching out! We will get back to you shortly.",
-        );
-        reset();
+        
+        post(route("contact.store"), {
+            onSuccess: () => {
+                reset();
+                setSuccessMessage(
+                    "Thank you for reaching out! We will get back to you shortly.",
+                );
+            },
+        });
     };
 
     return (

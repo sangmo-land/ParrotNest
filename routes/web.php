@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SpeciesController;
 use App\Http\Controllers\AdoptionApplicationController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ContactController;
 use App\Models\Parrot;
 use App\Models\Species;
 use App\Models\Review;
@@ -51,6 +52,7 @@ Route::get('/about-breeds/{species}', [SpeciesController::class, 'show'])->name(
 
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::get('/contact', function() { return Inertia::render('ContactUs'); })->name('contact');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/health-guarantee', function() { return Inertia::render('HealthGuarantee'); })->name('health');
 Route::get('/delivery-shipping', function() { return Inertia::render('DeliveryShipping'); })->name('delivery');
 Route::get('/care-guide', function() { return Inertia::render('CareGuide'); })->name('care');
