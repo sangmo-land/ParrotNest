@@ -1,4 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
+import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 
 export default function Footer() {
     const { auth, contact } = usePage().props;
@@ -17,14 +18,12 @@ export default function Footer() {
                             ParrotNest
                         </h3>
                         <p className="text-gray-300">
-                            Connecting rescued parrots with loving
-                            forever homes.
+                            Connecting rescued parrots with loving forever
+                            homes.
                         </p>
                     </div>
                     <div>
-                        <h4 className="font-semibold mb-4">
-                            Quick Links
-                        </h4>
+                        <h4 className="font-semibold mb-4">Quick Links</h4>
                         <ul className="space-y-2">
                             <li>
                                 <Link
@@ -75,15 +74,52 @@ export default function Footer() {
                     </div>
                     <div>
                         <h4 className="font-semibold mb-4">Contact</h4>
-                        <p className="text-gray-300">
-                            Email: {contact?.email}
-                        </p>
+                        <p className="text-gray-300">Email: {contact?.email}</p>
                         <p className="text-gray-300 mt-2">
                             Phone: {contact?.phone}
                         </p>
+
+                        {/* Social Links */}
+                        <div className="mt-6">
+                            <h5 className="font-semibold mb-3 text-sm uppercase tracking-wider">
+                                Follow Us
+                            </h5>
+                            <div className="flex space-x-4">
+                                {/* Facebook */}
+                                <a
+                                    href="https://www.facebook.com/share/1KKHsfGFMA/?mibextid=wwXIfr"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-500 hover:text-blue-400 transform hover:scale-110 transition-all duration-300"
+                                    aria-label="Facebook"
+                                >
+                                    <FaFacebook size={32} />
+                                </a>
+
+                                {/* Instagram */}
+                                <a
+                                    href="https://www.instagram.com/parrotnest0?igsh=MXdlNDRsNmt6NnUwMg%3D%3D&utm_source=qr"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-pink-500 hover:text-pink-400 transform hover:scale-110 transition-all duration-300"
+                                    aria-label="Instagram"
+                                >
+                                    <FaInstagram size={32} />
+                                </a>
+
+                                {/* TikTok */}
+                                <a
+                                    href="https://www.tiktok.com/@parrotnest0?_r=1&_t=ZM-939fRwB7SH6"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-white hover:text-emerald-400 transform hover:scale-110 transition-all duration-300"
+                                    aria-label="TikTok"
+                                >
+                                    <FaTiktok size={32} />
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
                     <p>&copy; 2026 ParrotNest. All rights reserved.</p>
                 </div>
             </div>
