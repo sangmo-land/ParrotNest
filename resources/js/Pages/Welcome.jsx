@@ -1,9 +1,35 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm } from "@inertiajs/react";
 import PublicNavbar from "@/Components/PublicNavbar";
 import Footer from "@/Components/Footer";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
-export default function Welcome({ auth, featuredParrots = [], stats = {}, successStories = [] }) {
+export default function Welcome({
+    auth,
+    featuredParrots = [],
+    stats = {},
+    successStories = [],
+}) {
+    // Newsletter Form
+    const {
+        data,
+        setData,
+        post,
+        processing,
+        errors,
+        reset,
+        recentlySuccessful,
+    } = useForm({
+        email: "",
+    });
+
+    const submitNewsletter = (e) => {
+        e.preventDefault();
+        post(route("subscribe"), {
+            preserveScroll: true,
+            onSuccess: () => reset(),
+        });
+    };
+
     // Animation Variants
     const fadeInUp = {
         hidden: { opacity: 0, y: 30 },
@@ -152,6 +178,16 @@ export default function Welcome({ auth, featuredParrots = [], stats = {}, succes
                                                     src={`/storage/${parrot.images[0]}`}
                                                     alt={parrot.name}
                                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                                    style={{
+                                                        objectPosition:
+                                                            parrot.name ===
+                                                            "Lola"
+                                                                ? "center 25%"
+                                                                : parrot.name ===
+                                                                    "Nina"
+                                                                  ? "center 5%"
+                                                                  : "center",
+                                                    }}
                                                 />
                                             ) : (
                                                 <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-400 to-teal-500">
@@ -351,7 +387,9 @@ export default function Welcome({ auth, featuredParrots = [], stats = {}, succes
                                         initial={{ opacity: 0, y: 30 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
-                                        transition={{ delay: 0.1 * (index + 1) }}
+                                        transition={{
+                                            delay: 0.1 * (index + 1),
+                                        }}
                                         className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition duration-300 border border-emerald-50"
                                     >
                                         <div className="flex text-emerald-500 mb-4">
@@ -489,15 +527,52 @@ export default function Welcome({ auth, featuredParrots = [], stats = {}, succes
                             heartwarming adoption updates.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
-                            <input
-                                type="email"
-                                placeholder="Enter your email address"
-                                className="px-6 py-4 rounded-full text-gray-900 w-full focus:ring-4 focus:ring-emerald-400 focus:outline-none"
-                            />
-                            <button className="bg-gray-900 text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition shadow-lg whitespace-nowrap">
-                                Subscribe
-                            </button>
+                        <div className="max-w-lg mx-auto">
+                            <form
+                                onSubmit={submitNewsletter}
+                                className="flex flex-col sm:flex-row gap-4 justify-center"
+                            >
+                                <div className="w-full">
+                                    <input
+                                        type="email"
+                                        value={data.email}
+                                        onChange={(e) =>
+                                            setData("email", e.target.value)
+                                        }
+                                        placeholder="Enter your email address"
+                                        className="px-6 py-4 rounded-full text-gray-900 w-full focus:ring-4 focus:ring-emerald-400 focus:outline-none"
+                                        required
+                                    />
+                                    {errors.email && (
+                                        <div className="text-red-200 text-sm mt-1 text-left pl-4">
+                                            {errors.email}
+                                        </div>
+                                    )}
+                                </div>
+                                <button
+                                    type="submit"
+                                    disabled={processing}
+                                    className="bg-gray-900 text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition shadow-lg whitespace-nowrap disabled:opacity-75"
+                                >
+                                    {processing
+                                        ? "Subscribing..."
+                                        : "Subscribe"}
+                                </button>
+                            </form>
+
+                            <AnimatePresence>
+                                {recentlySuccessful && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0 }}
+                                        className="mt-4 bg-emerald-800/50 text-emerald-100 px-4 py-2 rounded-lg backdrop-blur-sm border border-emerald-500/30"
+                                    >
+                                        🎉 Thanks for subscribing! Check your
+                                        inbox.
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                         <p className="text-emerald-200/60 text-sm mt-6">
                             We respect your privacy. No spam, just parrots.
