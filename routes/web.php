@@ -7,6 +7,7 @@ use App\Http\Controllers\AdoptionApplicationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\ProductController;
 use App\Models\Parrot;
 use App\Models\Species;
 use App\Models\Review;
@@ -52,7 +53,7 @@ Route::get('/species', [SpeciesController::class, 'index']); // Alias
 Route::get('/about-breeds/{species}', [SpeciesController::class, 'show'])->name('species.show');
 
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
-Route::get('/shop', function() { return Inertia::render('Shop'); })->name('shop');
+Route::get('/shop', [ProductController::class, 'index'])->name('shop');
 Route::get('/contact', function() { return Inertia::render('ContactUs'); })->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/subscribe', [NewsletterController::class, 'subscribe'])->name('subscribe');
