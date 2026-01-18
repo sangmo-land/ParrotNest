@@ -426,11 +426,7 @@ export default function Welcome({
                                                 <h4 className="font-bold text-gray-900">
                                                     {review.reviewer_name}
                                                 </h4>
-                                                <p className="text-xs text-gray-500">
-                                                    {review.parrot_species
-                                                        ? `Adopted ${review.parrot_species}`
-                                                        : review.location}
-                                                </p>
+                                                
                                             </div>
                                         </div>
                                     </motion.div>
