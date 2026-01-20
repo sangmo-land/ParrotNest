@@ -358,7 +358,7 @@ export default function Welcome({
                     </div>
                 </div>
 
-                {/* Happy Tails - Testimonials Section */}
+                {/* Happy Beaks - Testimonials Section */}
                 <div className="py-20 bg-gray-50 relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-64 h-64 bg-emerald-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
                     <div className="absolute top-0 right-0 w-64 h-64 bg-teal-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
@@ -375,7 +375,7 @@ export default function Welcome({
                                 Success Stories
                             </span>
                             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mt-2">
-                                Happy Tails
+                                Happy Beaks
                             </h2>
                         </motion.div>
 
@@ -426,7 +426,6 @@ export default function Welcome({
                                                 <h4 className="font-bold text-gray-900">
                                                     {review.reviewer_name}
                                                 </h4>
-                                                
                                             </div>
                                         </div>
                                     </motion.div>
