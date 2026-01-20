@@ -1,7 +1,7 @@
 import { Head, Link, router, usePage } from "@inertiajs/react";
 import PublicNavbar from "@/Components/PublicNavbar";
 import Footer from "@/Components/Footer";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     RiShoppingCartLine,
@@ -10,16 +10,57 @@ import {
 } from "react-icons/ri";
 
 export default function Shop({ auth, products, categories, filters }) {
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState(filters.search || "");
     const [selectedCategory, setSelectedCategory] = useState(
         filters.category || "all",
     );
+
+    // Create a ref to track the first render
+    const firstRender = useRef(true);
+
+    // Live search effect with debounce
+    useEffect(() => {
+        // Skip the initial render to prevent unnecessary requests on load
+        if (firstRender.current) {
+            firstRender.current = false;
+            return;
+        }
+
+        const timeoutId = setTimeout(() => {
+            router.get(
+                "/shop",
+                {
+                    category:
+                        selectedCategory === "all"
+                            ? undefined
+                            : selectedCategory,
+                    search: search || undefined,
+                },
+                {
+                    preserveState: true,
+                    preserveScroll: true,
+                    only: ["products", "filters"],
+                    replace: true, // Use replace to avoid polluting history stack with every keystroke
+                },
+            );
+        }, 300); // 300ms debounce
+
+        return () => clearTimeout(timeoutId);
+    }, [search]);
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        // Search is handled by useEffect now, this just prevents form submission
+    };
 
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
         router.get(
             "/shop",
-            { category: category === "all" ? undefined : category },
+            {
+                category: category === "all" ? undefined : category,
+                search: search || undefined,
+            },
             {
                 preserveState: true,
                 preserveScroll: true,
@@ -66,30 +107,47 @@ export default function Shop({ auth, products, categories, filters }) {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
                     {/* Filters & Control Bar */}
                     <div className="flex flex-col md:flex-row justify-between items-center mb-10 pb-6 border-b border-gray-200 gap-4">
-                        <div className="flex items-center space-x-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto scrollbar-hide">
-                            <button
-                                onClick={() => handleCategoryChange("all")}
-                                className={`px-5 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap ${
-                                    selectedCategory === "all"
-                                        ? "bg-emerald-600 text-white shadow-md"
-                                        : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
-                                }`}
+                        <div className="flex flex-col lg:flex-row items-center gap-4 w-full md:w-auto">
+                            <form
+                                onSubmit={handleSearch}
+                                className="relative w-full md:w-64"
                             >
-                                All Products
-                            </button>
-                            {categories.map((cat) => (
+                                <input
+                                    type="text"
+                                    placeholder="Search products..."
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50 transition-colors"
+                                />
+                                <RiSearchLine className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                            </form>
+                            <div className="flex items-center space-x-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto scrollbar-hide">
                                 <button
-                                    key={cat}
-                                    onClick={() => handleCategoryChange(cat)}
-                                    className={`px-5 py-2 rounded-full text-sm font-bold capitalize transition-all whitespace-nowrap ${
-                                        selectedCategory === cat
+                                    onClick={() => handleCategoryChange("all")}
+                                    className={`px-5 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap ${
+                                        selectedCategory === "all"
                                             ? "bg-emerald-600 text-white shadow-md"
                                             : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
                                     }`}
                                 >
-                                    {cat}
+                                    All Products
                                 </button>
-                            ))}
+                                {categories.map((cat) => (
+                                    <button
+                                        key={cat}
+                                        onClick={() =>
+                                            handleCategoryChange(cat)
+                                        }
+                                        className={`px-5 py-2 rounded-full text-sm font-bold capitalize transition-all whitespace-nowrap ${
+                                            selectedCategory === cat
+                                                ? "bg-emerald-600 text-white shadow-md"
+                                                : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
+                                        }`}
+                                    >
+                                        {cat}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
 
                         <div className="text-gray-500 text-sm font-medium">
