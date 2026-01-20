@@ -12,6 +12,7 @@ class Review extends Model
 
     protected $fillable = [
         'reviewer_name',
+'email',
         'location',
         'image_path',
         'rating',

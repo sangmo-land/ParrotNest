@@ -53,6 +53,7 @@ Route::get('/species', [SpeciesController::class, 'index']); // Alias
 Route::get('/about-breeds/{species}', [SpeciesController::class, 'show'])->name('species.show');
 
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 Route::get('/shop', [ProductController::class, 'index'])->name('shop');
 Route::get('/contact', function() { return Inertia::render('ContactUs'); })->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
