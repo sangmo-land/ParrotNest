@@ -47,6 +47,13 @@ Route::get('/', function () {
 Route::get('/parrots', [ParrotController::class, 'index'])->name('parrots.index');
 Route::get('/parrots/{parrot}', [ParrotController::class, 'show'])->name('parrots.show');
 
+// Donation Page
+Route::get('/donate', function () {
+return Inertia::render('Donate', [
+'canLogin' => Route::has('login'),
+'canRegister' => Route::has('register'),
+]);
+})->name('donate');
 // Species Routes (Mapped to /about-breeds as requested, keeping /species alias for backward compat if needed)
 Route::get('/about-breeds', [SpeciesController::class, 'index'])->name('species.index');
 Route::get('/species', [SpeciesController::class, 'index']); // Alias
