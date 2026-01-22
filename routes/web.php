@@ -90,4 +90,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/my-applications/{application}', [AdoptionApplicationController::class, 'show'])->name('applications.show');
 });
 
+use App\Http\Controllers\ChatBotController;
+
+// ChatBot Route
+Route::post('/chatbot/message', [ChatBotController::class, 'handle'])->name('chatbot.message');
 require __DIR__.'/auth.php';
