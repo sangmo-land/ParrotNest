@@ -1,7 +1,8 @@
 import { Link, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { RiShoppingCartLine } from "react-icons/ri";
+import { RiShoppingCartLine, RiHeartLine } from "react-icons/ri";
+import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 
 export default function PublicNavbar({ auth }) {
     const { contact } = usePage().props;
@@ -37,6 +38,37 @@ export default function PublicNavbar({ auth }) {
 
                         {/* Right Side: Contact & Auth */}
                         <div className="hidden lg:flex items-center gap-8">
+                            {/* Social Icons */}
+                            <div className="flex items-center gap-3 mr-2">
+                                <a
+                                    href="https://www.facebook.com/share/1KKHsfGFMA/?mibextid=wwXIfr"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 hover:text-blue-500 transform hover:scale-110 transition-all duration-300"
+                                    aria-label="Facebook"
+                                >
+                                    <FaFacebook size={20} />
+                                </a>
+                                <a
+                                    href="https://www.instagram.com/parrotnest0?igsh=MXdlNDRsNmt6NnUwMg%3D%3D&utm_source=qr"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-pink-600 hover:text-pink-500 transform hover:scale-110 transition-all duration-300"
+                                    aria-label="Instagram"
+                                >
+                                    <FaInstagram size={20} />
+                                </a>
+                                <a
+                                    href="https://www.tiktok.com/@parrotnest0?_r=1&_t=ZM-939fRwB7SH6"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-gray-900 hover:text-emerald-600 transform hover:scale-110 transition-all duration-300"
+                                    aria-label="TikTok"
+                                >
+                                    <FaTiktok size={20} />
+                                </a>
+                            </div>
+
                             <div className="text-right hidden xl:block">
                                 <p className="text-xs text-gray-500 uppercase font-semibold">
                                     Support & Inquiries
@@ -47,6 +79,13 @@ export default function PublicNavbar({ auth }) {
                             </div>
 
                             <div className="flex items-center gap-3">
+                                <Link
+                                    href="/donate"
+                                    className="bg-amber-100 text-amber-800 hover:bg-amber-200 px-5 py-2.5 rounded-full text-sm font-bold transition-colors shadow-sm hover:shadow-md flex items-center gap-2"
+                                >
+                                    <RiHeartLine className="w-4 h-4" />
+                                    <span>Donate</span>
+                                </Link>
                                 <Link
                                     href="/shop"
                                     className="text-gray-700 hover:text-emerald-600 font-semibold px-2 py-2"
@@ -84,6 +123,43 @@ export default function PublicNavbar({ auth }) {
 
                         {/* Mobile Menu Button */}
                         <div className="lg:hidden flex items-center gap-2">
+                            <div className="flex items-center gap-2 mr-1">
+                                <a
+                                    href="https://www.facebook.com/share/1KKHsfGFMA/?mibextid=wwXIfr"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 hover:text-blue-500 transition-colors"
+                                    aria-label="Facebook"
+                                >
+                                    <FaFacebook size={18} />
+                                </a>
+                                <a
+                                    href="https://www.instagram.com/parrotnest0?igsh=MXdlNDRsNmt6NnUwMg%3D%3D&utm_source=qr"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-pink-600 hover:text-pink-500 transition-colors"
+                                    aria-label="Instagram"
+                                >
+                                    <FaInstagram size={18} />
+                                </a>
+                                <a
+                                    href="https://www.tiktok.com/@parrotnest0?_r=1&_t=ZM-939fRwB7SH6"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-gray-900 hover:text-emerald-600 transition-colors"
+                                    aria-label="TikTok"
+                                >
+                                    <FaTiktok size={18} />
+                                </a>
+                            </div>
+
+                            <Link
+                                href="/donate"
+                                className="text-amber-600 hover:text-amber-700 transition p-2"
+                            >
+                                <RiHeartLine className="w-6 h-6" />
+                            </Link>
+
                             <Link
                                 href="/shop"
                                 className="text-gray-600 hover:text-emerald-600 transition p-2"
