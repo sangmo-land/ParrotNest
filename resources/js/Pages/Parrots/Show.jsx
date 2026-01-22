@@ -1,13 +1,173 @@
-import { Head, Link } from '@inertiajs/react';
-import { useState } from "react";
+import { Head, Link, useForm } from "@inertiajs/react";
+import { useState, useMemo } from "react";
 import PublicNavbar from "@/Components/PublicNavbar";
 
-export default function Show({ auth, parrot, similarParrots }) {
+const CommentItem = ({
+    comment,
+    depth = 0,
+    replyingTo,
+    handleReply,
+    submitComment,
+    data,
+    setData,
+    setReplyingTo,
+    processing,
+}) => {
+    return (
+        <div className={`flex gap-4 ${depth > 0 ? "mt-4" : ""}`}>
+            <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 font-bold flex-shrink-0">
+                {comment.user ? comment.user.name[0] : "G"}
+            </div>
+            <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                    <span className="font-bold text-stone-900">
+                        {comment.user
+                            ? comment.user.name
+                            : comment.guest_name || "Guest"}
+                    </span>
+                    <span className="text-xs text-stone-400">
+                        {new Date(comment.created_at).toLocaleDateString(
+                            undefined,
+                            {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                            },
+                        )}
+                    </span>
+                </div>
+                <p className="text-stone-600 leading-relaxed bg-stone-50 p-4 rounded-xl rounded-tl-none mb-2">
+                    {comment.body}
+                </p>
+
+                <div className="flex gap-4">
+                    <button
+                        onClick={() => handleReply(comment.id)}
+                        className="text-emerald-600 text-xs font-bold hover:underline"
+                    >
+                        Reply
+                    </button>
+                </div>
+
+                {replyingTo === comment.id && (
+                    <form onSubmit={submitComment} className="mt-4">
+                        <textarea
+                            value={data.body}
+                            onChange={(e) =>
+                                setData((prev) => ({
+                                    ...prev,
+                                    body: e.target.value,
+                                }))
+                            }
+                            placeholder="Write a reply..."
+                            className="w-full rounded-xl border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 min-h-[80px] resize-y p-3 text-sm text-stone-700 placeholder-stone-400 bg-white"
+                            autoFocus
+                        ></textarea>
+                        <div className="flex justify-end gap-2 mt-2">
+                            <button
+                                type="button"
+                                onClick={() => setReplyingTo(null)}
+                                className="text-stone-400 hover:text-stone-600 text-xs font-bold px-3 py-1"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                disabled={processing}
+                                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-full font-bold text-xs disabled:opacity-50"
+                            >
+                                {processing && replyingTo === comment.id
+                                    ? "Posting..."
+                                    : "Reply"}
+                            </button>
+                        </div>
+                    </form>
+                )}
+
+                {comment.replies && comment.replies.length > 0 && (
+                    <div className="mt-4 pl-4 border-l-2 border-stone-100">
+                        {comment.replies.map((reply) => (
+                            <CommentItem
+                                key={reply.id}
+                                comment={reply}
+                                depth={depth + 1}
+                                replyingTo={replyingTo}
+                                handleReply={handleReply}
+                                submitComment={submitComment}
+                                data={data}
+                                setData={setData}
+                                setReplyingTo={setReplyingTo}
+                                processing={processing}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default function Show({ auth, parrot, similarParrots, comments }) {
     const [mainImage, setMainImage] = useState(
         parrot.images && parrot.images.length > 0
             ? `/storage/${parrot.images[0]}`
-            : null
+            : null,
     );
+
+    const { data, setData, post, processing, reset, errors } = useForm({
+        body: "",
+        parent_id: null,
+    });
+
+    const [replyingTo, setReplyingTo] = useState(null);
+
+    const submitComment = (e) => {
+        e.preventDefault();
+        post(`/parrots/${parrot.id}/comments`, {
+            onSuccess: () => {
+                reset();
+                setReplyingTo(null);
+            },
+        });
+    };
+
+    const handleReply = (commentId) => {
+        if (!auth.user) {
+            // Optional: redirect to login or show modal
+            alert("Please log in to reply.");
+            return;
+        }
+        setReplyingTo(commentId);
+        setData((prev) => ({ ...prev, parent_id: commentId, body: "" })); // Reset body when switching reply target
+    };
+
+    // Build recursive tree
+    const commentTree = useMemo(() => {
+        if (!comments) return [];
+        const map = {};
+        const roots = [];
+
+        // First pass: map of items
+        comments.forEach((comment) => {
+            map[comment.id] = { ...comment, replies: [] };
+        });
+
+        // Second pass: attach structure
+        comments.forEach((comment) => {
+            if (comment.parent_id && map[comment.parent_id]) {
+                map[comment.parent_id].replies.push(map[comment.id]);
+            } else {
+                roots.push(map[comment.id]);
+            }
+        });
+
+        // Helper to sort by date recursively (optional, depending on backend sort)
+        // comments are already sorted by latest on backend, so roots are latest first.
+        // replies might need sorting if they weren't strictly ordered.
+        // Let's assume backend sort is sufficient for now or add explicit sort here.
+
+        return roots;
+    }, [comments]);
 
     return (
         <div className="bg-[#FAF9F6] min-h-screen font-sans text-stone-800">
@@ -159,7 +319,7 @@ export default function Show({ auth, parrot, similarParrots }) {
                                     <span className="text-4xl font-serif font-bold text-stone-900 tracking-tight">
                                         $
                                         {Number(
-                                            parrot.adoption_fee
+                                            parrot.adoption_fee,
                                         ).toLocaleString()}
                                     </span>
                                 </div>
@@ -168,7 +328,7 @@ export default function Show({ auth, parrot, similarParrots }) {
                                     <Link
                                         href={route(
                                             "applications.create",
-                                            parrot.id
+                                            parrot.id,
                                         )}
                                         className="px-10 py-5 bg-stone-900 text-white font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-[#D4AF37] transition-all duration-300 shadow-xl hover:shadow-[#D4AF37]/30 transform active:scale-95"
                                     >
@@ -186,6 +346,120 @@ export default function Show({ auth, parrot, similarParrots }) {
                         </div>
                     </div>
                 </div>
+
+                {/* Comments Section */}
+                {comments && (
+                    <div className="mt-16 bg-white rounded-[2rem] shadow-sm border border-stone-100 p-8 sm:p-12">
+                        <h3 className="text-2xl font-bold font-serif text-stone-900 mb-8 flex items-center gap-3">
+                            <span>💬</span> Comments
+                            <span className="text-base font-sans font-medium text-stone-400">
+                                ({comments.length})
+                            </span>
+                        </h3>
+
+                        <div className="space-y-8 mb-12">
+                            {commentTree.length > 0 ? (
+                                commentTree.map((comment) => (
+                                    <CommentItem
+                                        key={comment.id}
+                                        comment={comment}
+                                        replyingTo={replyingTo}
+                                        data={data}
+                                        setData={setData}
+                                        handleReply={handleReply}
+                                        submitComment={submitComment}
+                                        setReplyingTo={setReplyingTo}
+                                        processing={processing}
+                                    />
+                                ))
+                            ) : (
+                                <p className="text-stone-500 italic text-center py-8">
+                                    No comments yet. Be the first to say hello
+                                    to {parrot.name}!
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Comment Form */}
+                        <div className="border-t border-stone-100 pt-8">
+                            <h4 className="font-bold text-lg mb-4">
+                                Leave a Comment
+                            </h4>
+                            {auth.user ? (
+                                <form
+                                    onSubmit={(e) => {
+                                        // Ensure parent_id is null for main form
+                                        if (replyingTo) {
+                                            setReplyingTo(null);
+                                            setData((prev) => ({
+                                                ...prev,
+                                                parent_id: null,
+                                            }));
+                                        }
+                                        submitComment(e);
+                                    }}
+                                >
+                                    <div className="mb-4">
+                                        <textarea
+                                            value={
+                                                replyingTo === null
+                                                    ? data.body
+                                                    : ""
+                                            }
+                                            onChange={(e) =>
+                                                setData({
+                                                    body: e.target.value,
+                                                    parent_id: null,
+                                                })
+                                            }
+                                            placeholder={`Ask a question or share some love for ${parrot.name}...`}
+                                            className="w-full rounded-xl border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 min-h-[100px] resize-y p-4 text-stone-700 placeholder-stone-400 bg-stone-50/50"
+                                        ></textarea>
+                                        {errors.body && (
+                                            <div className="text-red-500 text-sm mt-1">
+                                                {errors.body}
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="flex justify-end">
+                                        <button
+                                            type="submit"
+                                            disabled={processing}
+                                            className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
+                                        >
+                                            {processing && replyingTo === null
+                                                ? "Posting..."
+                                                : "Post Comment"}
+                                        </button>
+                                    </div>
+                                </form>
+                            ) : (
+                                <div className="bg-stone-50 rounded-xl p-8 text-center border border-stone-100">
+                                    <p className="text-stone-600 mb-4">
+                                        Please log in to leave a comment.
+                                    </p>
+                                    <div className="flex justify-center gap-4">
+                                        <Link
+                                            href={route("login")}
+                                            className="text-emerald-600 font-bold hover:underline"
+                                        >
+                                            Log In
+                                        </Link>
+                                        <span className="text-stone-300">
+                                            |
+                                        </span>
+                                        <Link
+                                            href={route("register")}
+                                            className="text-emerald-600 font-bold hover:underline"
+                                        >
+                                            Register
+                                        </Link>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
 
                 {/* Similar Parrots */}
                 {similarParrots.length > 0 && (

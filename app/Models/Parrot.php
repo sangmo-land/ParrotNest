@@ -11,6 +11,9 @@ class Parrot extends Model
 {
     use SoftDeletes;
 
+public function comments() {
+        return $this->hasMany(Comment::class);
+    }
     protected $fillable = [
         'species_id',
         'name',

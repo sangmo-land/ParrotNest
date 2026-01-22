@@ -72,6 +72,24 @@ class ParrotController extends Controller
         return Inertia::render('Parrots/Show', [
             'parrot' => $parrot,
             'similarParrots' => $similarParrots,
+'comments' => $parrot->comments()->with('user')->latest()->get(),
         ]);
+}
+    
+    public function storeComment(Request $request, Parrot $parrot)
+    {
+    $validated = $request->validate([
+    'body' => 'required|string|max:1000',
+    'parent_id' => 'nullable|exists:comments,id',
+    ]);
+    
+    $comment = $parrot->comments()->create([
+    'body' => $validated['body'],
+    'user_id' => auth()->id(),
+    'guest_name' => auth()->check() ? null : 'Guest',
+    'parent_id' => $validated['parent_id'] ?? null,
+    ]);
+    
+    return back()->with('success', 'Comment posted!');
     }
 }
