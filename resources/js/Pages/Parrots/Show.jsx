@@ -1,5 +1,6 @@
 import { Head, Link, useForm } from "@inertiajs/react";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import axios from "axios";
 import PublicNavbar from "@/Components/PublicNavbar";
 
 const CommentItem = ({
@@ -12,7 +13,10 @@ const CommentItem = ({
     setData,
     setReplyingTo,
     processing,
+    errors,
 }) => {
+    const [isExpanded, setIsExpanded] = useState(true);
+
     return (
         <div className={`flex gap-4 ${depth > 0 ? "mt-4" : ""}`}>
             <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 font-bold flex-shrink-0">
@@ -40,13 +44,33 @@ const CommentItem = ({
                     {comment.body}
                 </p>
 
-                <div className="flex gap-4">
+                <div className="flex gap-4 items-center">
                     <button
                         onClick={() => handleReply(comment.id)}
                         className="text-emerald-600 text-xs font-bold hover:underline"
                     >
                         Reply
                     </button>
+                    {comment.replies && comment.replies.length > 0 && (
+                        <>
+                            <span className="text-stone-300">•</span>
+                            <button
+                                onClick={() => setIsExpanded(!isExpanded)}
+                                className="text-stone-500 text-xs font-bold hover:text-stone-700 flex items-center gap-1"
+                            >
+                                {isExpanded ? (
+                                    <>
+                                        <span>−</span> Hide Replies
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>+</span> Show{" "}
+                                        {comment.replies.length} Replies
+                                    </>
+                                )}
+                            </button>
+                        </>
+                    )}
                 </div>
 
                 {replyingTo === comment.id && (
@@ -63,6 +87,11 @@ const CommentItem = ({
                             className="w-full rounded-xl border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 min-h-[80px] resize-y p-3 text-sm text-stone-700 placeholder-stone-400 bg-white"
                             autoFocus
                         ></textarea>
+                        {errors.body && (
+                            <div className="text-red-500 text-xs mt-1">
+                                {errors.body}
+                            </div>
+                        )}
                         <div className="flex justify-end gap-2 mt-2">
                             <button
                                 type="button"
@@ -73,8 +102,8 @@ const CommentItem = ({
                             </button>
                             <button
                                 type="submit"
-                                disabled={processing}
-                                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-full font-bold text-xs disabled:opacity-50"
+                                disabled={processing || errors.body}
+                                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-full font-bold text-xs disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {processing && replyingTo === comment.id
                                     ? "Posting..."
@@ -84,24 +113,27 @@ const CommentItem = ({
                     </form>
                 )}
 
-                {comment.replies && comment.replies.length > 0 && (
-                    <div className="mt-4 pl-4 border-l-2 border-stone-100">
-                        {comment.replies.map((reply) => (
-                            <CommentItem
-                                key={reply.id}
-                                comment={reply}
-                                depth={depth + 1}
-                                replyingTo={replyingTo}
-                                handleReply={handleReply}
-                                submitComment={submitComment}
-                                data={data}
-                                setData={setData}
-                                setReplyingTo={setReplyingTo}
-                                processing={processing}
-                            />
-                        ))}
-                    </div>
-                )}
+                {isExpanded &&
+                    comment.replies &&
+                    comment.replies.length > 0 && (
+                        <div className="mt-4 pl-4 border-l-2 border-stone-100">
+                            {comment.replies.map((reply) => (
+                                <CommentItem
+                                    key={reply.id}
+                                    comment={reply}
+                                    depth={depth + 1}
+                                    replyingTo={replyingTo}
+                                    handleReply={handleReply}
+                                    submitComment={submitComment}
+                                    data={data}
+                                    setData={setData}
+                                    setReplyingTo={setReplyingTo}
+                                    processing={processing}
+                                    errors={errors}
+                                />
+                            ))}
+                        </div>
+                    )}
             </div>
         </div>
     );
@@ -114,16 +146,49 @@ export default function Show({ auth, parrot, similarParrots, comments }) {
             : null,
     );
 
-    const { data, setData, post, processing, reset, errors } = useForm({
+    const {
+        data,
+        setData,
+        post,
+        processing,
+        reset,
+        errors,
+        setError,
+        clearErrors,
+    } = useForm({
         body: "",
         parent_id: null,
     });
+
+    // Real-time validation
+    useEffect(() => {
+        if (!data.body || data.body.length < 3) {
+            clearErrors("body");
+            return;
+        }
+
+        const timer = setTimeout(() => {
+            axios
+                .post(route("comments.validate"), { body: data.body })
+                .then(() => {
+                    clearErrors("body");
+                })
+                .catch((error) => {
+                    if (error.response && error.response.status === 422) {
+                        setError("body", error.response.data.errors.body[0]);
+                    }
+                });
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [data.body]);
 
     const [replyingTo, setReplyingTo] = useState(null);
 
     const submitComment = (e) => {
         e.preventDefault();
         post(`/parrots/${parrot.id}/comments`, {
+            preserveScroll: true,
             onSuccess: () => {
                 reset();
                 setReplyingTo(null);
@@ -138,6 +203,7 @@ export default function Show({ auth, parrot, similarParrots, comments }) {
             return;
         }
         setReplyingTo(commentId);
+        clearErrors("body"); // Clear errors from previous context
         setData((prev) => ({ ...prev, parent_id: commentId, body: "" })); // Reset body when switching reply target
     };
 
@@ -370,6 +436,7 @@ export default function Show({ auth, parrot, similarParrots, comments }) {
                                         submitComment={submitComment}
                                         setReplyingTo={setReplyingTo}
                                         processing={processing}
+                                        errors={errors}
                                     />
                                 ))
                             ) : (
@@ -415,7 +482,7 @@ export default function Show({ auth, parrot, similarParrots, comments }) {
                                             placeholder={`Ask a question or share some love for ${parrot.name}...`}
                                             className="w-full rounded-xl border-stone-200 focus:border-emerald-500 focus:ring-emerald-500 min-h-[100px] resize-y p-4 text-stone-700 placeholder-stone-400 bg-stone-50/50"
                                         ></textarea>
-                                        {errors.body && (
+                                        {errors.body && replyingTo === null && (
                                             <div className="text-red-500 text-sm mt-1">
                                                 {errors.body}
                                             </div>
@@ -424,8 +491,12 @@ export default function Show({ auth, parrot, similarParrots, comments }) {
                                     <div className="flex justify-end">
                                         <button
                                             type="submit"
-                                            disabled={processing}
-                                            className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
+                                            disabled={
+                                                processing ||
+                                                (replyingTo === null &&
+                                                    errors.body)
+                                            }
+                                            className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
                                             {processing && replyingTo === null
                                                 ? "Posting..."

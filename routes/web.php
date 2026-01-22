@@ -47,6 +47,7 @@ Route::get('/', function () {
 Route::get('/parrots', [ParrotController::class, 'index'])->name('parrots.index');
 Route::get('/parrots/{parrot}', [ParrotController::class, 'show'])->name('parrots.show');
 Route::post('/parrots/{parrot}/comments', [ParrotController::class, 'storeComment'])->name('parrots.comments.store');
+Route::post('/validate-comment', [ParrotController::class, 'validateComment'])->name('comments.validate');
 
 // Donation Page
 Route::get('/donate', function () {

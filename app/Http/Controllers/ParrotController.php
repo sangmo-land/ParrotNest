@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Parrot;
 use App\Models\Species;
+use App\Rules\NoProfanity;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -78,18 +79,26 @@ class ParrotController extends Controller
     
     public function storeComment(Request $request, Parrot $parrot)
     {
-    $validated = $request->validate([
-    'body' => 'required|string|max:1000',
-    'parent_id' => 'nullable|exists:comments,id',
-    ]);
-    
-    $comment = $parrot->comments()->create([
-    'body' => $validated['body'],
-    'user_id' => auth()->id(),
-    'guest_name' => auth()->check() ? null : 'Guest',
-    'parent_id' => $validated['parent_id'] ?? null,
-    ]);
-    
-    return back()->with('success', 'Comment posted!');
+$validated = $request->validate([
+'body' => ['required', 'string', 'max:1000', new NoProfanity],
+            'parent_id' => 'nullable|exists:comments,id',
+            ]);
+            
+            $comment = $parrot->comments()->create([
+            'body' => $validated['body'],
+            'user_id' => auth()->id(),
+            'guest_name' => auth()->check() ? null : 'Guest',
+            'parent_id' => $validated['parent_id'] ?? null,
+            ]);
+            
+            return back()->with('success', 'Comment posted!');
     }
+public function validateComment(Request $request)
+{
+$request->validate([
+'body' => ['required', 'string', 'max:1000', new NoProfanity],
+]);
+
+return response()->json(['valid' => true]);
+}
 }
