@@ -29,7 +29,9 @@ public function create(Parrot $parrot)
             'state' => 'required|string|max:100',
             'zip_code' => 'required|string|max:20',
             'country' => 'required|string|max:100',
-            'experience' => 'required|string',
+            'has_bird_experience' => 'required|boolean',
+            'no_experience_reason' => 'nullable|string',
+            'experience' => 'nullable|string',
             'housing_type' => 'required|string|in:house,apartment,condo,other',
             'has_other_pets' => 'boolean',
             'other_pets_details' => 'nullable|string',
@@ -40,7 +42,7 @@ public function create(Parrot $parrot)
         $validated['status'] = 'pending';
         
         // Map frontend fields to database columns
-        $validated['bird_experience_description'] = $validated['experience'];
+        $validated['bird_experience_description'] = $validated['experience'] ?? null;
         $validated['other_pets_description'] = $validated['other_pets_details'];
         $validated['why_adopt'] = $validated['reason_for_adoption'];
         

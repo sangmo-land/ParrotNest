@@ -32,6 +32,7 @@ class AdoptionApplication extends Model
         'other_pets_description',
         'has_bird_experience',
         'bird_experience_description',
+        'no_experience_reason',
         'why_adopt',
         'income_range',
         'can_afford_care',

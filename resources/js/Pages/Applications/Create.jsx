@@ -13,6 +13,8 @@ export default function Create({ auth, parrot }) {
         state: '',
         zip_code: '',
         country: '',
+        has_bird_experience: null,
+        no_experience_reason: '',
         experience: '',
         housing_type: 'house',
         has_other_pets: false,
@@ -210,6 +212,61 @@ export default function Create({ auth, parrot }) {
                                 <div className="space-y-8">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                         <div>
+                                            <label className="block text-xs font-bold text-stone-500 uppercase tracking-widest mb-2 ml-1">Do you have any past experience caring for parrots?</label>
+                                            <div className="flex gap-4 mt-2">
+                                                <label className="flex items-center gap-2 cursor-pointer">
+                                                    <input 
+                                                        type="radio" 
+                                                        name="has_bird_experience"
+                                                        value="yes"
+                                                        checked={data.has_bird_experience === true}
+                                                        onChange={() => setData('has_bird_experience', true)}
+                                                        className="w-4 h-4 text-emerald-600 border-stone-300 focus:ring-emerald-500"
+                                                    />
+                                                    <span className="font-medium text-stone-700">Yes</span>
+                                                </label>
+                                                <label className="flex items-center gap-2 cursor-pointer">
+                                                    <input 
+                                                        type="radio" 
+                                                        name="has_bird_experience"
+                                                        value="no"
+                                                        checked={data.has_bird_experience === false}
+                                                        onChange={() => setData('has_bird_experience', false)}
+                                                        className="w-4 h-4 text-emerald-600 border-stone-300 focus:ring-emerald-500"
+                                                    />
+                                                    <span className="font-medium text-stone-700">No</span>
+                                                </label>
+                                            </div>
+                                            {errors.has_bird_experience && <p className="text-red-500 text-xs mt-2 font-medium flex items-center gap-1">⚠ {errors.has_bird_experience}</p>}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                         <label className="block text-xs font-bold text-stone-500 uppercase tracking-widest mb-2 ml-1">If you do not have any experience with birds, please explain why you are interested in adopting one.</label>
+                                         <p className="text-xs text-stone-400 mb-3 ml-1">Be as detailed as possible so we get a good understanding of you interest in caring for one of our birds. Type N/A if the question does not apply to you. Please note responses as "I like birds" or one sentence answers are not considered a valid response to this question.</p>
+                                         <textarea 
+                                            value={data.no_experience_reason}
+                                            onChange={e => setData('no_experience_reason', e.target.value)}
+                                            className="w-full bg-stone-50 border-stone-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-medium text-stone-700 placeholder-stone-400 min-h-[120px]"
+                                            placeholder="I have always loved birds and have researched..."
+                                        ></textarea>
+                                        {errors.no_experience_reason && <p className="text-red-500 text-xs mt-2 font-medium flex items-center gap-1">⚠ {errors.no_experience_reason}</p>}
+                                    </div>
+
+                                    <div>
+                                         <label className="block text-xs font-bold text-stone-500 uppercase tracking-widest mb-2 ml-1">Experience with Parrots</label>
+                                         <p className="text-xs text-stone-400 mb-3 ml-1">Be as detailed as possible so we get a good understanding of you interest in caring for one of our birds. Type N/A if the question does not apply to you. Please note responses as "I like birds" or one sentence answers are not considered a valid response to this question.</p>
+                                         <textarea 
+                                            value={data.experience}
+                                            onChange={e => setData('experience', e.target.value)}
+                                            className="w-full bg-stone-50 border-stone-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-medium text-stone-700 placeholder-stone-400 min-h-[120px]"
+                                            placeholder="I have raised two Cockatiels previously..."
+                                        ></textarea>
+                                        {errors.experience && <p className="text-red-500 text-xs mt-2 font-medium flex items-center gap-1">⚠ {errors.experience}</p>}
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        <div>
                                             <label className="block text-xs font-bold text-stone-500 uppercase tracking-widest mb-2 ml-1">Housing Type</label>
                                             <div className="relative">
                                                 <select 
@@ -230,19 +287,7 @@ export default function Create({ auth, parrot }) {
                                         </div>
                                     </div>
 
-                                    <div>
-                                         <label className="block text-xs font-bold text-stone-500 uppercase tracking-widest mb-2 ml-1">Experience with Parrots</label>
-                                         <p className="text-xs text-stone-400 mb-3 ml-1">Do you currently own other birds, or have you owned them in the past? Be specific.</p>
-                                         <textarea 
-                                            value={data.experience}
-                                            onChange={e => setData('experience', e.target.value)}
-                                            className="w-full bg-stone-50 border-stone-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all font-medium text-stone-700 placeholder-stone-400 min-h-[120px]"
-                                            placeholder="I have raised two Cockatiels previously..."
-                                        ></textarea>
-                                        {errors.experience && <p className="text-red-500 text-xs mt-2 font-medium flex items-center gap-1">⚠ {errors.experience}</p>}
-                                    </div>
-                                    
-                                     {/* Custom Checkbox Design */}
+                                    {/* Custom Checkbox Design */}
                                     <div className="bg-stone-50 rounded-2xl p-6 border border-stone-100">
                                         <div className="flex items-start gap-4">
                                             <div className="flex items-center h-5 mt-1">
@@ -291,7 +336,6 @@ export default function Create({ auth, parrot }) {
                                 </div>
                             </section>
 
-                             {/* Action Buttons */}
                             <div className="flex items-center justify-between pt-6">
                                 <Link 
                                     href={route('parrots.show', parrot)}
