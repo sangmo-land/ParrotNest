@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { RiShoppingCartLine, RiHeartLine } from "react-icons/ri";
 import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
+import ChatBot from "./ChatBot";
 
 export default function PublicNavbar({ auth }) {
     const { contact } = usePage().props;
@@ -655,6 +656,7 @@ export default function PublicNavbar({ auth }) {
                     </motion.div>
                 )}
             </AnimatePresence>
+            <ChatBot />
         </header>
     );
 }
