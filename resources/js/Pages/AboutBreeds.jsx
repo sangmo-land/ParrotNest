@@ -71,10 +71,10 @@ export default function AboutBreeds({ auth, species: displaySpecies }) {
                                                 </span>
                                             )}
                                             <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-6 py-3 inline-block">
-                                                <p className="font-mono text-emerald-50 text-xs tracking-widest uppercase mb-1 opacity-80">
+                                                <p className="font-mono text-gray-600 text-xs tracking-widest uppercase mb-1 opacity-80">
                                                     Scientific Name
                                                 </p>
-                                                <p className="font-serif italic text-2xl text-white">
+                                                <p className="font-serif italic text-2xl text-black">
                                                     {bird.scientific_name}
                                                 </p>
                                             </div>
