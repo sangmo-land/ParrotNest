@@ -11,6 +11,48 @@ export default function PublicNavbar({ auth }) {
 
     return (
         <header className="bg-white shadow-sm sticky top-0 z-50">
+            {/* Mobile Socials Top Bar - Visible only on very small screens */}
+            <div className="block sm:hidden bg-gray-50 border-b border-gray-100 py-2">
+                <div className="flex justify-between items-center px-4">
+                    <div className="flex items-center gap-4">
+                        <a
+                            href="https://www.facebook.com/share/1KKHsfGFMA/?mibextid=wwXIfr"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:text-blue-500 transition-colors"
+                            aria-label="Facebook"
+                        >
+                            <FaFacebook size={18} />
+                        </a>
+                        <a
+                            href="https://www.instagram.com/parrotnest0?igsh=MXdlNDRsNmt6NnUwMg%3D%3D&utm_source=qr"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-pink-600 hover:text-pink-500 transition-colors"
+                            aria-label="Instagram"
+                        >
+                            <FaInstagram size={18} />
+                        </a>
+                        <a
+                            href="https://www.tiktok.com/@parrotnest0?_r=1&_t=ZM-939fRwB7SH6"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-900 hover:text-emerald-600 transition-colors"
+                            aria-label="TikTok"
+                        >
+                            <FaTiktok size={18} />
+                        </a>
+                    </div>
+                    <Link
+                        href="/donate"
+                        className="text-amber-600 hover:text-amber-700 transition flex items-center gap-1"
+                    >
+                        <RiHeartLine className="w-5 h-5" />
+                        <span className="text-sm font-semibold">Donate</span>
+                    </Link>
+                </div>
+            </div>
+
             {/* Row 1: Brand & User Actions */}
             <div className="border-b border-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -124,7 +166,7 @@ export default function PublicNavbar({ auth }) {
 
                         {/* Mobile Menu Button */}
                         <div className="lg:hidden flex items-center gap-2">
-                            <div className="flex items-center gap-2 mr-1">
+                            <div className="hidden sm:flex items-center gap-2 mr-1">
                                 <a
                                     href="https://www.facebook.com/share/1KKHsfGFMA/?mibextid=wwXIfr"
                                     target="_blank"
@@ -156,7 +198,7 @@ export default function PublicNavbar({ auth }) {
 
                             <Link
                                 href="/donate"
-                                className="text-amber-600 hover:text-amber-700 transition p-2"
+                                className="hidden sm:inline-block text-amber-600 hover:text-amber-700 transition p-2"
                             >
                                 <RiHeartLine className="w-6 h-6" />
                             </Link>
