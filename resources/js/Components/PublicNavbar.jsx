@@ -6,11 +6,25 @@ import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 import ChatBot from "./ChatBot";
 
 export default function PublicNavbar({ auth }) {
-    const { contact } = usePage().props;
+    const { contact, flash } = usePage().props;
     const [isOpen, setIsOpen] = useState(false);
 
     return (
         <header className="bg-white shadow-sm sticky top-0 z-50">
+            {/* Flash Message */}
+            <AnimatePresence>
+                {flash?.message && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="bg-emerald-600 text-white text-center py-2 px-4 font-bold text-sm tracking-wide z-[60]"
+                    >
+                        {flash.message}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* Mobile Socials Top Bar - Visible only on very small screens */}
             <div className="block sm:hidden bg-gray-50 border-b border-gray-100 py-2">
                 <div className="flex justify-between items-center px-4">

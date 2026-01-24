@@ -31,6 +31,7 @@ public function create(Parrot $parrot)
             'country' => 'required|string|max:100',
             'has_bird_experience' => 'required|boolean',
             'no_experience_reason' => 'nullable|string',
+'can_provide_medical_care' => 'required|boolean',
             'experience' => 'nullable|string',
             'housing_type' => 'required|string|in:house,apartment,condo,other',
             'has_other_pets' => 'boolean',
@@ -50,7 +51,6 @@ public function create(Parrot $parrot)
 
         AdoptionApplication::create($validated);
 
-        return redirect()->route('parrots.index')
-            ->with('message', 'Application submitted successfully! We will review it shortly.');
+return redirect()->route('parrots.index')->with('adoption_success', true);
     }
 }

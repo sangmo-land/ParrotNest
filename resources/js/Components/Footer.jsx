@@ -21,6 +21,13 @@ export default function Footer() {
                             Connecting rescued parrots with loving forever
                             homes.
                         </p>
+                        <div className="mt-4">
+                            <img
+                                src="/images/footerAdd.jpeg"
+                                alt="Parrot Nest Feature"
+                                className="w-full max-w-[200px] rounded-lg shadow-md hover:opacity-90 transition-opacity"
+                            />
+                        </div>
                     </div>
                     <div>
                         <h4 className="font-semibold mb-4">Quick Links</h4>

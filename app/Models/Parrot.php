@@ -28,6 +28,7 @@ public function comments() {
         'adoption_fee',
 'comes_with_cage',
         'images',
+'video',
         'location',
         'intake_date',
         'good_with_children',

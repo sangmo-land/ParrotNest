@@ -63,6 +63,13 @@ Toggle::make('comes_with_cage')
 ->disk('public')
                 ->directory('parrots')
                     ->columnSpanFull(),
+FileUpload::make('video')
+                ->acceptedFileTypes(['video/mp4', 'video/quicktime', 'video/x-msvideo']) // mp4, mov, avi
+                ->directory('parrots/videos')
+                ->disk('public')
+                ->maxSize(51200) // 50MB
+                ->downloadable()
+                ->columnSpanFull(),
                 TextInput::make('location')
                     ->default(null),
                 DatePicker::make('intake_date'),

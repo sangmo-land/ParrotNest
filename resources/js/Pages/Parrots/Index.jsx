@@ -1,8 +1,36 @@
 import { Head, Link, router } from '@inertiajs/react';
 import PublicNavbar from "@/Components/PublicNavbar";
 import Footer from "@/Components/Footer";
+import Modal from "@/Components/Modal";
+import { useState, useEffect } from "react";
+import { FaCheckCircle, FaLock, FaCreditCard } from "react-icons/fa";
 
-export default function Index({ auth, parrots, species, filters }) {
+export default function Index({ auth, parrots, species, filters, flash }) {
+    // --- Application / Payment Modal Logic ---
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
+    const [paymentProcessing, setPaymentProcessing] = useState(false);
+    const [cardType, setCardType] = useState("visa");
+
+    useEffect(() => {
+        if (flash?.adoption_success) {
+            setShowSuccessModal(true);
+        }
+    }, [flash]);
+
+    const handlePaymentSubmit = (e) => {
+        e.preventDefault();
+        setPaymentProcessing(true);
+        // Simulate payment processing
+        setTimeout(() => {
+            setPaymentProcessing(false);
+            setShowPaymentModal(false);
+            alert("Adoption fee payment successful! Thank you.");
+            window.location.href = route("dashboard");
+        }, 2000);
+    };
+    // -----------------------------------------
+
     const handleFilterChange = (key, value) => {
         router.get(
             "/parrots",
@@ -10,7 +38,7 @@ export default function Index({ auth, parrots, species, filters }) {
             {
                 preserveState: true,
                 replace: true,
-            }
+            },
         );
     };
 
@@ -349,6 +377,169 @@ export default function Index({ auth, parrots, species, filters }) {
             </div>
 
             <Footer />
+
+            {/* Success Modal */}
+            <Modal
+                show={showSuccessModal}
+                onClose={() => setShowSuccessModal(false)}
+            >
+                <div className="p-8 text-center flex flex-col items-center">
+                    <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-green-500 mb-6 animate-bounce">
+                        <FaCheckCircle size={40} />
+                    </div>
+                    <h2 className="text-3xl font-serif font-bold text-stone-800 mb-4">
+                        Application Approved!
+                    </h2>
+                    <p className="text-stone-600 mb-8 max-w-md">
+                        Congratulations! Your adoption application has been
+                        provisionally approved. Please complete the adoption fee
+                        payment to finalize the process.
+                    </p>
+                    <button
+                        onClick={() => {
+                            setShowSuccessModal(false);
+                            setShowPaymentModal(true);
+                        }}
+                        className="bg-stone-900 text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#D4AF37] transition-all hover:scale-105 shadow-lg active:scale-95"
+                    >
+                        Proceed to Payment
+                    </button>
+                </div>
+            </Modal>
+
+            {/* Payment Modal */}
+            <Modal
+                show={showPaymentModal}
+                onClose={() => setShowPaymentModal(false)}
+            >
+                <div className="p-6">
+                    <div className="flex justify-between items-center mb-6">
+                        <h3 className="text-2xl font-bold text-stone-900 flex items-center gap-2">
+                            <FaLock className="text-[#D4AF37]" size={20} />
+                            Adoption Fee Payment
+                        </h3>
+                        <button
+                            onClick={() => setShowPaymentModal(false)}
+                            className="text-stone-400 hover:text-stone-600 transition"
+                        >
+                            ✕
+                        </button>
+                    </div>
+
+                    <form onSubmit={handlePaymentSubmit}>
+                        <div className="mb-6 bg-stone-50 p-4 rounded-lg border border-stone-200">
+                            <p className="text-sm text-stone-500 mb-1">
+                                Adoption Fee
+                            </p>
+                            <p className="text-3xl font-bold text-[#D4AF37]">
+                                $150.00
+                            </p>
+                        </div>
+
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-stone-700 mb-2">
+                                    Card Type
+                                </label>
+                                <div className="flex gap-4">
+                                    {[
+                                        "visa",
+                                        "mastercard",
+                                        "amex",
+                                        "discover",
+                                    ].map((type) => (
+                                        <button
+                                            key={type}
+                                            type="button"
+                                            onClick={() => setCardType(type)}
+                                            className={`p-2 rounded-lg border transition-all ${cardType === type ? "border-[#D4AF37] ring-2 ring-[#D4AF37]/20 bg-white" : "border-stone-200 hover:border-[#D4AF37]/50 bg-white"}`}
+                                        >
+                                            <img
+                                                src={`/images/cards/${type}.svg`}
+                                                alt={type}
+                                                className="h-8 w-auto object-contain"
+                                            />
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-stone-700 mb-1">
+                                    Cardholder Name
+                                </label>
+                                <input
+                                    type="text"
+                                    className="w-full rounded-lg border-stone-300 focus:border-[#D4AF37] focus:ring-[#D4AF37]"
+                                    placeholder="John Doe"
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-stone-700 mb-1">
+                                    Card Number
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        className="w-full rounded-lg border-stone-300 focus:border-[#D4AF37] focus:ring-[#D4AF37] pl-10"
+                                        placeholder="0000 0000 0000 0000"
+                                        required
+                                    />
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
+                                        <FaCreditCard />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-stone-700 mb-1">
+                                        Expiration
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="w-full rounded-lg border-stone-300 focus:border-[#D4AF37] focus:ring-[#D4AF37]"
+                                        placeholder="MM/YY"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-stone-700 mb-1">
+                                        CVC
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="w-full rounded-lg border-stone-300 focus:border-[#D4AF37] focus:ring-[#D4AF37]"
+                                        placeholder="123"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mt-8">
+                            <button
+                                type="submit"
+                                disabled={paymentProcessing}
+                                className="w-full bg-stone-900 text-white font-bold py-3 px-4 rounded-lg hover:bg-black transition shadow-md flex justify-center items-center gap-2 disabled:opacity-50"
+                            >
+                                {paymentProcessing ? (
+                                    <>Processing...</>
+                                ) : (
+                                    <>Pay $150.00</>
+                                )}
+                            </button>
+                            <p className="text-center text-xs text-stone-400 mt-3 flex items-center justify-center gap-1">
+                                <FaLock size={10} />
+                                Your payment information is encrypted and
+                                secure.
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </Modal>
         </div>
     );
 }

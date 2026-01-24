@@ -1,7 +1,18 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import { useState, useMemo, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import PublicNavbar from "@/Components/PublicNavbar";
+import Footer from "@/Components/Footer";
+import {
+    FaFacebookF,
+    FaTwitter,
+    FaWhatsapp,
+    FaLink,
+    FaInstagram,
+    FaTiktok,
+    FaCheck,
+} from "react-icons/fa";
 
 const CommentItem = ({
     comment,
@@ -140,6 +151,27 @@ const CommentItem = ({
 };
 
 export default function Show({ auth, parrot, similarParrots, comments }) {
+    const [toast, setToast] = useState(null);
+
+    const showNotification = (message) => {
+        setToast(message);
+        setTimeout(() => setToast(null), 3000);
+    };
+
+    const handleCopyLink = async (platform = null) => {
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            if (platform) {
+                showNotification(`Link copied! Ready to share on ${platform}.`);
+            } else {
+                showNotification("Link copied to clipboard!");
+            }
+        } catch (err) {
+            console.error("Failed to copy text: ", err);
+            showNotification("Failed to copy link");
+        }
+    };
+
     const [mainImage, setMainImage] = useState(
         parrot.images && parrot.images.length > 0
             ? `/storage/${parrot.images[0]}`
@@ -259,11 +291,21 @@ export default function Show({ auth, parrot, similarParrots, comments }) {
                             </div>
 
                             {mainImage ? (
-                                <img
-                                    src={mainImage}
-                                    alt={parrot.name}
-                                    className="absolute inset-0 w-full h-full object-cover"
-                                />
+                                mainImage.endsWith(".mp4") ||
+                                mainImage.endsWith(".mov") ||
+                                mainImage.endsWith(".avi") ? (
+                                    <video
+                                        controls
+                                        src={mainImage}
+                                        className="absolute inset-0 w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <img
+                                        src={mainImage}
+                                        alt={parrot.name}
+                                        className="absolute inset-0 w-full h-full object-cover"
+                                    />
+                                )
                             ) : (
                                 <div className="absolute inset-0 flex flex-col items-center justify-center text-stone-300">
                                     <span className="text-9xl mb-4 opacity-50">
@@ -275,28 +317,53 @@ export default function Show({ auth, parrot, similarParrots, comments }) {
                                 </div>
                             )}
 
-                            {/* Thumbnails (Only if there are multiple images) */}
-                            {parrot.images && parrot.images.length > 1 && (
+                            {/* Thumbnails (Images & Video) */}
+                            {(parrot.images || parrot.video) && (
                                 <div className="absolute bottom-6 left-6 right-6 flex gap-3 overflow-x-auto pb-2 noscrollbar">
-                                    {parrot.images.map((img, index) => (
+                                    {parrot.images &&
+                                        parrot.images.map((img, index) => (
+                                            <button
+                                                key={`img-${index}`}
+                                                onClick={() =>
+                                                    setMainImage(
+                                                        `/storage/${img}`,
+                                                    )
+                                                }
+                                                className={`w-16 h-16 rounded-xl overflow-hidden border-2 flex-shrink-0 transition-all ${
+                                                    mainImage ===
+                                                    `/storage/${img}`
+                                                        ? "border-[#D4AF37] shadow-lg scale-105"
+                                                        : "border-white/50 opacity-80 hover:opacity-100"
+                                                }`}
+                                            >
+                                                <img
+                                                    src={`/storage/${img}`}
+                                                    alt=""
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </button>
+                                        ))}
+
+                                    {/* Video Thumbnail */}
+                                    {parrot.video && (
                                         <button
-                                            key={index}
                                             onClick={() =>
-                                                setMainImage(`/storage/${img}`)
+                                                setMainImage(
+                                                    `/storage/${parrot.video}`,
+                                                )
                                             }
-                                            className={`w-16 h-16 rounded-xl overflow-hidden border-2 flex-shrink-0 transition-all ${
-                                                mainImage === `/storage/${img}`
+                                            className={`w-16 h-16 rounded-xl overflow-hidden border-2 flex-shrink-0 transition-all flex items-center justify-center bg-black/50 ${
+                                                mainImage ===
+                                                `/storage/${parrot.video}`
                                                     ? "border-[#D4AF37] shadow-lg scale-105"
                                                     : "border-white/50 opacity-80 hover:opacity-100"
                                             }`}
                                         >
-                                            <img
-                                                src={`/storage/${img}`}
-                                                alt=""
-                                                className="w-full h-full object-cover"
-                                            />
+                                            <span className="text-white text-2xl">
+                                                ▶
+                                            </span>
                                         </button>
-                                    ))}
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -312,6 +379,84 @@ export default function Show({ auth, parrot, similarParrots, comments }) {
                             <h1 className="text-5xl md:text-6xl font-serif font-bold text-stone-900 mb-6 tracking-tight">
                                 {parrot.name}
                             </h1>
+
+                            {/* Social Share Buttons */}
+                            <div className="flex flex-col gap-3 mb-8">
+                                <span className="text-xs font-bold uppercase tracking-wider text-stone-400">
+                                    Share
+                                </span>
+                                <div className="flex gap-3">
+                                    <button
+                                        onClick={() =>
+                                            window.open(
+                                                `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`,
+                                                "_blank",
+                                            )
+                                        }
+                                        className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition-all transform hover:scale-110"
+                                        title="Share on Facebook"
+                                    >
+                                        <FaFacebookF size={16} />
+                                    </button>
+                                    <button
+                                        onClick={() =>
+                                            window.open(
+                                                `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out ${parrot.name} on ParrotNest!`)}&url=${encodeURIComponent(window.location.href)}`,
+                                                "_blank",
+                                            )
+                                        }
+                                        className="w-10 h-10 rounded-full bg-sky-50 flex items-center justify-center text-sky-500 hover:bg-sky-500 hover:text-white transition-all transform hover:scale-110"
+                                        title="Share on Twitter"
+                                    >
+                                        <FaTwitter size={16} />
+                                    </button>
+                                    <button
+                                        onClick={() =>
+                                            window.open(
+                                                `https://wa.me/?text=${encodeURIComponent(`Check out ${parrot.name} on ParrotNest! ${window.location.href}`)}`,
+                                                "_blank",
+                                            )
+                                        }
+                                        className="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-green-600 hover:bg-green-600 hover:text-white transition-all transform hover:scale-110"
+                                        title="Share on WhatsApp"
+                                    >
+                                        <FaWhatsapp size={18} />
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            handleCopyLink("Instagram");
+                                            window.open(
+                                                "https://www.instagram.com/",
+                                                "_blank",
+                                            );
+                                        }}
+                                        className="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 hover:bg-pink-600 hover:text-white transition-all transform hover:scale-110"
+                                        title="Share on Instagram (Copy Link)"
+                                    >
+                                        <FaInstagram size={18} />
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            handleCopyLink("TikTok");
+                                            window.open(
+                                                "https://www.tiktok.com/",
+                                                "_blank",
+                                            );
+                                        }}
+                                        className="w-10 h-10 rounded-full bg-stone-900 flex items-center justify-center text-white hover:bg-black transition-all transform hover:scale-110 border border-stone-800"
+                                        title="Share on TikTok (Copy Link)"
+                                    >
+                                        <FaTiktok size={16} />
+                                    </button>
+                                    <button
+                                        onClick={() => handleCopyLink()}
+                                        className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 hover:bg-stone-600 hover:text-white transition-all transform hover:scale-110"
+                                        title="Copy Link"
+                                    >
+                                        <FaLink size={16} />
+                                    </button>
+                                </div>
+                            </div>
 
                             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10 pb-10 border-b border-stone-100">
                                 <div className="p-4 rounded-2xl bg-stone-50 border border-stone-100 text-center">
@@ -412,6 +557,23 @@ export default function Show({ auth, parrot, similarParrots, comments }) {
                         </div>
                     </div>
                 </div>
+
+                {/* Video Section */}
+                {parrot.video && (
+                    <div className="mt-8 bg-white rounded-[2rem] shadow-sm border border-stone-100 p-8 sm:p-12">
+                        <h3 className="text-2xl font-bold font-serif text-stone-900 mb-8 flex items-center gap-3">
+                            <span>📹</span> Video of {parrot.name}
+                        </h3>
+                        <div className="rounded-2xl overflow-hidden shadow-md border border-stone-200">
+                            <video
+                                controls
+                                src={`/storage/${parrot.video}`}
+                                className="w-full max-h-[600px] object-cover"
+                                controlsList="nodownload"
+                            />
+                        </div>
+                    </div>
+                )}
 
                 {/* Comments Section */}
                 {comments && (
@@ -580,44 +742,24 @@ export default function Show({ auth, parrot, similarParrots, comments }) {
                 )}
             </div>
 
-            {/* Footer Simple */}
-            <footer className="bg-white border-t border-stone-100 py-16 mt-20">
-                <div className="max-w-7xl mx-auto px-4 text-center">
-                    <div className="mb-8">
-                        <span className="text-4xl">🦜</span>
-                        <h3 className="text-2xl font-serif font-bold text-stone-900 mt-2">
-                            ParrotNest
-                        </h3>
-                        <p className="text-stone-400 text-sm mt-2">
-                            Ethical Breeding • Lifelong Support
-                        </p>
-                    </div>
-                    <div className="flex justify-center gap-8 mb-8 text-xs font-bold uppercase tracking-widest text-stone-500">
-                        <Link
-                            href="/"
-                            className="hover:text-[#D4AF37] transition-colors"
-                        >
-                            Home
-                        </Link>
-                        <Link
-                            href="/contact"
-                            className="hover:text-[#D4AF37] transition-colors"
-                        >
-                            Contact
-                        </Link>
-                        <Link
-                            href="/about-us"
-                            className="hover:text-[#D4AF37] transition-colors"
-                        >
-                            About Us
-                        </Link>
-                    </div>
-                    <p className="text-stone-300 text-xs">
-                        &copy; {new Date().getFullYear()} ParrotNest. All Rights
-                        Reserved.
-                    </p>
-                </div>
-            </footer>
+            {/* Footer */}
+            <Footer />
+
+            <AnimatePresence>
+                {toast && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 20, scale: 0.95 }}
+                        className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-stone-900 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 z-50 border border-stone-700 backdrop-blur-sm bg-opacity-95"
+                    >
+                        <div className="bg-[#D4AF37] rounded-full p-1 text-stone-900">
+                            <FaCheck size={10} />
+                        </div>
+                        <span className="font-medium text-sm">{toast}</span>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
