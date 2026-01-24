@@ -290,11 +290,14 @@ export default function Create({ auth, parrot }) {
             "state",
             "zip_code",
             "country",
-            "reason_for_adoption"
+            "reason_for_adoption",
         ];
 
-        requiredFields.forEach(field => {
-            if (!data[field] || (typeof data[field] === 'string' && !data[field].trim())) {
+        requiredFields.forEach((field) => {
+            if (
+                !data[field] ||
+                (typeof data[field] === "string" && !data[field].trim())
+            ) {
                 setError(field, "This field is required");
                 hasErrors = true;
             }
@@ -303,15 +306,24 @@ export default function Create({ auth, parrot }) {
         if (data.has_bird_experience === null) {
             setError("has_bird_experience", "Please select an option");
             hasErrors = true;
-        } else if (data.has_bird_experience === true && (!data.experience || !data.experience.trim())) {
+        } else if (
+            data.has_bird_experience === true &&
+            (!data.experience || !data.experience.trim())
+        ) {
             setError("experience", "This field is required");
             hasErrors = true;
-        } else if (data.has_bird_experience === false && (!data.no_experience_reason || !data.no_experience_reason.trim())) {
+        } else if (
+            data.has_bird_experience === false &&
+            (!data.no_experience_reason || !data.no_experience_reason.trim())
+        ) {
             setError("no_experience_reason", "This field is required");
             hasErrors = true;
         }
 
-        if (data.has_other_pets && (!data.other_pets_details || !data.other_pets_details.trim())) {
+        if (
+            data.has_other_pets &&
+            (!data.other_pets_details || !data.other_pets_details.trim())
+        ) {
             setError("other_pets_details", "This field is required");
             hasErrors = true;
         }
