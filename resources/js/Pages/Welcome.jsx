@@ -127,10 +127,10 @@ export default function Welcome({
                             </motion.div>
                             <motion.div variants={fadeInUp}>
                                 <div className="text-4xl font-bold text-emerald-600">
-                                    {stats.total_adopted || 0}
+                                    500+
                                 </div>
                                 <div className="text-gray-600 mt-2">
-                                    Successfully Adopted
+                                    Securely Adopted
                                 </div>
                             </motion.div>
                         </motion.div>
