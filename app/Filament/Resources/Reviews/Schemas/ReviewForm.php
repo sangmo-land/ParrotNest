@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Reviews\Schemas;
 
+use App\Models\Species;
 use App\Models\User;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
@@ -62,8 +63,11 @@ Select::make('user_id')
                 Toggle::make('is_approved')
                     ->default(true)
                     ->required(),
-                TextInput::make('parrot_species')
-                    ->maxLength(255),
+Select::make('parrot_species')
+                ->label('Parrot Species')
+                ->options(Species::where('is_active', true)->pluck('name', 'name'))
+                ->searchable()
+                ->placeholder('Select a species'),
             ]);
     }
 }
