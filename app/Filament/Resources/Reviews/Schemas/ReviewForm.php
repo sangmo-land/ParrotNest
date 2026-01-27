@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources\Reviews\Schemas;
 
+use App\Models\User;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Set;
 
 class ReviewForm
 {
@@ -18,6 +20,24 @@ class ReviewForm
                 TextInput::make('reviewer_name')
                     ->required()
                     ->maxLength(255),
+Select::make('user_id')
+                ->label('Select User (Optional)')
+                ->options(User::pluck('name', 'id'))
+                ->searchable()
+                ->placeholder('Select a user to auto-fill email')
+                ->live()
+                ->afterStateUpdated(function (Set $set, ?string $state) {
+                if ($state) {
+                $user = User::find($state);
+                if ($user) {
+                $set('email', $user->email);
+                }
+                }
+                }),
+                TextInput::make('email')
+                ->email()
+                ->maxLength(255)
+                ->placeholder('Enter email or select a user above'),
                 TextInput::make('location')
                     ->maxLength(255),
                 Select::make('rating')

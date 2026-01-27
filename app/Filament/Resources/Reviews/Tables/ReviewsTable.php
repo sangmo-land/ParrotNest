@@ -22,6 +22,9 @@ class ReviewsTable
                 TextColumn::make('reviewer_name')
                     ->searchable()
                     ->sortable(),
+TextColumn::make('email')
+                ->searchable()
+                ->sortable(),
                 TextColumn::make('rating')
                     ->numeric()
                     ->sortable(),
