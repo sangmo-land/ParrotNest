@@ -37,6 +37,7 @@ Select::make('user_id')
                 }),
                 TextInput::make('email')
                 ->email()
+->required()
                 ->maxLength(255)
                 ->placeholder('Enter email or select a user above'),
                 TextInput::make('location')
