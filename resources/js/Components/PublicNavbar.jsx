@@ -1,7 +1,7 @@
 import { Link, usePage } from "@inertiajs/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { RiShoppingCartLine, RiHeartLine } from "react-icons/ri";
+import { RiShoppingCartLine, RiHeartLine, RiStore2Line } from "react-icons/ri";
 import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 import ChatBot from "./ChatBot";
 import ContactFab from "./ContactFab";
@@ -9,6 +9,37 @@ import ContactFab from "./ContactFab";
 export default function PublicNavbar({ auth }) {
     const { contact, flash } = usePage().props;
     const [isOpen, setIsOpen] = useState(false);
+    const [cartCount, setCartCount] = useState(0);
+
+    // Load cart count from localStorage
+    useEffect(() => {
+        const updateCartCount = () => {
+            const saved = localStorage.getItem("parrotnest_cart");
+            if (saved) {
+                const cart = JSON.parse(saved);
+                const count = cart.reduce(
+                    (sum, item) => sum + item.quantity,
+                    0,
+                );
+                setCartCount(count);
+            } else {
+                setCartCount(0);
+            }
+        };
+
+        updateCartCount();
+
+        // Listen for storage changes (when cart is updated in another tab or component)
+        window.addEventListener("storage", updateCartCount);
+
+        // Custom event for same-tab updates
+        window.addEventListener("cartUpdated", updateCartCount);
+
+        return () => {
+            window.removeEventListener("storage", updateCartCount);
+            window.removeEventListener("cartUpdated", updateCartCount);
+        };
+    }, []);
 
     return (
         <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -149,7 +180,19 @@ export default function PublicNavbar({ auth }) {
                                     className="text-gray-700 hover:text-emerald-600 font-semibold px-2 py-2"
                                     title="Shop"
                                 >
+                                    <RiStore2Line className="w-6 h-6" />
+                                </Link>
+                                <Link
+                                    href="/cart"
+                                    className="relative text-gray-700 hover:text-emerald-600 font-semibold px-2 py-2"
+                                    title="Cart"
+                                >
                                     <RiShoppingCartLine className="w-6 h-6" />
+                                    {cartCount > 0 && (
+                                        <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                            {cartCount > 99 ? "99+" : cartCount}
+                                        </span>
+                                    )}
                                 </Link>
                                 {auth.user ? (
                                     <Link
@@ -221,8 +264,21 @@ export default function PublicNavbar({ auth }) {
                             <Link
                                 href="/shop"
                                 className="text-gray-600 hover:text-emerald-600 transition p-2"
+                                title="Shop"
+                            >
+                                <RiStore2Line className="w-6 h-6" />
+                            </Link>
+
+                            <Link
+                                href="/cart"
+                                className="relative text-gray-600 hover:text-emerald-600 transition p-2"
                             >
                                 <RiShoppingCartLine className="w-6 h-6" />
+                                {cartCount > 0 && (
+                                    <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                        {cartCount > 99 ? "99+" : cartCount}
+                                    </span>
+                                )}
                             </Link>
                             <button
                                 onClick={() => setIsOpen(!isOpen)}

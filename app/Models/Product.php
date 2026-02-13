@@ -11,7 +11,7 @@ class Product extends Model
         'slug',
         'description',
         'price',
-        'image',
+'images',
         'category',
         'stock',
         'is_active',
@@ -21,5 +21,6 @@ class Product extends Model
         'price' => 'decimal:2',
         'stock' => 'integer',
         'is_active' => 'boolean',
+'images' => 'array',
     ];
 }

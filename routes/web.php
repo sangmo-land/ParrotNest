@@ -64,6 +64,7 @@ Route::get('/about-breeds/{species}', [SpeciesController::class, 'show'])->name(
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 Route::get('/shop', [ProductController::class, 'index'])->name('shop');
+Route::get('/cart', function() { return Inertia::render('Cart'); })->name('cart');
 Route::get('/contact', function() { return Inertia::render('ContactUs'); })->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/subscribe', [NewsletterController::class, 'subscribe'])->name('subscribe');

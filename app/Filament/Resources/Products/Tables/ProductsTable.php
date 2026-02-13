@@ -23,8 +23,10 @@ class ProductsTable
                 TextColumn::make('price')
                     ->money()
                     ->sortable(),
-                ImageColumn::make('image')
-                    ->disk('public'),
+ImageColumn::make('images')
+                ->disk('public')
+                ->stacked()
+                ->limit(3),
                 TextColumn::make('category')
                     ->searchable(),
                 TextColumn::make('stock')

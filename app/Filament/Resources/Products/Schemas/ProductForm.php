@@ -32,8 +32,10 @@ class ProductForm
                     ->required()
                     ->numeric()
                     ->prefix('$'),
-                FileUpload::make('image')
+FileUpload::make('images')
                     ->image()
+->multiple()
+                    ->reorderable()
                     ->disk('public')
                     ->directory('products'),
                 Select::make('category')
