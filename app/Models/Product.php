@@ -12,7 +12,7 @@ class Product extends Model
         'description',
         'price',
 'previous_price',
-'images',
+        'images',
         'category',
         'stock',
         'is_active',
@@ -20,6 +20,8 @@ class Product extends Model
         'is_best',
         'is_popular',
         'free_next_day_delivery',
+'rating',
+        'rating_count',
     ];
 
     protected $casts = [
@@ -28,10 +30,12 @@ class Product extends Model
         'stock' => 'integer',
         'is_active' => 'boolean',
 'images' => 'array',
-'free_delivery' => 'boolean',
+        'free_delivery' => 'boolean',
         'is_best' => 'boolean',
         'is_popular' => 'boolean',
         'free_next_day_delivery' => 'boolean',
+'rating' => 'decimal:1',
+        'rating_count' => 'integer',
     ];
 protected static function boot()
 {

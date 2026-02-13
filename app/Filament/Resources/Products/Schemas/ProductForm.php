@@ -71,6 +71,20 @@ Toggle::make('free_next_day_delivery')
 ->label('Free Next Day Delivery')
 ->helperText('Show "Free Next Day Delivery" text on the card')
 ->default(false),
+TextInput::make('rating')
+->label('Star Rating')
+->numeric()
+->minValue(0)
+->maxValue(5)
+->step(0.5)
+->default(4.0)
+->helperText('Rating from 0 to 5 stars (supports half stars)'),
+TextInput::make('rating_count')
+->label('Number of Reviews')
+->numeric()
+->minValue(0)
+->default(0)
+->helperText('Number of customer reviews'),
             ]);
     }
 }

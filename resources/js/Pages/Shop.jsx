@@ -470,11 +470,7 @@ export default function Shop({ auth, products, categories, filters }) {
                                                 <div className="flex items-center mb-4">
                                                     {[...Array(5)].map(
                                                         (_, i) => {
-                                                            const rating =
-                                                                3.5 +
-                                                                (product.id %
-                                                                    3) *
-                                                                    0.5;
+                                                            const rating = parseFloat(product.rating) || 4.0;
                                                             if (
                                                                 i <
                                                                 Math.floor(
@@ -508,7 +504,7 @@ export default function Shop({ auth, products, categories, filters }) {
                                                     )}
                                                     <span className="text-xs text-gray-500 ml-1">
                                                         (
-                                                        {10 + (product.id % 50)}
+                                                        {product.rating_count || 0}
                                                         )
                                                     </span>
                                                 </div>
@@ -751,12 +747,7 @@ export default function Shop({ auth, products, categories, filters }) {
                                                         <div className="flex items-center gap-0.5 mb-1 sm:mb-2">
                                                             {[...Array(5)].map(
                                                                 (_, i) => {
-                                                                    // Generate consistent rating based on product id
-                                                                    const rating =
-                                                                        3.5 +
-                                                                        (product.id %
-                                                                            3) *
-                                                                            0.5;
+                                                                    const rating = parseFloat(product.rating) || 4.0;
                                                                     if (
                                                                         i <
                                                                         Math.floor(
@@ -797,9 +788,7 @@ export default function Shop({ auth, products, categories, filters }) {
                                                             )}
                                                             <span className="text-xs text-gray-500 ml-1">
                                                                 (
-                                                                {10 +
-                                                                    (product.id %
-                                                                        50)}
+                                                                {product.rating_count || 0}
                                                                 )
                                                             </span>
                                                         </div>
