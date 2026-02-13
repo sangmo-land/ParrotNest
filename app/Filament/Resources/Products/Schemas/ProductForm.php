@@ -55,6 +55,22 @@ FileUpload::make('images')
                     ->default(0),
                 Toggle::make('is_active')
                     ->required(),
+Toggle::make('free_delivery')
+->label('Free Delivery')
+->helperText('Show "Free Delivery" tag on the shop page')
+->default(false),
+Toggle::make('is_best')
+->label('Best Seller')
+->helperText('Show "Best" tag on the shop page')
+->default(false),
+Toggle::make('is_popular')
+->label('Popular')
+->helperText('Show "Popular" tag on the shop page')
+->default(false),
+Toggle::make('free_next_day_delivery')
+->label('Free Next Day Delivery')
+->helperText('Show "Free Next Day Delivery" text on the card')
+->default(false),
             ]);
     }
 }

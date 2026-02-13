@@ -12,6 +12,7 @@ export default function PublicNavbar({ auth }) {
     const [cartCount, setCartCount] = useState(0);
     const [shopMenuOpen, setShopMenuOpen] = useState(false);
     const shopMenuRef = useRef(null);
+    const shopMenuMobileRef = useRef(null);
 
     // Load cart count from localStorage
     useEffect(() => {
@@ -46,10 +47,13 @@ export default function PublicNavbar({ auth }) {
     // Close shop menu when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (
-                shopMenuRef.current &&
-                !shopMenuRef.current.contains(event.target)
-            ) {
+            const isInsideDesktop = shopMenuRef.current?.contains(event.target);
+            const isInsideMobile = shopMenuMobileRef.current?.contains(
+                event.target,
+            );
+
+            // Close only if clicking outside both refs
+            if (!isInsideDesktop && !isInsideMobile) {
                 setShopMenuOpen(false);
             }
         };
@@ -331,7 +335,7 @@ export default function PublicNavbar({ auth }) {
                                 <RiHeartLine className="w-6 h-6" />
                             </Link>
 
-                            <div className="relative" ref={shopMenuRef}>
+                            <div className="relative" ref={shopMenuMobileRef}>
                                 <button
                                     onClick={() =>
                                         setShopMenuOpen(!shopMenuOpen)

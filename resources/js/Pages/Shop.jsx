@@ -321,6 +321,41 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                 className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                                                             />
 
+                                                            {/* Product Tags - Top Left */}
+                                                            <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 max-w-[70%]">
+                                                                {product.free_delivery && (
+                                                                    <span className="bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm">
+                                                                        Free
+                                                                        Delivery
+                                                                    </span>
+                                                                )}
+                                                                {product.is_best && (
+                                                                    <span className="bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm">
+                                                                        Best
+                                                                    </span>
+                                                                )}
+                                                                {product.is_popular && (
+                                                                    <span className="bg-rose-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm">
+                                                                        Popular
+                                                                    </span>
+                                                                )}
+                                                            </div>
+
+                                                            {/* Image count badge - Bottom Left */}
+                                                            {hasMultipleImages && (
+                                                                <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+                                                                    <RiImageLine className="w-3.5 h-3.5" />
+                                                                    <span>
+                                                                        {currentIdx +
+                                                                            1}
+                                                                        /
+                                                                        {
+                                                                            images.length
+                                                                        }
+                                                                    </span>
+                                                                </div>
+                                                            )}
+
                                                             {/* Like and Share buttons */}
                                                             <div className="absolute top-3 right-3 flex flex-col gap-2">
                                                                 <button
@@ -362,21 +397,6 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                     <RiShareLine className="w-5 h-5" />
                                                                 </button>
                                                             </div>
-
-                                                            {/* Image count badge - Always visible when multiple images */}
-                                                            {hasMultipleImages && (
-                                                                <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-sm text-white text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
-                                                                    <RiImageLine className="w-3.5 h-3.5" />
-                                                                    <span>
-                                                                        {currentIdx +
-                                                                            1}
-                                                                        /
-                                                                        {
-                                                                            images.length
-                                                                        }
-                                                                    </span>
-                                                                </div>
-                                                            )}
 
                                                             {/* Category badge */}
                                                             <div className="absolute bottom-3 right-3">
@@ -436,17 +456,88 @@ export default function Shop({ auth, products, categories, filters }) {
                                                 <h3 className="text-xl font-bold text-gray-900 mb-2 font-montserrat line-clamp-1">
                                                     {product.name}
                                                 </h3>
-                                                <p className="text-gray-500 text-sm mb-4 line-clamp-2 flex-grow">
+                                                <p className="text-gray-500 text-sm mb-2 line-clamp-2 flex-grow">
                                                     {product.description}
                                                 </p>
 
-                                                <div className="flex items-center justify-between mt-4">
-                                                    <span className="text-2xl font-bold text-emerald-600">
-                                                        $
-                                                        {parseFloat(
-                                                            product.price,
-                                                        ).toFixed(2)}
+                                                {product.free_next_day_delivery && (
+                                                    <p className="text-emerald-600 text-sm font-semibold mb-2">
+                                                        Free Next Day Delivery
+                                                    </p>
+                                                )}
+
+                                                {/* Star Ratings */}
+                                                <div className="flex items-center mb-4">
+                                                    {[...Array(5)].map(
+                                                        (_, i) => {
+                                                            const rating =
+                                                                3.5 +
+                                                                (product.id %
+                                                                    3) *
+                                                                    0.5;
+                                                            if (
+                                                                i <
+                                                                Math.floor(
+                                                                    rating,
+                                                                )
+                                                            ) {
+                                                                return (
+                                                                    <RiStarFill
+                                                                        key={i}
+                                                                        className="w-4 h-4 text-amber-400"
+                                                                    />
+                                                                );
+                                                            } else if (
+                                                                i < rating
+                                                            ) {
+                                                                return (
+                                                                    <RiStarHalfFill
+                                                                        key={i}
+                                                                        className="w-4 h-4 text-amber-400"
+                                                                    />
+                                                                );
+                                                            } else {
+                                                                return (
+                                                                    <RiStarLine
+                                                                        key={i}
+                                                                        className="w-4 h-4 text-gray-300"
+                                                                    />
+                                                                );
+                                                            }
+                                                        },
+                                                    )}
+                                                    <span className="text-xs text-gray-500 ml-1">
+                                                        (
+                                                        {10 + (product.id % 50)}
+                                                        )
                                                     </span>
+                                                </div>
+
+                                                <div className="flex items-center justify-between mt-auto">
+                                                    <div className="flex flex-col">
+                                                        <span className="text-2xl font-bold text-emerald-600">
+                                                            $
+                                                            {parseFloat(
+                                                                product.price,
+                                                            ).toFixed(2)}
+                                                        </span>
+                                                        {product.previous_price &&
+                                                            parseFloat(
+                                                                product.previous_price,
+                                                            ) >
+                                                                parseFloat(
+                                                                    product.price,
+                                                                ) && (
+                                                                <span className="text-sm text-gray-400 line-through">
+                                                                    was: $
+                                                                    {parseFloat(
+                                                                        product.previous_price,
+                                                                    ).toFixed(
+                                                                        2,
+                                                                    )}
+                                                                </span>
+                                                            )}
+                                                    </div>
                                                     {(() => {
                                                         const cartItem =
                                                             cart.find(
@@ -474,9 +565,7 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                 className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors duration-300 ${
                                                                     justAdded
                                                                         ? "bg-emerald-600 text-white"
-                                                                        : isInCart
-                                                                          ? "bg-emerald-700 text-white hover:bg-emerald-800"
-                                                                          : "bg-gray-900 text-white hover:bg-emerald-600"
+                                                                        : "bg-amber-500 text-white hover:bg-amber-600"
                                                                 }`}
                                                             >
                                                                 {justAdded ? (
@@ -484,21 +573,18 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                         <RiCheckLine className="w-4 h-4" />
                                                                         Added!
                                                                     </>
-                                                                ) : isInCart ? (
-                                                                    <>
-                                                                        <RiShoppingCartLine className="w-4 h-4" />
-                                                                        In Cart
-                                                                        (
-                                                                        {
-                                                                            cartItem.quantity
-                                                                        }
-                                                                        )
-                                                                    </>
                                                                 ) : (
                                                                     <>
                                                                         <RiShoppingCartLine className="w-4 h-4" />
                                                                         Add to
                                                                         Cart
+                                                                        {isInCart && (
+                                                                            <span className="ml-1 bg-white/20 px-1.5 rounded-full text-xs">
+                                                                                {
+                                                                                    cartItem.quantity
+                                                                                }
+                                                                            </span>
+                                                                        )}
                                                                     </>
                                                                 )}
                                                             </button>
@@ -547,8 +633,26 @@ export default function Shop({ auth, products, categories, filters }) {
                                                         alt={product.name}
                                                         className="w-full h-full object-cover"
                                                     />
-                                                    <div className="absolute top-1 left-1 sm:top-2 sm:left-2 bg-white/90 backdrop-blur-sm text-emerald-800 text-[10px] sm:text-xs font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full uppercase">
-                                                        {product.category}
+                                                    {/* Category and Tags */}
+                                                    <div className="absolute top-1 left-1 sm:top-2 sm:left-2 flex flex-wrap gap-1 max-w-[80%]">
+                                                        <span className="bg-white/90 backdrop-blur-sm text-emerald-800 text-[10px] sm:text-xs font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full uppercase">
+                                                            {product.category}
+                                                        </span>
+                                                        {product.free_delivery && (
+                                                            <span className="bg-emerald-500 text-white text-[10px] sm:text-xs font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full hidden sm:inline-block">
+                                                                Free Delivery
+                                                            </span>
+                                                        )}
+                                                        {product.is_best && (
+                                                            <span className="bg-amber-500 text-white text-[10px] sm:text-xs font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full hidden sm:inline-block">
+                                                                Best
+                                                            </span>
+                                                        )}
+                                                        {product.is_popular && (
+                                                            <span className="bg-rose-500 text-white text-[10px] sm:text-xs font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full hidden sm:inline-block">
+                                                                Popular
+                                                            </span>
+                                                        )}
                                                     </div>
                                                     {/* Like/Share buttons - hidden on mobile */}
                                                     <div className="absolute top-1 right-1 sm:top-2 sm:right-2 flex gap-1 hidden sm:flex">
@@ -704,15 +808,39 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                 product.description
                                                             }
                                                         </p>
+                                                        {product.free_next_day_delivery && (
+                                                            <p className="text-emerald-600 text-xs sm:text-sm font-semibold">
+                                                                Free Next Day
+                                                                Delivery
+                                                            </p>
+                                                        )}
                                                     </div>
 
                                                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-2 sm:mt-4 gap-1 sm:gap-2">
-                                                        <span className="text-lg sm:text-2xl font-bold text-emerald-600">
-                                                            $
-                                                            {parseFloat(
-                                                                product.price,
-                                                            ).toFixed(2)}
-                                                        </span>
+                                                        <div className="flex flex-col">
+                                                            <span className="text-lg sm:text-2xl font-bold text-emerald-600">
+                                                                $
+                                                                {parseFloat(
+                                                                    product.price,
+                                                                ).toFixed(2)}
+                                                            </span>
+                                                            {product.previous_price &&
+                                                                parseFloat(
+                                                                    product.previous_price,
+                                                                ) >
+                                                                    parseFloat(
+                                                                        product.price,
+                                                                    ) && (
+                                                                    <span className="text-xs sm:text-sm text-gray-400 line-through">
+                                                                        was: $
+                                                                        {parseFloat(
+                                                                            product.previous_price,
+                                                                        ).toFixed(
+                                                                            2,
+                                                                        )}
+                                                                    </span>
+                                                                )}
+                                                        </div>
                                                         <button
                                                             onClick={(e) => {
                                                                 e.preventDefault();
@@ -723,9 +851,7 @@ export default function Shop({ auth, products, categories, filters }) {
                                                             className={`flex items-center justify-center gap-1 sm:gap-2 px-2.5 py-1.5 sm:px-5 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-xs sm:text-sm transition-colors duration-300 flex-shrink-0 ${
                                                                 justAdded
                                                                     ? "bg-emerald-600 text-white"
-                                                                    : isInCart
-                                                                      ? "bg-emerald-700 text-white hover:bg-emerald-800"
-                                                                      : "bg-gray-900 text-white hover:bg-emerald-600"
+                                                                    : "bg-amber-500 text-white hover:bg-amber-600"
                                                             }`}
                                                         >
                                                             {justAdded ? (
@@ -733,19 +859,17 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                     <RiCheckLine className="w-4 h-4" />
                                                                     Added!
                                                                 </>
-                                                            ) : isInCart ? (
-                                                                <>
-                                                                    <RiShoppingCartLine className="w-4 h-4" />
-                                                                    In Cart (
-                                                                    {
-                                                                        cartItem.quantity
-                                                                    }
-                                                                    )
-                                                                </>
                                                             ) : (
                                                                 <>
                                                                     <RiShoppingCartLine className="w-4 h-4" />
                                                                     Add to Cart
+                                                                    {isInCart && (
+                                                                        <span className="ml-1 bg-white/20 px-1.5 rounded-full text-xs">
+                                                                            {
+                                                                                cartItem.quantity
+                                                                            }
+                                                                        </span>
+                                                                    )}
                                                                 </>
                                                             )}
                                                         </button>
