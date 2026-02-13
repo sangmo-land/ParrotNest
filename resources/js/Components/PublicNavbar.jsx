@@ -1,5 +1,5 @@
 import { Link, usePage } from "@inertiajs/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { RiShoppingCartLine, RiHeartLine, RiStore2Line } from "react-icons/ri";
 import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
@@ -10,6 +10,8 @@ export default function PublicNavbar({ auth }) {
     const { contact, flash } = usePage().props;
     const [isOpen, setIsOpen] = useState(false);
     const [cartCount, setCartCount] = useState(0);
+    const [shopMenuOpen, setShopMenuOpen] = useState(false);
+    const shopMenuRef = useRef(null);
 
     // Load cart count from localStorage
     useEffect(() => {
@@ -39,6 +41,22 @@ export default function PublicNavbar({ auth }) {
             window.removeEventListener("storage", updateCartCount);
             window.removeEventListener("cartUpdated", updateCartCount);
         };
+    }, []);
+
+    // Close shop menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                shopMenuRef.current &&
+                !shopMenuRef.current.contains(event.target)
+            ) {
+                setShopMenuOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () =>
+            document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
     return (
@@ -175,25 +193,77 @@ export default function PublicNavbar({ auth }) {
                                     <RiHeartLine className="w-4 h-4" />
                                     <span>Donate</span>
                                 </Link>
-                                <Link
-                                    href="/shop"
-                                    className="text-gray-700 hover:text-emerald-600 font-semibold px-2 py-2"
-                                    title="Shop"
-                                >
-                                    <RiStore2Line className="w-6 h-6" />
-                                </Link>
-                                <Link
-                                    href="/cart"
-                                    className="relative text-gray-700 hover:text-emerald-600 font-semibold px-2 py-2"
-                                    title="Cart"
-                                >
-                                    <RiShoppingCartLine className="w-6 h-6" />
-                                    {cartCount > 0 && (
-                                        <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                                            {cartCount > 99 ? "99+" : cartCount}
-                                        </span>
-                                    )}
-                                </Link>
+                                <div className="relative" ref={shopMenuRef}>
+                                    <button
+                                        onClick={() =>
+                                            setShopMenuOpen(!shopMenuOpen)
+                                        }
+                                        className="relative text-gray-700 hover:text-emerald-600 font-semibold px-2 py-2"
+                                        title="Shop & Cart"
+                                    >
+                                        <RiShoppingCartLine className="w-6 h-6" />
+                                        {cartCount > 0 && (
+                                            <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                                {cartCount > 99
+                                                    ? "99+"
+                                                    : cartCount}
+                                            </span>
+                                        )}
+                                    </button>
+                                    <AnimatePresence>
+                                        {shopMenuOpen && (
+                                            <motion.div
+                                                initial={{
+                                                    opacity: 0,
+                                                    y: -10,
+                                                    scale: 0.95,
+                                                }}
+                                                animate={{
+                                                    opacity: 1,
+                                                    y: 0,
+                                                    scale: 1,
+                                                }}
+                                                exit={{
+                                                    opacity: 0,
+                                                    y: -10,
+                                                    scale: 0.95,
+                                                }}
+                                                transition={{ duration: 0.15 }}
+                                                className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50"
+                                            >
+                                                <Link
+                                                    href="/shop"
+                                                    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
+                                                    onClick={() =>
+                                                        setShopMenuOpen(false)
+                                                    }
+                                                >
+                                                    <RiStore2Line className="w-5 h-5 text-emerald-600" />
+                                                    <span className="font-semibold text-gray-700">
+                                                        Browse Shop
+                                                    </span>
+                                                </Link>
+                                                <Link
+                                                    href="/cart"
+                                                    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors border-t border-gray-100"
+                                                    onClick={() =>
+                                                        setShopMenuOpen(false)
+                                                    }
+                                                >
+                                                    <RiShoppingCartLine className="w-5 h-5 text-emerald-600" />
+                                                    <span className="font-semibold text-gray-700">
+                                                        View Cart
+                                                    </span>
+                                                    {cartCount > 0 && (
+                                                        <span className="ml-auto bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-full">
+                                                            {cartCount}
+                                                        </span>
+                                                    )}
+                                                </Link>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
                                 {auth.user ? (
                                     <Link
                                         href={route("logout")}
@@ -261,25 +331,74 @@ export default function PublicNavbar({ auth }) {
                                 <RiHeartLine className="w-6 h-6" />
                             </Link>
 
-                            <Link
-                                href="/shop"
-                                className="text-gray-600 hover:text-emerald-600 transition p-2"
-                                title="Shop"
-                            >
-                                <RiStore2Line className="w-6 h-6" />
-                            </Link>
-
-                            <Link
-                                href="/cart"
-                                className="relative text-gray-600 hover:text-emerald-600 transition p-2"
-                            >
-                                <RiShoppingCartLine className="w-6 h-6" />
-                                {cartCount > 0 && (
-                                    <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                                        {cartCount > 99 ? "99+" : cartCount}
-                                    </span>
-                                )}
-                            </Link>
+                            <div className="relative" ref={shopMenuRef}>
+                                <button
+                                    onClick={() =>
+                                        setShopMenuOpen(!shopMenuOpen)
+                                    }
+                                    className="relative text-gray-600 hover:text-emerald-600 transition p-2"
+                                >
+                                    <RiShoppingCartLine className="w-6 h-6" />
+                                    {cartCount > 0 && (
+                                        <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                            {cartCount > 99 ? "99+" : cartCount}
+                                        </span>
+                                    )}
+                                </button>
+                                <AnimatePresence>
+                                    {shopMenuOpen && (
+                                        <motion.div
+                                            initial={{
+                                                opacity: 0,
+                                                y: -10,
+                                                scale: 0.95,
+                                            }}
+                                            animate={{
+                                                opacity: 1,
+                                                y: 0,
+                                                scale: 1,
+                                            }}
+                                            exit={{
+                                                opacity: 0,
+                                                y: -10,
+                                                scale: 0.95,
+                                            }}
+                                            transition={{ duration: 0.15 }}
+                                            className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50"
+                                        >
+                                            <Link
+                                                href="/shop"
+                                                className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
+                                                onClick={() =>
+                                                    setShopMenuOpen(false)
+                                                }
+                                            >
+                                                <RiStore2Line className="w-5 h-5 text-emerald-600" />
+                                                <span className="font-semibold text-gray-700">
+                                                    Browse Shop
+                                                </span>
+                                            </Link>
+                                            <Link
+                                                href="/cart"
+                                                className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors border-t border-gray-100"
+                                                onClick={() =>
+                                                    setShopMenuOpen(false)
+                                                }
+                                            >
+                                                <RiShoppingCartLine className="w-5 h-5 text-emerald-600" />
+                                                <span className="font-semibold text-gray-700">
+                                                    View Cart
+                                                </span>
+                                                {cartCount > 0 && (
+                                                    <span className="ml-auto bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-full">
+                                                        {cartCount}
+                                                    </span>
+                                                )}
+                                            </Link>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
                             <button
                                 onClick={() => setIsOpen(!isOpen)}
                                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-emerald-600 focus:outline-none transition duration-150 ease-in-out"
