@@ -1351,6 +1351,62 @@ export default function Shop({ auth, products, categories, filters }) {
                                                     </>
                                                 )}
                                             </button>
+
+                                            {/* Share Section */}
+                                            <div className="mt-6 pt-6 border-t border-gray-200">
+                                                <p className="text-sm font-semibold text-gray-700 mb-3">
+                                                    Share this product
+                                                </p>
+                                                <div className="flex gap-3">
+                                                    <button
+                                                        onClick={() =>
+                                                            shareToFacebook(
+                                                                selectedProduct,
+                                                            )
+                                                        }
+                                                        className="flex items-center justify-center w-10 h-10 rounded-full bg-[#1877F2] text-white hover:opacity-90 transition-opacity"
+                                                        title="Share on Facebook"
+                                                    >
+                                                        <RiFacebookFill className="w-5 h-5" />
+                                                    </button>
+                                                    <button
+                                                        onClick={() =>
+                                                            shareToPinterest(
+                                                                selectedProduct,
+                                                                images[
+                                                                    modalImageIndex
+                                                                ],
+                                                            )
+                                                        }
+                                                        className="flex items-center justify-center w-10 h-10 rounded-full bg-[#E60023] text-white hover:opacity-90 transition-opacity"
+                                                        title="Share on Pinterest"
+                                                    >
+                                                        <RiPinterestFill className="w-5 h-5" />
+                                                    </button>
+                                                    <button
+                                                        onClick={() =>
+                                                            shareToTwitter(
+                                                                selectedProduct,
+                                                            )
+                                                        }
+                                                        className="flex items-center justify-center w-10 h-10 rounded-full bg-black text-white hover:opacity-90 transition-opacity"
+                                                        title="Share on Twitter/X"
+                                                    >
+                                                        <RiTwitterXFill className="w-5 h-5" />
+                                                    </button>
+                                                    <button
+                                                        onClick={() =>
+                                                            shareToEmail(
+                                                                selectedProduct,
+                                                            )
+                                                        }
+                                                        className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-600 text-white hover:opacity-90 transition-opacity"
+                                                        title="Share via Email"
+                                                    >
+                                                        <RiMailLine className="w-5 h-5" />
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 );
