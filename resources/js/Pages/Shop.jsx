@@ -17,6 +17,10 @@ import {
     RiStarFill,
     RiStarHalfFill,
     RiStarLine,
+    RiFacebookFill,
+    RiPinterestFill,
+    RiTwitterXFill,
+    RiMailLine,
 } from "react-icons/ri";
 
 export default function Shop({ auth, products, categories, filters }) {
@@ -26,6 +30,7 @@ export default function Shop({ auth, products, categories, filters }) {
     );
     const [currentImageIndex, setCurrentImageIndex] = useState({});
     const [likedImages, setLikedImages] = useState({});
+    const [shareMenuOpen, setShareMenuOpen] = useState(null);
     const [cart, setCart] = useState(() => {
         // Initialize cart from localStorage
         if (typeof window !== "undefined") {
@@ -118,25 +123,64 @@ export default function Shop({ auth, products, categories, filters }) {
     };
 
     // Share image functionality
-    const handleShare = async (product, imageUrl) => {
-        const shareData = {
-            title: product.name,
-            text: `Check out ${product.name} at ParrotNest!`,
-            url: window.location.origin + `/shop?product=${product.slug}`,
-        };
+    const SITE_URL = "https://theparrotnest.org";
+    const getShareUrl = (product) => `${SITE_URL}/shop?product=${product.slug}`;
 
-        if (navigator.share) {
-            try {
-                await navigator.share(shareData);
-            } catch (err) {
-                // User cancelled or share failed
-            }
-        } else {
-            // Fallback: copy link to clipboard
-            await navigator.clipboard.writeText(shareData.url);
-            alert("Link copied to clipboard!");
-        }
+    const shareToFacebook = (product) => {
+        const url = getShareUrl(product);
+        window.open(
+            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+            "_blank",
+            "width=600,height=400",
+        );
+        setShareMenuOpen(null);
     };
+
+    const shareToPinterest = (product, imageUrl) => {
+        const url = getShareUrl(product);
+        const media = imageUrl.startsWith("http")
+            ? imageUrl
+            : `${SITE_URL}${imageUrl}`;
+        window.open(
+            `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&media=${encodeURIComponent(media)}&description=${encodeURIComponent(product.name)}`,
+            "_blank",
+            "width=600,height=400",
+        );
+        setShareMenuOpen(null);
+    };
+
+    const shareToTwitter = (product) => {
+        const url = getShareUrl(product);
+        const text = `Check out ${product.name} at The Parrot Nest!`;
+        window.open(
+            `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
+            "_blank",
+            "width=600,height=400",
+        );
+        setShareMenuOpen(null);
+    };
+
+    const shareToEmail = (product) => {
+        const url = getShareUrl(product);
+        const subject = `Check out ${product.name} at The Parrot Nest!`;
+        const body = `I found this amazing product and thought you might like it:\n\n${product.name}\n${url}`;
+        window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        setShareMenuOpen(null);
+    };
+
+    const toggleShareMenu = (productId) => {
+        setShareMenuOpen(shareMenuOpen === productId ? null : productId);
+    };
+
+    // Close share menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = () => setShareMenuOpen(null);
+        if (shareMenuOpen) {
+            document.addEventListener("click", handleClickOutside);
+            return () =>
+                document.removeEventListener("click", handleClickOutside);
+        }
+    }, [shareMenuOpen]);
 
     // Save cart to localStorage whenever it changes
     useEffect(() => {
@@ -379,23 +423,82 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                         <RiHeartLine className="w-5 h-5" />
                                                                     )}
                                                                 </button>
-                                                                <button
-                                                                    onClick={(
-                                                                        e,
-                                                                    ) => {
-                                                                        e.preventDefault();
-                                                                        handleShare(
-                                                                            product,
-                                                                            images[
-                                                                                currentIdx
-                                                                            ],
-                                                                        );
-                                                                    }}
-                                                                    className="bg-white/90 backdrop-blur-sm hover:bg-white text-gray-700 rounded-full p-2 shadow-md transition-all duration-200 hover:scale-110"
-                                                                    title="Share this image"
-                                                                >
-                                                                    <RiShareLine className="w-5 h-5" />
-                                                                </button>
+                                                                <div className="relative">
+                                                                    <button
+                                                                        onClick={(
+                                                                            e,
+                                                                        ) => {
+                                                                            e.preventDefault();
+                                                                            e.stopPropagation();
+                                                                            toggleShareMenu(
+                                                                                `grid-${product.id}`,
+                                                                            );
+                                                                        }}
+                                                                        className="bg-white/90 backdrop-blur-sm hover:bg-white text-gray-700 rounded-full p-2 shadow-md transition-all duration-200 hover:scale-110"
+                                                                        title="Share this product"
+                                                                    >
+                                                                        <RiShareLine className="w-5 h-5" />
+                                                                    </button>
+                                                                    {shareMenuOpen ===
+                                                                        `grid-${product.id}` && (
+                                                                        <div
+                                                                            className="absolute right-0 top-full mt-2 bg-white rounded-lg shadow-xl py-2 min-w-[160px] z-50"
+                                                                            onClick={(
+                                                                                e,
+                                                                            ) =>
+                                                                                e.stopPropagation()
+                                                                            }
+                                                                        >
+                                                                            <button
+                                                                                onClick={() =>
+                                                                                    shareToFacebook(
+                                                                                        product,
+                                                                                    )
+                                                                                }
+                                                                                className="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                                                                            >
+                                                                                <RiFacebookFill className="w-5 h-5 text-[#1877F2]" />
+                                                                                Facebook
+                                                                            </button>
+                                                                            <button
+                                                                                onClick={() =>
+                                                                                    shareToPinterest(
+                                                                                        product,
+                                                                                        images[
+                                                                                            currentIdx
+                                                                                        ],
+                                                                                    )
+                                                                                }
+                                                                                className="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                                                                            >
+                                                                                <RiPinterestFill className="w-5 h-5 text-[#E60023]" />
+                                                                                Pinterest
+                                                                            </button>
+                                                                            <button
+                                                                                onClick={() =>
+                                                                                    shareToTwitter(
+                                                                                        product,
+                                                                                    )
+                                                                                }
+                                                                                className="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                                                                            >
+                                                                                <RiTwitterXFill className="w-5 h-5 text-black" />
+                                                                                Twitter/X
+                                                                            </button>
+                                                                            <button
+                                                                                onClick={() =>
+                                                                                    shareToEmail(
+                                                                                        product,
+                                                                                    )
+                                                                                }
+                                                                                className="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                                                                            >
+                                                                                <RiMailLine className="w-5 h-5 text-gray-600" />
+                                                                                Email
+                                                                            </button>
+                                                                        </div>
+                                                                    )}
+                                                                </div>
                                                             </div>
 
                                                             {/* Category badge */}
@@ -470,7 +573,10 @@ export default function Shop({ auth, products, categories, filters }) {
                                                 <div className="flex items-center mb-4">
                                                     {[...Array(5)].map(
                                                         (_, i) => {
-                                                            const rating = parseFloat(product.rating) || 4.0;
+                                                            const rating =
+                                                                parseFloat(
+                                                                    product.rating,
+                                                                ) || 4.0;
                                                             if (
                                                                 i <
                                                                 Math.floor(
@@ -504,7 +610,8 @@ export default function Shop({ auth, products, categories, filters }) {
                                                     )}
                                                     <span className="text-xs text-gray-500 ml-1">
                                                         (
-                                                        {product.rating_count || 0}
+                                                        {product.rating_count ||
+                                                            0}
                                                         )
                                                     </span>
                                                 </div>
@@ -670,20 +777,81 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                 <RiHeartLine className="w-4 h-4" />
                                                             )}
                                                         </button>
-                                                        <button
-                                                            onClick={(e) => {
-                                                                e.preventDefault();
-                                                                handleShare(
-                                                                    product,
-                                                                    images[
-                                                                        currentIdx
-                                                                    ],
-                                                                );
-                                                            }}
-                                                            className="bg-white/90 hover:bg-white text-gray-700 rounded-full p-1.5 shadow-sm transition-all"
-                                                        >
-                                                            <RiShareLine className="w-4 h-4" />
-                                                        </button>
+                                                        <div className="relative">
+                                                            <button
+                                                                onClick={(
+                                                                    e,
+                                                                ) => {
+                                                                    e.preventDefault();
+                                                                    e.stopPropagation();
+                                                                    toggleShareMenu(
+                                                                        `list-${product.id}`,
+                                                                    );
+                                                                }}
+                                                                className="bg-white/90 hover:bg-white text-gray-700 rounded-full p-1.5 shadow-sm transition-all"
+                                                            >
+                                                                <RiShareLine className="w-4 h-4" />
+                                                            </button>
+                                                            {shareMenuOpen ===
+                                                                `list-${product.id}` && (
+                                                                <div
+                                                                    className="absolute right-0 top-full mt-2 bg-white rounded-lg shadow-xl py-2 min-w-[160px] z-50"
+                                                                    onClick={(
+                                                                        e,
+                                                                    ) =>
+                                                                        e.stopPropagation()
+                                                                    }
+                                                                >
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            shareToFacebook(
+                                                                                product,
+                                                                            )
+                                                                        }
+                                                                        className="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                                                                    >
+                                                                        <RiFacebookFill className="w-5 h-5 text-[#1877F2]" />
+                                                                        Facebook
+                                                                    </button>
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            shareToPinterest(
+                                                                                product,
+                                                                                images[
+                                                                                    currentIdx
+                                                                                ],
+                                                                            )
+                                                                        }
+                                                                        className="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                                                                    >
+                                                                        <RiPinterestFill className="w-5 h-5 text-[#E60023]" />
+                                                                        Pinterest
+                                                                    </button>
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            shareToTwitter(
+                                                                                product,
+                                                                            )
+                                                                        }
+                                                                        className="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                                                                    >
+                                                                        <RiTwitterXFill className="w-5 h-5 text-black" />
+                                                                        Twitter/X
+                                                                    </button>
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            shareToEmail(
+                                                                                product,
+                                                                            )
+                                                                        }
+                                                                        className="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                                                                    >
+                                                                        <RiMailLine className="w-5 h-5 text-gray-600" />
+                                                                        Email
+                                                                    </button>
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                     {/* Thumbnails for list view - hidden on mobile */}
                                                     {images.length > 1 && (
@@ -747,7 +915,11 @@ export default function Shop({ auth, products, categories, filters }) {
                                                         <div className="flex items-center gap-0.5 mb-1 sm:mb-2">
                                                             {[...Array(5)].map(
                                                                 (_, i) => {
-                                                                    const rating = parseFloat(product.rating) || 4.0;
+                                                                    const rating =
+                                                                        parseFloat(
+                                                                            product.rating,
+                                                                        ) ||
+                                                                        4.0;
                                                                     if (
                                                                         i <
                                                                         Math.floor(
@@ -788,7 +960,8 @@ export default function Shop({ auth, products, categories, filters }) {
                                                             )}
                                                             <span className="text-xs text-gray-500 ml-1">
                                                                 (
-                                                                {product.rating_count || 0}
+                                                                {product.rating_count ||
+                                                                    0}
                                                                 )
                                                             </span>
                                                         </div>
