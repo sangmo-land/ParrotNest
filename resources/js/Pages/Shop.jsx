@@ -21,6 +21,9 @@ import {
     RiPinterestFill,
     RiTwitterXFill,
     RiMailLine,
+    RiCloseLine,
+    RiArrowLeftSLine,
+    RiArrowRightSLine,
 } from "react-icons/ri";
 
 export default function Shop({ auth, products, categories, filters }) {
@@ -31,6 +34,8 @@ export default function Shop({ auth, products, categories, filters }) {
     const [currentImageIndex, setCurrentImageIndex] = useState({});
     const [likedImages, setLikedImages] = useState({});
     const [shareMenuOpen, setShareMenuOpen] = useState(null);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [modalImageIndex, setModalImageIndex] = useState(0);
     const [cart, setCart] = useState(() => {
         // Initialize cart from localStorage
         if (typeof window !== "undefined") {
@@ -354,7 +359,17 @@ export default function Shop({ auth, products, categories, filters }) {
                                                 return (
                                                     <div className="flex flex-col">
                                                         {/* Main Image Container */}
-                                                        <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+                                                        <div
+                                                            className="relative aspect-[4/3] overflow-hidden bg-gray-100 cursor-pointer"
+                                                            onClick={() => {
+                                                                setSelectedProduct(
+                                                                    product,
+                                                                );
+                                                                setModalImageIndex(
+                                                                    currentIdx,
+                                                                );
+                                                            }}
+                                                        >
                                                             <img
                                                                 src={
                                                                     images[
@@ -730,7 +745,17 @@ export default function Shop({ auth, products, categories, filters }) {
                                                 className="group bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 flex flex-row"
                                             >
                                                 {/* Image Section */}
-                                                <div className="relative w-28 h-28 sm:w-40 sm:h-40 md:w-64 md:h-auto flex-shrink-0 bg-gray-100">
+                                                <div
+                                                    className="relative w-28 h-28 sm:w-40 sm:h-40 md:w-64 md:h-auto flex-shrink-0 bg-gray-100 cursor-pointer"
+                                                    onClick={() => {
+                                                        setSelectedProduct(
+                                                            product,
+                                                        );
+                                                        setModalImageIndex(
+                                                            currentIdx,
+                                                        );
+                                                    }}
+                                                >
                                                     <img
                                                         src={images[currentIdx]}
                                                         alt={product.name}
@@ -1066,6 +1091,274 @@ export default function Shop({ auth, products, categories, filters }) {
 
                 <Footer />
             </div>
+
+            {/* Product Modal */}
+            <AnimatePresence>
+                {selectedProduct && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+                        onClick={() => setSelectedProduct(null)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            transition={{ type: "spring", damping: 25 }}
+                            className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {(() => {
+                                const images = getProductImages(
+                                    selectedProduct.images,
+                                );
+                                const rating =
+                                    parseFloat(selectedProduct.rating) || 4.0;
+
+                                return (
+                                    <div className="flex flex-col md:flex-row">
+                                        {/* Image Section */}
+                                        <div className="relative md:w-1/2 bg-gray-100">
+                                            <img
+                                                src={images[modalImageIndex]}
+                                                alt={selectedProduct.name}
+                                                className="w-full h-64 md:h-[500px] object-cover"
+                                            />
+
+                                            {/* Close Button */}
+                                            <button
+                                                onClick={() =>
+                                                    setSelectedProduct(null)
+                                                }
+                                                className="absolute top-4 right-4 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all"
+                                            >
+                                                <RiCloseLine className="w-6 h-6" />
+                                            </button>
+
+                                            {/* Navigation Arrows */}
+                                            {images.length > 1 && (
+                                                <>
+                                                    <button
+                                                        onClick={() =>
+                                                            setModalImageIndex(
+                                                                (prev) =>
+                                                                    prev === 0
+                                                                        ? images.length -
+                                                                          1
+                                                                        : prev -
+                                                                          1,
+                                                            )
+                                                        }
+                                                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all"
+                                                    >
+                                                        <RiArrowLeftSLine className="w-6 h-6" />
+                                                    </button>
+                                                    <button
+                                                        onClick={() =>
+                                                            setModalImageIndex(
+                                                                (prev) =>
+                                                                    prev ===
+                                                                    images.length -
+                                                                        1
+                                                                        ? 0
+                                                                        : prev +
+                                                                          1,
+                                                            )
+                                                        }
+                                                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all"
+                                                    >
+                                                        <RiArrowRightSLine className="w-6 h-6" />
+                                                    </button>
+                                                </>
+                                            )}
+
+                                            {/* Thumbnail Strip */}
+                                            {images.length > 1 && (
+                                                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 bg-white/90 rounded-lg p-2">
+                                                    {images.map((img, idx) => (
+                                                        <button
+                                                            key={idx}
+                                                            onClick={() =>
+                                                                setModalImageIndex(
+                                                                    idx,
+                                                                )
+                                                            }
+                                                            className={`w-12 h-12 rounded-lg overflow-hidden border-2 transition-all ${
+                                                                idx ===
+                                                                modalImageIndex
+                                                                    ? "border-emerald-500"
+                                                                    : "border-transparent opacity-60 hover:opacity-100"
+                                                            }`}
+                                                        >
+                                                            <img
+                                                                src={img}
+                                                                alt=""
+                                                                className="w-full h-full object-cover"
+                                                            />
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Details Section */}
+                                        <div className="md:w-1/2 p-6 md:p-8 overflow-y-auto max-h-[500px]">
+                                            {/* Category Badge */}
+                                            <span className="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase mb-4">
+                                                {selectedProduct.category}
+                                            </span>
+
+                                            {/* Product Name */}
+                                            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 font-montserrat">
+                                                {selectedProduct.name}
+                                            </h2>
+
+                                            {/* Star Rating */}
+                                            <div className="flex items-center gap-1 mb-4">
+                                                {[...Array(5)].map((_, i) => {
+                                                    if (
+                                                        i < Math.floor(rating)
+                                                    ) {
+                                                        return (
+                                                            <RiStarFill
+                                                                key={i}
+                                                                className="w-5 h-5 text-amber-400"
+                                                            />
+                                                        );
+                                                    } else if (i < rating) {
+                                                        return (
+                                                            <RiStarHalfFill
+                                                                key={i}
+                                                                className="w-5 h-5 text-amber-400"
+                                                            />
+                                                        );
+                                                    } else {
+                                                        return (
+                                                            <RiStarLine
+                                                                key={i}
+                                                                className="w-5 h-5 text-gray-300"
+                                                            />
+                                                        );
+                                                    }
+                                                })}
+                                                <span className="text-sm text-gray-500 ml-2">
+                                                    (
+                                                    {selectedProduct.rating_count ||
+                                                        0}{" "}
+                                                    reviews)
+                                                </span>
+                                            </div>
+
+                                            {/* Tags */}
+                                            <div className="flex flex-wrap gap-2 mb-4">
+                                                {selectedProduct.free_delivery && (
+                                                    <span className="bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                                                        Free Delivery
+                                                    </span>
+                                                )}
+                                                {selectedProduct.is_best && (
+                                                    <span className="bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                                                        Best Seller
+                                                    </span>
+                                                )}
+                                                {selectedProduct.is_popular && (
+                                                    <span className="bg-rose-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                                                        Popular
+                                                    </span>
+                                                )}
+                                                {selectedProduct.free_next_day_delivery && (
+                                                    <span className="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                                                        Free Next Day Delivery
+                                                    </span>
+                                                )}
+                                            </div>
+
+                                            {/* Description */}
+                                            <p className="text-gray-600 mb-6 leading-relaxed">
+                                                {selectedProduct.description}
+                                            </p>
+
+                                            {/* Price */}
+                                            <div className="mb-6">
+                                                <span className="text-3xl font-bold text-emerald-600">
+                                                    $
+                                                    {parseFloat(
+                                                        selectedProduct.price,
+                                                    ).toFixed(2)}
+                                                </span>
+                                                {selectedProduct.previous_price &&
+                                                    parseFloat(
+                                                        selectedProduct.previous_price,
+                                                    ) >
+                                                        parseFloat(
+                                                            selectedProduct.price,
+                                                        ) && (
+                                                        <span className="ml-3 text-lg text-gray-400 line-through">
+                                                            $
+                                                            {parseFloat(
+                                                                selectedProduct.previous_price,
+                                                            ).toFixed(2)}
+                                                        </span>
+                                                    )}
+                                            </div>
+
+                                            {/* Stock Info */}
+                                            <p className="text-sm text-gray-500 mb-6">
+                                                {selectedProduct.stock > 0 ? (
+                                                    <span className="text-emerald-600 font-semibold">
+                                                        {selectedProduct.stock}{" "}
+                                                        in stock
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-red-500 font-semibold">
+                                                        Out of stock
+                                                    </span>
+                                                )}
+                                            </p>
+
+                                            {/* Add to Cart Button */}
+                                            <button
+                                                onClick={() => {
+                                                    addToCart(selectedProduct);
+                                                }}
+                                                disabled={
+                                                    selectedProduct.stock === 0
+                                                }
+                                                className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-lg transition-colors duration-300 ${
+                                                    addedToCart[
+                                                        selectedProduct.id
+                                                    ]
+                                                        ? "bg-emerald-600 text-white"
+                                                        : selectedProduct.stock ===
+                                                            0
+                                                          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                                                          : "bg-amber-500 text-white hover:bg-amber-600"
+                                                }`}
+                                            >
+                                                {addedToCart[
+                                                    selectedProduct.id
+                                                ] ? (
+                                                    <>
+                                                        <RiCheckLine className="w-5 h-5" />
+                                                        Added to Cart!
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <RiShoppingCartLine className="w-5 h-5" />
+                                                        Add to Cart
+                                                    </>
+                                                )}
+                                            </button>
+                                        </div>
+                                    </div>
+                                );
+                            })()}
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     );
 }
