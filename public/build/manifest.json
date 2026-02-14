@@ -1,404 +1,404 @@
 {
-  "_ApplicationLogo-R9waBkAF.js": {
-    "file": "assets/ApplicationLogo-R9waBkAF.js",
+  "_ApplicationLogo-UDf5yIv9.js": {
+    "file": "assets/ApplicationLogo-UDf5yIv9.js",
     "name": "ApplicationLogo",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_AuthenticatedLayout-BHQkvaUk.js": {
-    "file": "assets/AuthenticatedLayout-BHQkvaUk.js",
+  "_AuthenticatedLayout-CovXx-Om.js": {
+    "file": "assets/AuthenticatedLayout-CovXx-Om.js",
     "name": "AuthenticatedLayout",
     "imports": [
       "resources/js/app.jsx",
-      "_ApplicationLogo-R9waBkAF.js",
-      "_transition-C7uuPyIZ.js",
-      "_Footer-BTOlKvWh.js"
+      "_ApplicationLogo-UDf5yIv9.js",
+      "_transition-C2PERWMY.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
-  "_Footer-BTOlKvWh.js": {
-    "file": "assets/Footer-BTOlKvWh.js",
+  "_Footer-D2Ul6KPS.js": {
+    "file": "assets/Footer-D2Ul6KPS.js",
     "name": "Footer",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_GuestLayout-B1aMmT6h.js": {
-    "file": "assets/GuestLayout-B1aMmT6h.js",
+  "_GuestLayout-B1CtPp-k.js": {
+    "file": "assets/GuestLayout-B1CtPp-k.js",
     "name": "GuestLayout",
     "imports": [
       "resources/js/app.jsx",
-      "_ApplicationLogo-R9waBkAF.js"
+      "_ApplicationLogo-UDf5yIv9.js"
     ]
   },
-  "_InputLabel-QU4xOTZQ.js": {
-    "file": "assets/InputLabel-QU4xOTZQ.js",
+  "_InputLabel-DKYTryoQ.js": {
+    "file": "assets/InputLabel-DKYTryoQ.js",
     "name": "InputLabel",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_Modal-D3tR6Dse.js": {
-    "file": "assets/Modal-D3tR6Dse.js",
+  "_Modal-C1X2ZCG7.js": {
+    "file": "assets/Modal-C1X2ZCG7.js",
     "name": "Modal",
     "imports": [
       "resources/js/app.jsx",
-      "_transition-C7uuPyIZ.js"
+      "_transition-C2PERWMY.js"
     ]
   },
-  "_PrimaryButton-BMhCwk9x.js": {
-    "file": "assets/PrimaryButton-BMhCwk9x.js",
+  "_PrimaryButton-BcOJ19eQ.js": {
+    "file": "assets/PrimaryButton-BcOJ19eQ.js",
     "name": "PrimaryButton",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_PublicNavbar-DfeVs0lS.js": {
-    "file": "assets/PublicNavbar-DfeVs0lS.js",
+  "_PublicNavbar-DQLom9JK.js": {
+    "file": "assets/PublicNavbar-DQLom9JK.js",
     "name": "PublicNavbar",
     "imports": [
       "resources/js/app.jsx",
-      "_Footer-BTOlKvWh.js"
+      "_Footer-D2Ul6KPS.js"
     ]
   },
-  "_TextInput-nSLRqQa2.js": {
-    "file": "assets/TextInput-nSLRqQa2.js",
+  "_TextInput-C1EZtAQN.js": {
+    "file": "assets/TextInput-C1EZtAQN.js",
     "name": "TextInput",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_transition-C7uuPyIZ.js": {
-    "file": "assets/transition-C7uuPyIZ.js",
+  "_transition-C2PERWMY.js": {
+    "file": "assets/transition-C2PERWMY.js",
     "name": "transition",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
   "resources/js/Pages/AboutBreeds.jsx": {
-    "file": "assets/AboutBreeds-CLKVitVM.js",
+    "file": "assets/AboutBreeds-BFYLIRbF.js",
     "name": "AboutBreeds",
     "src": "resources/js/Pages/AboutBreeds.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
   "resources/js/Pages/AboutUs.jsx": {
-    "file": "assets/AboutUs-CgqwiDg8.js",
+    "file": "assets/AboutUs-wJAUDBoM.js",
     "name": "AboutUs",
     "src": "resources/js/Pages/AboutUs.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
   "resources/js/Pages/Applications/Create.jsx": {
-    "file": "assets/Create-CuPiEkB2.js",
+    "file": "assets/Create-D1m0tGZ-.js",
     "name": "Create",
     "src": "resources/js/Pages/Applications/Create.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
   "resources/js/Pages/Auth/ConfirmPassword.jsx": {
-    "file": "assets/ConfirmPassword-BFc0tDqb.js",
+    "file": "assets/ConfirmPassword-BMd47zjG.js",
     "name": "ConfirmPassword",
     "src": "resources/js/Pages/Auth/ConfirmPassword.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_TextInput-nSLRqQa2.js",
-      "_InputLabel-QU4xOTZQ.js",
-      "_PrimaryButton-BMhCwk9x.js",
-      "_GuestLayout-B1aMmT6h.js",
-      "_ApplicationLogo-R9waBkAF.js"
+      "_TextInput-C1EZtAQN.js",
+      "_InputLabel-DKYTryoQ.js",
+      "_PrimaryButton-BcOJ19eQ.js",
+      "_GuestLayout-B1CtPp-k.js",
+      "_ApplicationLogo-UDf5yIv9.js"
     ]
   },
   "resources/js/Pages/Auth/ForgotPassword.jsx": {
-    "file": "assets/ForgotPassword-CiTojXa5.js",
+    "file": "assets/ForgotPassword-DmF_5IBe.js",
     "name": "ForgotPassword",
     "src": "resources/js/Pages/Auth/ForgotPassword.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_TextInput-nSLRqQa2.js",
-      "_PrimaryButton-BMhCwk9x.js",
-      "_GuestLayout-B1aMmT6h.js",
-      "_ApplicationLogo-R9waBkAF.js"
+      "_TextInput-C1EZtAQN.js",
+      "_PrimaryButton-BcOJ19eQ.js",
+      "_GuestLayout-B1CtPp-k.js",
+      "_ApplicationLogo-UDf5yIv9.js"
     ]
   },
   "resources/js/Pages/Auth/Login.jsx": {
-    "file": "assets/Login-BSgTwhhU.js",
+    "file": "assets/Login-BQo7-PIe.js",
     "name": "Login",
     "src": "resources/js/Pages/Auth/Login.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_GuestLayout-B1aMmT6h.js",
-      "_TextInput-nSLRqQa2.js",
-      "_InputLabel-QU4xOTZQ.js",
-      "_PrimaryButton-BMhCwk9x.js",
-      "_ApplicationLogo-R9waBkAF.js"
+      "_GuestLayout-B1CtPp-k.js",
+      "_TextInput-C1EZtAQN.js",
+      "_InputLabel-DKYTryoQ.js",
+      "_PrimaryButton-BcOJ19eQ.js",
+      "_ApplicationLogo-UDf5yIv9.js"
     ]
   },
   "resources/js/Pages/Auth/Register.jsx": {
-    "file": "assets/Register-DnMDxls3.js",
+    "file": "assets/Register-C5jDDgr0.js",
     "name": "Register",
     "src": "resources/js/Pages/Auth/Register.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_TextInput-nSLRqQa2.js",
-      "_InputLabel-QU4xOTZQ.js",
-      "_PrimaryButton-BMhCwk9x.js",
-      "_GuestLayout-B1aMmT6h.js",
-      "_ApplicationLogo-R9waBkAF.js"
+      "_TextInput-C1EZtAQN.js",
+      "_InputLabel-DKYTryoQ.js",
+      "_PrimaryButton-BcOJ19eQ.js",
+      "_GuestLayout-B1CtPp-k.js",
+      "_ApplicationLogo-UDf5yIv9.js"
     ]
   },
   "resources/js/Pages/Auth/ResetPassword.jsx": {
-    "file": "assets/ResetPassword-QsBan91f.js",
+    "file": "assets/ResetPassword-DAGf1UPK.js",
     "name": "ResetPassword",
     "src": "resources/js/Pages/Auth/ResetPassword.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_TextInput-nSLRqQa2.js",
-      "_InputLabel-QU4xOTZQ.js",
-      "_PrimaryButton-BMhCwk9x.js",
-      "_GuestLayout-B1aMmT6h.js",
-      "_ApplicationLogo-R9waBkAF.js"
+      "_TextInput-C1EZtAQN.js",
+      "_InputLabel-DKYTryoQ.js",
+      "_PrimaryButton-BcOJ19eQ.js",
+      "_GuestLayout-B1CtPp-k.js",
+      "_ApplicationLogo-UDf5yIv9.js"
     ]
   },
   "resources/js/Pages/Auth/VerifyEmail.jsx": {
-    "file": "assets/VerifyEmail-B6axT_E_.js",
+    "file": "assets/VerifyEmail-Dao6m-h6.js",
     "name": "VerifyEmail",
     "src": "resources/js/Pages/Auth/VerifyEmail.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PrimaryButton-BMhCwk9x.js",
-      "_GuestLayout-B1aMmT6h.js",
-      "_ApplicationLogo-R9waBkAF.js"
+      "_PrimaryButton-BcOJ19eQ.js",
+      "_GuestLayout-B1CtPp-k.js",
+      "_ApplicationLogo-UDf5yIv9.js"
     ]
   },
   "resources/js/Pages/CareGuide.jsx": {
-    "file": "assets/CareGuide-BXRmqgk7.js",
+    "file": "assets/CareGuide-vo2_ONWG.js",
     "name": "CareGuide",
     "src": "resources/js/Pages/CareGuide.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
   "resources/js/Pages/Cart.jsx": {
-    "file": "assets/Cart-C3pAMlEf.js",
+    "file": "assets/Cart-jUpfgOJH.js",
     "name": "Cart",
     "src": "resources/js/Pages/Cart.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
   "resources/js/Pages/ContactUs.jsx": {
-    "file": "assets/ContactUs-BwwRXlWJ.js",
+    "file": "assets/ContactUs-B_YTuYdj.js",
     "name": "ContactUs",
     "src": "resources/js/Pages/ContactUs.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
   "resources/js/Pages/Dashboard.jsx": {
-    "file": "assets/Dashboard-zuZh2KFc.js",
+    "file": "assets/Dashboard-DiJ6Q4eI.js",
     "name": "Dashboard",
     "src": "resources/js/Pages/Dashboard.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_AuthenticatedLayout-BHQkvaUk.js",
-      "_ApplicationLogo-R9waBkAF.js",
-      "_transition-C7uuPyIZ.js",
-      "_Footer-BTOlKvWh.js"
+      "_AuthenticatedLayout-CovXx-Om.js",
+      "_ApplicationLogo-UDf5yIv9.js",
+      "_transition-C2PERWMY.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
   "resources/js/Pages/DeliveryShipping.jsx": {
-    "file": "assets/DeliveryShipping-Cz2fkWPO.js",
+    "file": "assets/DeliveryShipping-BSthx7Jo.js",
     "name": "DeliveryShipping",
     "src": "resources/js/Pages/DeliveryShipping.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
   "resources/js/Pages/Donate.jsx": {
-    "file": "assets/Donate-DBRrsCcS.js",
+    "file": "assets/Donate-BoNfAJHe.js",
     "name": "Donate",
     "src": "resources/js/Pages/Donate.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js",
-      "_Modal-D3tR6Dse.js",
-      "_transition-C7uuPyIZ.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js",
+      "_Modal-C1X2ZCG7.js",
+      "_transition-C2PERWMY.js"
     ]
   },
   "resources/js/Pages/FeedingTips.jsx": {
-    "file": "assets/FeedingTips-CAn2eXWf.js",
+    "file": "assets/FeedingTips-C1_crvX9.js",
     "name": "FeedingTips",
     "src": "resources/js/Pages/FeedingTips.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
   "resources/js/Pages/HealthGuarantee.jsx": {
-    "file": "assets/HealthGuarantee-k5rnBRru.js",
+    "file": "assets/HealthGuarantee-DVx3Bb2W.js",
     "name": "HealthGuarantee",
     "src": "resources/js/Pages/HealthGuarantee.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
   "resources/js/Pages/Parrots/Index.jsx": {
-    "file": "assets/Index-1MkOI3LV.js",
+    "file": "assets/Index-BvfOOJyV.js",
     "name": "Index",
     "src": "resources/js/Pages/Parrots/Index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js",
-      "_Modal-D3tR6Dse.js",
-      "_transition-C7uuPyIZ.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js",
+      "_Modal-C1X2ZCG7.js",
+      "_transition-C2PERWMY.js"
     ]
   },
   "resources/js/Pages/Parrots/Show.jsx": {
-    "file": "assets/Show-DKdJ1Vo5.js",
+    "file": "assets/Show-DfO80p3z.js",
     "name": "Show",
     "src": "resources/js/Pages/Parrots/Show.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
   "resources/js/Pages/Profile/Edit.jsx": {
-    "file": "assets/Edit-D0qWJKBV.js",
+    "file": "assets/Edit-DcPDiqAp.js",
     "name": "Edit",
     "src": "resources/js/Pages/Profile/Edit.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_AuthenticatedLayout-BHQkvaUk.js",
+      "_AuthenticatedLayout-CovXx-Om.js",
       "resources/js/Pages/Profile/Partials/DeleteUserForm.jsx",
       "resources/js/Pages/Profile/Partials/UpdatePasswordForm.jsx",
       "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.jsx",
-      "_ApplicationLogo-R9waBkAF.js",
-      "_transition-C7uuPyIZ.js",
-      "_Footer-BTOlKvWh.js",
-      "_TextInput-nSLRqQa2.js",
-      "_InputLabel-QU4xOTZQ.js",
-      "_Modal-D3tR6Dse.js",
-      "_PrimaryButton-BMhCwk9x.js"
+      "_ApplicationLogo-UDf5yIv9.js",
+      "_transition-C2PERWMY.js",
+      "_Footer-D2Ul6KPS.js",
+      "_TextInput-C1EZtAQN.js",
+      "_InputLabel-DKYTryoQ.js",
+      "_Modal-C1X2ZCG7.js",
+      "_PrimaryButton-BcOJ19eQ.js"
     ]
   },
   "resources/js/Pages/Profile/Partials/DeleteUserForm.jsx": {
-    "file": "assets/DeleteUserForm-CDCgG7nJ.js",
+    "file": "assets/DeleteUserForm-B9hkJ1ux.js",
     "name": "DeleteUserForm",
     "src": "resources/js/Pages/Profile/Partials/DeleteUserForm.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_TextInput-nSLRqQa2.js",
-      "_InputLabel-QU4xOTZQ.js",
-      "_Modal-D3tR6Dse.js",
-      "_transition-C7uuPyIZ.js"
+      "_TextInput-C1EZtAQN.js",
+      "_InputLabel-DKYTryoQ.js",
+      "_Modal-C1X2ZCG7.js",
+      "_transition-C2PERWMY.js"
     ]
   },
   "resources/js/Pages/Profile/Partials/UpdatePasswordForm.jsx": {
-    "file": "assets/UpdatePasswordForm-C72cjlWH.js",
+    "file": "assets/UpdatePasswordForm-CNTRk-jp.js",
     "name": "UpdatePasswordForm",
     "src": "resources/js/Pages/Profile/Partials/UpdatePasswordForm.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_TextInput-nSLRqQa2.js",
-      "_InputLabel-QU4xOTZQ.js",
-      "_PrimaryButton-BMhCwk9x.js",
-      "_transition-C7uuPyIZ.js"
+      "_TextInput-C1EZtAQN.js",
+      "_InputLabel-DKYTryoQ.js",
+      "_PrimaryButton-BcOJ19eQ.js",
+      "_transition-C2PERWMY.js"
     ]
   },
   "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.jsx": {
-    "file": "assets/UpdateProfileInformationForm-docGJNo7.js",
+    "file": "assets/UpdateProfileInformationForm-DeSEf0Kg.js",
     "name": "UpdateProfileInformationForm",
     "src": "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_TextInput-nSLRqQa2.js",
-      "_InputLabel-QU4xOTZQ.js",
-      "_PrimaryButton-BMhCwk9x.js",
-      "_transition-C7uuPyIZ.js"
+      "_TextInput-C1EZtAQN.js",
+      "_InputLabel-DKYTryoQ.js",
+      "_PrimaryButton-BcOJ19eQ.js",
+      "_transition-C2PERWMY.js"
     ]
   },
   "resources/js/Pages/Reviews/Index.jsx": {
-    "file": "assets/Index-B86ZTrLz.js",
+    "file": "assets/Index-DqBoOUgv.js",
     "name": "Index",
     "src": "resources/js/Pages/Reviews/Index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
   "resources/js/Pages/Shop.jsx": {
-    "file": "assets/Shop-DJjkZ_rL.js",
+    "file": "assets/Shop-B5V7mCla.js",
     "name": "Shop",
     "src": "resources/js/Pages/Shop.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
   "resources/js/Pages/Welcome.jsx": {
-    "file": "assets/Welcome-DxiAE5-u.js",
+    "file": "assets/Welcome-BD7eNQWS.js",
     "name": "Welcome",
     "src": "resources/js/Pages/Welcome.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_PublicNavbar-DfeVs0lS.js",
-      "_Footer-BTOlKvWh.js"
+      "_PublicNavbar-DQLom9JK.js",
+      "_Footer-D2Ul6KPS.js"
     ]
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-BbkYCf_C.js",
+    "file": "assets/app-QH0X3DLH.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,

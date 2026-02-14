@@ -422,6 +422,7 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                         e,
                                                                     ) => {
                                                                         e.preventDefault();
+                                                                        e.stopPropagation();
                                                                         toggleLike(
                                                                             product.id,
                                                                             currentIdx,
@@ -787,6 +788,7 @@ export default function Shop({ auth, products, categories, filters }) {
                                                         <button
                                                             onClick={(e) => {
                                                                 e.preventDefault();
+                                                                e.stopPropagation();
                                                                 toggleLike(
                                                                     product.id,
                                                                     currentIdx,
