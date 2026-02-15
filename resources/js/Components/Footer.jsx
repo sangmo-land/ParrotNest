@@ -200,7 +200,7 @@ export default function Footer() {
                             </div>
                             {/* American Express */}
                             <div
-                                className="bg-[#016FD0] rounded-md p-1.5 flex items-center justify-center"
+                                className="bg-[#006FCF] rounded-md p-1.5 flex items-center justify-center"
                                 title="American Express"
                             >
                                 <svg
@@ -210,28 +210,28 @@ export default function Footer() {
                                     xmlns="http://www.w3.org/2000/svg"
                                 >
                                     <text
-                                        x="38"
-                                        y="12"
-                                        textAnchor="end"
+                                        x="20"
+                                        y="11"
+                                        textAnchor="middle"
                                         fill="white"
-                                        fontSize="10"
+                                        fontSize="7"
                                         fontWeight="bold"
-                                        fontFamily="Arial Black, sans-serif"
-                                        letterSpacing="-0.5"
+                                        fontFamily="serif"
+                                        letterSpacing="0.5"
                                     >
-                                        AM
+                                        AMERICAN
                                     </text>
                                     <text
-                                        x="38"
-                                        y="23"
-                                        textAnchor="end"
+                                        x="20"
+                                        y="21"
+                                        textAnchor="middle"
                                         fill="white"
-                                        fontSize="10"
+                                        fontSize="7"
                                         fontWeight="bold"
-                                        fontFamily="Arial Black, sans-serif"
-                                        letterSpacing="-0.5"
+                                        fontFamily="serif"
+                                        letterSpacing="0.5"
                                     >
-                                        EX
+                                        EXPRESS
                                     </text>
                                 </svg>
                             </div>
