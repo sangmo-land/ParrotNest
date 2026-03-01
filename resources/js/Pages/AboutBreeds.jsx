@@ -1,4 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
+import SEO from '@/Components/SEO';
 import { useState } from 'react';
 import PublicNavbar from '@/Components/PublicNavbar';
 import Footer from "@/Components/Footer";
@@ -6,7 +7,11 @@ import Footer from "@/Components/Footer";
 export default function AboutBreeds({ auth, species: displaySpecies }) {
     return (
         <>
-            <Head title="Parrot Species Guide - ParrotNest" />
+            <SEO
+                title="Parrot Species Guide - ParrotNest | Learn About Parrot Breeds"
+                description="Explore our comprehensive guide to parrot species. Learn about different parrot breeds, their characteristics, care needs, and which species is right for you."
+                keywords="parrot species, parrot breeds, types of parrots, parrot guide, macaw, cockatoo, african grey, conure, budgerigar"
+            />
             <div className="bg-white min-h-screen font-sans selection:bg-emerald-100 selection:text-emerald-900">
                 {/* Navigation */}
                 <PublicNavbar auth={auth} />

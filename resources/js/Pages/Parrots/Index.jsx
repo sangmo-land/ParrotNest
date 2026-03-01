@@ -1,4 +1,5 @@
 import { Head, Link, router } from '@inertiajs/react';
+import SEO from "@/Components/SEO";
 import PublicNavbar from "@/Components/PublicNavbar";
 import Footer from "@/Components/Footer";
 import Modal from "@/Components/Modal";
@@ -44,7 +45,11 @@ export default function Index({ auth, parrots, species, filters, flash }) {
 
     return (
         <div className="bg-[#FAF9F6] min-h-screen font-sans text-stone-800">
-            <Head title="Available Parrots - ParrotNest" />
+            <SEO
+                title="Available Parrots for Adoption - ParrotNest"
+                description="Browse our available parrots ready for adoption. Find your perfect feathered companion from our collection of rescued and rehabilitated parrots at ParrotNest."
+                keywords="available parrots, parrots for adoption, adopt a bird, rescue parrots available, pet parrots near me"
+            />
 
             <PublicNavbar auth={auth} />
 

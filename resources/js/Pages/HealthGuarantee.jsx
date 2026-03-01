@@ -1,11 +1,16 @@
 import { Head } from "@inertiajs/react";
+import SEO from "@/Components/SEO";
 import PublicNavbar from "@/Components/PublicNavbar";
 import Footer from "@/Components/Footer";
 
 export default function HealthGuarantee({ auth }) {
     return (
         <>
-            <Head title="Health Guarantee - ParrotNest" />
+            <SEO
+                title="Health Guarantee - ParrotNest | Healthy Parrots Guaranteed"
+                description="ParrotNest's comprehensive health guarantee ensures every adopted parrot is vet-checked and healthy. Learn about our health policies and veterinary care standards."
+                keywords="parrot health guarantee, healthy parrot adoption, vet checked parrots, bird health policy"
+            />
             <div className="bg-slate-50 min-h-screen font-sans selection:bg-emerald-100 selection:text-emerald-900">
                 <PublicNavbar auth={auth} />
 

@@ -1,4 +1,5 @@
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
+import SEO from "@/Components/SEO";
 import { useState, useRef } from "react";
 import PublicNavbar from "@/Components/PublicNavbar";
 import Footer from "@/Components/Footer";
@@ -57,7 +58,11 @@ export default function ContactUs({ auth }) {
 
     return (
         <>
-            <Head title="Contact Us - ParrotNest" />
+            <SEO
+                title="Contact Us - ParrotNest | Get in Touch"
+                description="Have questions about parrot adoption, care, or our services? Contact ParrotNest today. We're here to help you find your perfect feathered companion."
+                keywords="contact parrotnest, parrot adoption inquiry, parrot care questions, bird adoption help"
+            />
             <div className="bg-gray-50 min-h-screen">
                 {/* Header Section - Consistent with AboutUs & Welcome */}
                 <PublicNavbar auth={auth} />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
+import SEO from '@/Components/SEO';
 import PublicNavbar from '@/Components/PublicNavbar';
 import Footer from '@/Components/Footer';
 import Modal from '@/Components/Modal';
@@ -49,7 +50,11 @@ export default function Donate({ auth }) {
 
     return (
         <div className="min-h-screen bg-gray-50 font-montserrat text-gray-800">
-            <Head title="Donate Support Our Cause" />
+            <SEO
+                title="Donate - ParrotNest | Support Parrot Rescue & Rehabilitation"
+                description="Support ParrotNest's mission to rescue and rehome parrots. Your donation helps provide medical care, food, and shelter for parrots in need."
+                keywords="donate to parrot rescue, support parrot adoption, parrot charity, bird rescue donation, help parrots"
+            />
             <PublicNavbar auth={auth} />
 
             {/* Hero Section */}

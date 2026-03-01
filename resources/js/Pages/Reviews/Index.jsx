@@ -1,4 +1,5 @@
 import { Head, Link, useForm } from "@inertiajs/react"; // added useForm
+import SEO from "@/Components/SEO";
 import PublicNavbar from "@/Components/PublicNavbar";
 import Footer from "@/Components/Footer";
 import { useState } from "react"; // added useState
@@ -62,7 +63,11 @@ export default function Reviews({ auth, reviews }) {
 
     return (
         <>
-            <Head title="Success Stories & Reviews - ParrotNest" />
+            <SEO
+                title="Success Stories & Reviews - ParrotNest | Happy Families"
+                description="Read heartwarming stories from families who adopted parrots through ParrotNest. See reviews and testimonials from happy parrot owners."
+                keywords="parrot adoption reviews, parrot adoption stories, parrotnest testimonials, happy parrot families, bird adoption success stories"
+            />
             <div className="bg-gray-50 min-h-screen font-sans text-gray-900 leading-normal tracking-normal flex flex-col">
                 <PublicNavbar auth={auth} />
 

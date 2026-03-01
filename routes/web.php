@@ -8,6 +8,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SitemapController;
 use App\Models\Parrot;
 use App\Models\Species;
 use App\Models\Review;
@@ -97,4 +98,8 @@ use App\Http\Controllers\ChatBotController;
 
 // ChatBot Route
 Route::post('/chatbot/message', [ChatBotController::class, 'handle'])->name('chatbot.message');
+
+// SEO: Sitemap
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+
 require __DIR__.'/auth.php';

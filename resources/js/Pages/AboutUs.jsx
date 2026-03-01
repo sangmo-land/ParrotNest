@@ -1,11 +1,17 @@
 import { Head, Link } from "@inertiajs/react";
+import SEO, { jsonLdGenerators } from "@/Components/SEO";
 import PublicNavbar from "@/Components/PublicNavbar";
 import Footer from "@/Components/Footer";
 
 export default function AboutUs({ auth }) {
     return (
         <>
-            <Head title="About Us - ParrotNest" />
+            <SEO
+                title="About Us - ParrotNest | Our Mission & Values"
+                description="Learn about ParrotNest's mission to rescue, rehabilitate, and rehome parrots. Discover our values, our team, and how we're making a difference for parrots in need."
+                keywords="about parrotnest, parrot rescue mission, parrot adoption center, bird welfare, parrot sanctuary"
+                jsonLd={jsonLdGenerators.organization()}
+            />
             <div className="bg-gray-50 min-h-screen">
                 {/* Header Section - Same as Welcome.jsx */}
                 <PublicNavbar auth={auth} />

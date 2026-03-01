@@ -1,4 +1,5 @@
 import { Head, Link, useForm } from "@inertiajs/react";
+import SEO, { jsonLdGenerators } from "@/Components/SEO";
 import PublicNavbar from "@/Components/PublicNavbar";
 import Footer from "@/Components/Footer";
 import { motion, AnimatePresence } from "framer-motion";
@@ -48,7 +49,16 @@ export default function Welcome({
 
     return (
         <>
-            <Head title="ParrotNest - Parrot Adoption" />
+            <SEO
+                title="ParrotNest - Adopt a Parrot | Rescue & Rehome Parrots"
+                description="Find your perfect feathered companion at ParrotNest. We rescue, rehabilitate, and rehome parrots in need. Browse available parrots and start your adoption journey today."
+                keywords="parrot adoption, adopt a parrot, rescue parrots, parrot rehoming, pet parrots, bird adoption, parrot sanctuary"
+                jsonLd={[
+                    jsonLdGenerators.organization(),
+                    jsonLdGenerators.website(),
+                    jsonLdGenerators.localBusiness(),
+                ]}
+            />
             <div className="bg-gray-50 min-h-screen">
                 {/* Header Section - Divided into Two Rows */}
                 <PublicNavbar auth={auth} />

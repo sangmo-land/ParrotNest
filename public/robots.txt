@@ -1,2 +1,89 @@
+# robots.txt for theparrotnest.org
+
+# Allow all search engines
 User-agent: *
-Disallow:
+Allow: /
+
+# Public pages
+Allow: /parrots
+Allow: /about-breeds
+Allow: /shop
+Allow: /reviews
+Allow: /about-us
+Allow: /contact
+Allow: /care-guide
+Allow: /feeding-tips
+Allow: /health-guarantee
+Allow: /delivery-shipping
+Allow: /donate
+
+# Block authenticated/private pages
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /my-applications
+Disallow: /apply/
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /verify-email
+Disallow: /confirm-password
+
+# Block admin panel
+Disallow: /admin
+Disallow: /admin/*
+
+# Block API and internal routes
+Disallow: /chatbot/
+Disallow: /validate-comment
+Disallow: /subscribe
+
+# Block Laravel internal paths
+Disallow: /storage/
+Disallow: /build/
+Disallow: /hot
+Disallow: /vendor/
+
+# Crawl delay (seconds) - be polite to the server
+Crawl-delay: 2
+
+# Googlebot (no crawl-delay needed, Google ignores it)
+User-agent: Googlebot
+Allow: /
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /my-applications
+Disallow: /apply/
+Disallow: /login
+Disallow: /register
+Disallow: /admin
+Disallow: /admin/*
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /my-applications
+Disallow: /apply/
+Disallow: /login
+Disallow: /register
+Disallow: /admin
+Disallow: /admin/*
+Crawl-delay: 5
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Sitemap location
+Sitemap: https://theparrotnest.org/sitemap.xml

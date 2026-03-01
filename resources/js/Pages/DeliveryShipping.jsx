@@ -1,11 +1,16 @@
 import { Head, Link } from '@inertiajs/react';
+import SEO from '@/Components/SEO';
 import PublicNavbar from '@/Components/PublicNavbar';
 import Footer from "@/Components/Footer";
 
 export default function DeliveryShipping({ auth }) {
     return (
         <>
-            <Head title="Delivery & Shipping - ParrotNest" />
+            <SEO
+                title="Delivery & Shipping - ParrotNest | Safe Parrot Transport"
+                description="Learn about ParrotNest's safe and humane parrot delivery and shipping options. We ensure your new feathered friend arrives healthy and stress-free."
+                keywords="parrot delivery, parrot shipping, bird transport, safe parrot transport, pet bird delivery"
+            />
             <div className="bg-white min-h-screen font-sans selection:bg-emerald-100 selection:text-emerald-900">
                 {/* Navigation */}
                 <PublicNavbar auth={auth} />

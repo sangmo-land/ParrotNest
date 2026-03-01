@@ -1,11 +1,21 @@
 import { Head, Link } from '@inertiajs/react';
+import SEO, { jsonLdGenerators } from '@/Components/SEO';
 import PublicNavbar from '@/Components/PublicNavbar';
 import Footer from "@/Components/Footer";
 
 export default function FeedingTips({ auth }) {
     return (
         <>
-            <Head title="Nutrition & Husbandry - ParrotNest" />
+            <SEO
+                title="Parrot Nutrition & Feeding Tips - ParrotNest"
+                description="Expert parrot nutrition and feeding guide. Learn about the best diet for your parrot including pellets, fresh foods, treats, and foods to avoid."
+                keywords="parrot feeding tips, parrot diet, what to feed a parrot, parrot nutrition, bird food guide, parrot treats"
+                jsonLd={jsonLdGenerators.article({
+                    title: "Parrot Nutrition & Husbandry Guide",
+                    description: "Expert guide on parrot nutrition, feeding schedules, and dietary needs.",
+                    datePublished: "2025-01-01",
+                })}
+            />
             <div className="bg-white min-h-screen font-sans selection:bg-emerald-100 selection:text-emerald-900">
                 {/* Header Section */}
                 <PublicNavbar auth={auth} />

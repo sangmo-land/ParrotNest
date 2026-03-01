@@ -1,4 +1,5 @@
 import { Head, Link, router, usePage } from "@inertiajs/react";
+import SEO from "@/Components/SEO";
 import PublicNavbar from "@/Components/PublicNavbar";
 import Footer from "@/Components/Footer";
 import { useState, useEffect, useRef } from "react";
@@ -224,7 +225,11 @@ export default function Shop({ auth, products, categories, filters }) {
 
     return (
         <>
-            <Head title="Shop - ParrotNest" />
+            <SEO
+                title="Parrot Supplies Shop - ParrotNest | Toys, Food & Accessories"
+                description="Shop premium parrot supplies at ParrotNest. Find the best toys, food, cages, and accessories for your feathered friend. Quality products for happy parrots."
+                keywords="parrot supplies, parrot toys, parrot food, bird accessories, parrot cage, bird shop, parrot store"
+            />
             <div className="bg-gray-50 min-h-screen flex flex-col font-sans">
                 <PublicNavbar auth={auth} />
 

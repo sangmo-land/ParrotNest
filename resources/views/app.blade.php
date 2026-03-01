@@ -3,8 +3,15 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#059669">
+        <meta name="author" content="ParrotNest">
+        <meta name="application-name" content="ParrotNest">
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        {{-- Google Search Console Verification --}}
+        {{-- Replace YOUR_VERIFICATION_CODE with the code from Google Search Console --}}
+        {{-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" /> --}}
+
+        <title inertia>{{ config('app.name', 'ParrotNest') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

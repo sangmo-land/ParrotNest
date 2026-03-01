@@ -1,4 +1,5 @@
 import { Head, Link, useForm } from "@inertiajs/react";
+import SEO, { jsonLdGenerators } from "@/Components/SEO";
 import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
@@ -269,7 +270,14 @@ export default function Show({ auth, parrot, similarParrots, comments }) {
 
     return (
         <div className="bg-[#FAF9F6] min-h-screen font-sans text-stone-800">
-            <Head title={`${parrot.name} - Available for Adoption`} />
+            <SEO
+                title={`${parrot.name} - ${parrot.species?.name || 'Parrot'} Available for Adoption | ParrotNest`}
+                description={parrot.description ? parrot.description.substring(0, 160) : `Meet ${parrot.name}, a beautiful ${parrot.species?.name || 'parrot'} available for adoption at ParrotNest. Learn more and apply to adopt today.`}
+                keywords={`adopt ${parrot.name}, ${parrot.species?.name || 'parrot'} adoption, ${parrot.species?.name || 'parrot'} for sale, pet parrot`}
+                ogImage={parrot.image ? `/storage/${parrot.image}` : '/images/hero.jpg'}
+                ogType="product"
+                jsonLd={jsonLdGenerators.product(parrot)}
+            />
 
             <PublicNavbar auth={auth} />
 

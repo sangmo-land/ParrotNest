@@ -1,11 +1,21 @@
 import { Head, Link } from "@inertiajs/react";
+import SEO, { jsonLdGenerators } from "@/Components/SEO";
 import PublicNavbar from "@/Components/PublicNavbar";
 import Footer from "@/Components/Footer";
 
 export default function CareGuide({ auth }) {
     return (
         <>
-            <Head title="Parrot Care Guide - ParrotNest" />
+            <SEO
+                title="Parrot Care Guide - ParrotNest | Expert Avian Advice"
+                description="Comprehensive parrot care guide covering diet, housing, health, socialization, and enrichment. Expert tips to keep your feathered friend happy and healthy."
+                keywords="parrot care guide, how to care for a parrot, parrot diet, parrot housing, bird care tips, parrot health"
+                jsonLd={jsonLdGenerators.article({
+                    title: "The Essential Parrot Care Guide",
+                    description: "Comprehensive guide to caring for your parrot including diet, housing, health, and enrichment.",
+                    datePublished: "2025-01-01",
+                })}
+            />
             <div className="bg-white min-h-screen font-sans">
                 {/* Header Section */}
                 <PublicNavbar auth={auth} />
