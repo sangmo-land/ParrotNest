@@ -197,77 +197,6 @@ export default function PublicNavbar({ auth }) {
                                     <RiHeartLine className="w-4 h-4" />
                                     <span>Donate</span>
                                 </Link>
-                                <div className="relative" ref={shopMenuRef}>
-                                    <button
-                                        onClick={() =>
-                                            setShopMenuOpen(!shopMenuOpen)
-                                        }
-                                        className="relative text-gray-700 hover:text-emerald-600 font-semibold px-2 py-2"
-                                        title="Shop & Cart"
-                                    >
-                                        <RiShoppingCartLine className="w-6 h-6" />
-                                        {cartCount > 0 && (
-                                            <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                                                {cartCount > 99
-                                                    ? "99+"
-                                                    : cartCount}
-                                            </span>
-                                        )}
-                                    </button>
-                                    <AnimatePresence>
-                                        {shopMenuOpen && (
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    y: -10,
-                                                    scale: 0.95,
-                                                }}
-                                                animate={{
-                                                    opacity: 1,
-                                                    y: 0,
-                                                    scale: 1,
-                                                }}
-                                                exit={{
-                                                    opacity: 0,
-                                                    y: -10,
-                                                    scale: 0.95,
-                                                }}
-                                                transition={{ duration: 0.15 }}
-                                                className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50"
-                                            >
-                                                <Link
-                                                    href="/shop"
-                                                    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
-                                                    onClick={() =>
-                                                        setShopMenuOpen(false)
-                                                    }
-                                                >
-                                                    <RiStore2Line className="w-5 h-5 text-emerald-600" />
-                                                    <span className="font-semibold text-gray-700">
-                                                        Browse Shop
-                                                    </span>
-                                                </Link>
-                                                <Link
-                                                    href="/cart"
-                                                    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors border-t border-gray-100"
-                                                    onClick={() =>
-                                                        setShopMenuOpen(false)
-                                                    }
-                                                >
-                                                    <RiShoppingCartLine className="w-5 h-5 text-emerald-600" />
-                                                    <span className="font-semibold text-gray-700">
-                                                        View Cart
-                                                    </span>
-                                                    {cartCount > 0 && (
-                                                        <span className="ml-auto bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-full">
-                                                            {cartCount}
-                                                        </span>
-                                                    )}
-                                                </Link>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-                                </div>
                                 {auth.user ? (
                                     <Link
                                         href={route("logout")}
@@ -335,74 +264,6 @@ export default function PublicNavbar({ auth }) {
                                 <RiHeartLine className="w-6 h-6" />
                             </Link>
 
-                            <div className="relative" ref={shopMenuMobileRef}>
-                                <button
-                                    onClick={() =>
-                                        setShopMenuOpen(!shopMenuOpen)
-                                    }
-                                    className="relative text-gray-600 hover:text-emerald-600 transition p-2"
-                                >
-                                    <RiShoppingCartLine className="w-6 h-6" />
-                                    {cartCount > 0 && (
-                                        <span className="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                                            {cartCount > 99 ? "99+" : cartCount}
-                                        </span>
-                                    )}
-                                </button>
-                                <AnimatePresence>
-                                    {shopMenuOpen && (
-                                        <motion.div
-                                            initial={{
-                                                opacity: 0,
-                                                y: -10,
-                                                scale: 0.95,
-                                            }}
-                                            animate={{
-                                                opacity: 1,
-                                                y: 0,
-                                                scale: 1,
-                                            }}
-                                            exit={{
-                                                opacity: 0,
-                                                y: -10,
-                                                scale: 0.95,
-                                            }}
-                                            transition={{ duration: 0.15 }}
-                                            className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50"
-                                        >
-                                            <Link
-                                                href="/shop"
-                                                className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
-                                                onClick={() =>
-                                                    setShopMenuOpen(false)
-                                                }
-                                            >
-                                                <RiStore2Line className="w-5 h-5 text-emerald-600" />
-                                                <span className="font-semibold text-gray-700">
-                                                    Browse Shop
-                                                </span>
-                                            </Link>
-                                            <Link
-                                                href="/cart"
-                                                className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors border-t border-gray-100"
-                                                onClick={() =>
-                                                    setShopMenuOpen(false)
-                                                }
-                                            >
-                                                <RiShoppingCartLine className="w-5 h-5 text-emerald-600" />
-                                                <span className="font-semibold text-gray-700">
-                                                    View Cart
-                                                </span>
-                                                {cartCount > 0 && (
-                                                    <span className="ml-auto bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-full">
-                                                        {cartCount}
-                                                    </span>
-                                                )}
-                                            </Link>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
                             <button
                                 onClick={() => setIsOpen(!isOpen)}
                                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-emerald-600 focus:outline-none transition duration-150 ease-in-out"
@@ -440,33 +301,33 @@ export default function PublicNavbar({ auth }) {
 
             {/* Row 2: Main Navigation Bar (Emerald Section) - Visible on Desktop AND Mobile (Simplified) */}
             <div className="hidden lg:block bg-emerald-700 text-white shadow-md">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     {/* Desktop Navigation */}
-                    <div className="hidden lg:flex items-center justify-center space-x-2">
+                    <div className="hidden lg:flex items-center justify-center space-x-1">
                         <Link
                             href="/"
-                            className="font-montserrat px-6 py-3 text-base font-bold uppercase tracking-widest text-white hover:bg-emerald-600/60 hover:text-white rounded-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5"
+                            className="font-montserrat px-4 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-emerald-600/60 hover:text-white rounded-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5"
                         >
                             Home
                         </Link>
                         <Link
                             href="/parrots"
-                            className="font-montserrat px-6 py-3 text-base font-bold uppercase tracking-widest text-white hover:bg-emerald-600/60 hover:text-white rounded-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5"
+                            className="font-montserrat px-4 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-emerald-600/60 hover:text-white rounded-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5"
                         >
                             Available Parrots
                         </Link>
                         <Link
                             href="/about-breeds"
-                            className="font-montserrat px-6 py-3 text-base font-bold uppercase tracking-widest text-white hover:bg-emerald-600/60 hover:text-white rounded-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5"
+                            className="font-montserrat px-4 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-emerald-600/60 hover:text-white rounded-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5"
                         >
                             About Breeds
                         </Link>
                         {/* Dropdowns... */}
                         <div className="relative group">
-                            <button className="flex items-center font-montserrat px-6 py-3 text-base font-bold uppercase tracking-widest text-white hover:bg-emerald-600/60 hover:text-white rounded-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5 cursor-pointer">
+                            <button className="flex items-center font-montserrat px-4 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-emerald-600/60 hover:text-white rounded-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5 cursor-pointer">
                                 Services
                                 <svg
-                                    className="w-4 h-4 ml-2 opacity-80"
+                                    className="w-4 h-4 ml-1.5 opacity-80"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -495,10 +356,10 @@ export default function PublicNavbar({ auth }) {
                             </div>
                         </div>
                         <div className="relative group">
-                            <button className="flex items-center font-montserrat px-6 py-3 text-base font-bold uppercase tracking-widest text-white hover:bg-emerald-600/60 hover:text-white rounded-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5 cursor-pointer">
+                            <button className="flex items-center font-montserrat px-4 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-emerald-600/60 hover:text-white rounded-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5 cursor-pointer">
                                 Care Center
                                 <svg
-                                    className="w-4 h-4 ml-2 opacity-80"
+                                    className="w-4 h-4 ml-1.5 opacity-80"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -527,10 +388,49 @@ export default function PublicNavbar({ auth }) {
                             </div>
                         </div>
                         <div className="relative group">
-                            <button className="flex items-center font-montserrat px-6 py-3 text-base font-bold uppercase tracking-widest text-white hover:bg-emerald-600/60 hover:text-white rounded-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5 cursor-pointer">
+                            <button className="flex items-center font-montserrat px-4 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-emerald-600/60 hover:text-white rounded-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5 cursor-pointer">
+                                Shop
+                                <svg
+                                    className="w-4 h-4 ml-1.5 opacity-80"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M19 9l-7 7-7-7"
+                                    ></path>
+                                </svg>
+                            </button>
+                            <div className="absolute left-0 w-72 mt-2 bg-white/95 backdrop-blur-sm text-gray-800 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50 border border-emerald-100 overflow-hidden">
+                                <Link
+                                    href="/shop"
+                                    className="flex items-center gap-3 px-6 py-4 text-base font-semibold hover:bg-emerald-50 hover:text-emerald-700 hover:pl-8 transition-all duration-200 border-b border-gray-100/50"
+                                >
+                                    <RiStore2Line className="w-5 h-5 text-emerald-600" />
+                                    Browse Shop
+                                </Link>
+                                <Link
+                                    href="/cart"
+                                    className="flex items-center gap-3 px-6 py-4 text-base font-semibold hover:bg-emerald-50 hover:text-emerald-700 hover:pl-8 transition-all duration-200"
+                                >
+                                    <RiShoppingCartLine className="w-5 h-5 text-emerald-600" />
+                                    View Cart
+                                    {cartCount > 0 && (
+                                        <span className="ml-auto bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-full">
+                                            {cartCount}
+                                        </span>
+                                    )}
+                                </Link>
+                            </div>
+                        </div>
+                        <div className="relative group">
+                            <button className="flex items-center font-montserrat px-4 py-2.5 text-sm font-bold uppercase tracking-wider text-white hover:bg-emerald-600/60 hover:text-white rounded-full transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5 cursor-pointer">
                                 Company
                                 <svg
-                                    className="w-4 h-4 ml-2 opacity-80"
+                                    className="w-4 h-4 ml-1.5 opacity-80"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -627,6 +527,23 @@ export default function PublicNavbar({ auth }) {
                             className="font-montserrat px-5 py-2.5 text-sm font-bold uppercase tracking-widest text-white hover:bg-white/10 rounded-full transition-all duration-300 border border-transparent hover:border-white/20"
                         >
                             Contact Us
+                        </Link>
+                        <Link
+                            href="/shop"
+                            className="font-montserrat px-5 py-2.5 text-sm font-bold uppercase tracking-widest text-white hover:bg-white/10 rounded-full transition-all duration-300 border border-transparent hover:border-white/20"
+                        >
+                            Shop
+                        </Link>
+                        <Link
+                            href="/cart"
+                            className="font-montserrat px-5 py-2.5 text-sm font-bold uppercase tracking-widest text-white hover:bg-white/10 rounded-full transition-all duration-300 border border-transparent hover:border-white/20 flex items-center gap-1"
+                        >
+                            Cart
+                            {cartCount > 0 && (
+                                <span className="bg-white/20 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+                                    {cartCount}
+                                </span>
+                            )}
                         </Link>
 
                         {/* Mobile Auth Links */}
@@ -801,6 +718,35 @@ export default function PublicNavbar({ auth }) {
                                         className="block px-4 py-2 text-sm font-medium text-gray-600 hover:text-emerald-800 hover:bg-gray-50 rounded-md transition"
                                     >
                                         Feeding Tips
+                                    </Link>
+                                </div>
+                            </div>
+
+                            {/* Shop Section */}
+                            <div className="mt-2">
+                                <div className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-emerald-600 uppercase tracking-widest">
+                                    <RiStore2Line className="w-4 h-4" />
+                                    Shop
+                                </div>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <Link
+                                        href="/shop"
+                                        className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 bg-gray-50 hover:bg-emerald-50 hover:text-emerald-700 rounded-md border border-gray-100 transition"
+                                    >
+                                        <RiStore2Line className="w-4 h-4" />
+                                        Browse Shop
+                                    </Link>
+                                    <Link
+                                        href="/cart"
+                                        className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 bg-gray-50 hover:bg-emerald-50 hover:text-emerald-700 rounded-md border border-gray-100 transition"
+                                    >
+                                        <RiShoppingCartLine className="w-4 h-4" />
+                                        Cart
+                                        {cartCount > 0 && (
+                                            <span className="bg-emerald-100 text-emerald-700 text-xs font-bold px-1.5 py-0.5 rounded-full">
+                                                {cartCount}
+                                            </span>
+                                        )}
                                     </Link>
                                 </div>
                             </div>

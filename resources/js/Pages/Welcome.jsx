@@ -172,72 +172,162 @@ export default function Welcome({
                                 whileInView="visible"
                                 viewport={{ once: true, margin: "-50px" }}
                                 variants={staggerContainer}
-                                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+                                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-6"
                             >
                                 {featuredParrots.map((parrot) => (
                                     <motion.div
                                         variants={fadeInUp}
                                         key={parrot.id}
-                                        className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition group"
-                                        whileHover={{ y: -5 }}
+                                        className="group bg-white rounded-2xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] transition-all duration-500 transform hover:-translate-y-1 flex flex-col border border-stone-100"
                                     >
-                                        <div className="h-48 bg-gray-100 overflow-hidden relative">
-                                            {parrot.images &&
-                                            parrot.images.length > 0 ? (
-                                                <img
-                                                    src={`/storage/${parrot.images[0]}`}
-                                                    alt={parrot.name}
-                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                                    style={{
-                                                        objectPosition:
-                                                            parrot.name ===
-                                                            "Lola"
-                                                                ? "center 25%"
-                                                                : parrot.name ===
-                                                                    "Nina"
-                                                                  ? "center 5%"
-                                                                  : "center",
-                                                    }}
-                                                />
-                                            ) : (
-                                                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-400 to-teal-500">
-                                                    <span className="text-6xl">
-                                                        🦜
-                                                    </span>
-                                                </div>
-                                            )}
+                                        {/* Image Container */}
+                                        <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
+                                            <Link href={`/parrots/${parrot.id}`}>
+                                                {parrot.images &&
+                                                parrot.images.length > 0 ? (
+                                                    <img
+                                                        src={`/storage/${parrot.images[0]}`}
+                                                        alt={parrot.name}
+                                                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                                                    />
+                                                ) : (
+                                                    <div className="w-full h-full flex flex-col items-center justify-center text-stone-300 bg-stone-50">
+                                                        <span className="text-6xl mb-2 opacity-20">
+                                                            🦜
+                                                        </span>
+                                                        <span className="text-xs font-bold uppercase tracking-widest opacity-40">
+                                                            No Image
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            </Link>
 
-                                            {/* Status Badge */}
-                                            <div className="absolute top-4 right-4">
-                                                <span className="bg-white/90 backdrop-blur-sm text-emerald-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">
-                                                    {parrot.status}
+                                            {/* Availability Badge */}
+                                            <div className="absolute top-3 left-3 z-10">
+                                                <span className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-widest text-stone-800 shadow-lg flex items-center gap-1.5 border border-white/50">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                                    Available
                                                 </span>
                                             </div>
+
+                                            {/* Price Badge Overlay (Bottom Right) */}
+                                            <div className="absolute bottom-3 right-3 z-10">
+                                                <span className="bg-stone-900/90 backdrop-blur-md text-white px-3 py-1.5 rounded-lg text-sm font-bold shadow-lg border border-white/10 group-hover:bg-[#D4AF37] transition-colors duration-300">
+                                                    $
+                                                    {Number(
+                                                        parrot.adoption_fee,
+                                                    ).toLocaleString()}
+                                                </span>
+                                            </div>
+
+                                            {/* Overlay Gradient on Hover */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                                         </div>
-                                        <div className="p-4">
-                                            <div className="mb-3">
-                                                <h3 className="text-lg font-bold text-gray-900 mb-1">
-                                                    {parrot.name}
-                                                </h3>
-                                                <p className="text-emerald-600 text-sm font-medium">
+
+                                        {/* Content */}
+                                        <div className="p-4 flex flex-col flex-1 relative">
+                                            <div className="mb-3 text-center">
+                                                <p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600 mb-1">
                                                     {parrot.species?.name}
                                                 </p>
+                                                <h2 className="text-lg font-serif font-bold text-stone-900 group-hover:text-[#D4AF37] transition-colors mb-2 leading-tight">
+                                                    <Link
+                                                        href={`/parrots/${parrot.id}`}
+                                                    >
+                                                        {parrot.name}
+                                                    </Link>
+                                                </h2>
+                                                <div className="w-8 h-0.5 bg-stone-100 mx-auto rounded-full group-hover:bg-[#D4AF37]/30 transition-colors duration-500"></div>
                                             </div>
-                                            <p className="text-gray-600 mb-4 line-clamp-2 text-sm">
-                                                {parrot.description}
-                                            </p>
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-lg font-bold text-emerald-600">
-                                                    $
-                                                    {parseFloat(
-                                                        parrot.adoption_fee,
-                                                    ).toFixed(2)}
-                                                </span>
+
+                                            {/* Trait Grid */}
+                                            <div className="grid grid-cols-2 gap-2 mb-4">
+                                                <div className="flex items-center gap-2 p-2 rounded-xl bg-stone-50 border border-stone-100">
+                                                    <span className="text-base">
+                                                        {parrot.gender === "Male"
+                                                            ? "💙"
+                                                            : "🩷"}
+                                                    </span>
+                                                    <div className="flex flex-col">
+                                                        <span className="text-[8px] font-bold text-stone-400 uppercase tracking-wider">
+                                                            Gender
+                                                        </span>
+                                                        <span className="text-[11px] font-bold text-stone-800">
+                                                            {parrot.gender}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex items-center gap-2 p-2 rounded-xl bg-stone-50 border border-stone-100">
+                                                    <span className="text-base">
+                                                        🎂
+                                                    </span>
+                                                    <div className="flex flex-col">
+                                                        <span className="text-[8px] font-bold text-stone-400 uppercase tracking-wider">
+                                                            Age
+                                                        </span>
+                                                        <span className="text-[11px] font-bold text-stone-800">
+                                                            {parrot.age} Yrs
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex items-center gap-2 p-2 rounded-xl bg-stone-50 border border-stone-100">
+                                                    <span className="text-base">
+                                                        ✨
+                                                    </span>
+                                                    <div className="flex flex-col">
+                                                        <span className="text-[8px] font-bold text-stone-400 uppercase tracking-wider">
+                                                            Mood
+                                                        </span>
+                                                        <span className="text-[11px] font-bold text-stone-800 truncate w-16">
+                                                            {parrot.personality
+                                                                ? parrot.personality.split(",")[0]
+                                                                : "Sweet"}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                {parrot.comes_with_cage ? (
+                                                    <div className="flex items-center gap-2 p-2 rounded-xl bg-[#D4AF37]/5 border border-[#D4AF37]/20">
+                                                        <span className="text-base">
+                                                            🏠
+                                                        </span>
+                                                        <div className="flex flex-col">
+                                                            <span className="text-[8px] font-bold text-[#D4AF37] uppercase tracking-wider">
+                                                                Bonus
+                                                            </span>
+                                                            <span className="text-[11px] font-bold text-stone-800">
+                                                                Cage Inc.
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <div className="flex items-center gap-2 p-2 rounded-xl bg-stone-50 border border-stone-100">
+                                                        <span className="text-base">
+                                                            🩺
+                                                        </span>
+                                                        <div className="flex flex-col">
+                                                            <span className="text-[8px] font-bold text-stone-400 uppercase tracking-wider">
+                                                                Health
+                                                            </span>
+                                                            <span className="text-[11px] font-bold text-stone-800">
+                                                                Checked
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className="mt-auto">
                                                 <Link
                                                     href={`/parrots/${parrot.id}`}
-                                                    className="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition text-sm"
+                                                    className="block w-full py-2.5 bg-stone-900 text-white text-center font-bold uppercase tracking-widest text-[10px] rounded-lg hover:bg-[#D4AF37] transition-all transform active:scale-95 shadow-lg shadow-stone-200 hover:shadow-[#D4AF37]/30 relative overflow-hidden group/btn"
                                                 >
-                                                    View Details
+                                                    <span className="relative z-10">
+                                                        Meet {parrot.name}
+                                                    </span>
+                                                    <div className="absolute inset-0 bg-white/20 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300"></div>
                                                 </Link>
                                             </div>
                                         </div>

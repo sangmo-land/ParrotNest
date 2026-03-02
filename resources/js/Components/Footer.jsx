@@ -48,6 +48,14 @@ export default function Footer() {
                                     Species Guide
                                 </Link>
                             </li>
+                            <li>
+                                <Link
+                                    href="/shop"
+                                    className="text-gray-300 hover:text-white"
+                                >
+                                    Shop
+                                </Link>
+                            </li>
                             {auth?.user ? (
                                 <li>
                                     <Link
