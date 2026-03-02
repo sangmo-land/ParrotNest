@@ -7,10 +7,6 @@
         <meta name="author" content="ParrotNest">
         <meta name="application-name" content="ParrotNest">
 
-        {{-- Google Search Console Verification --}}
-        {{-- Replace YOUR_VERIFICATION_CODE with the code from Google Search Console --}}
-        {{-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" /> --}}
-
         <title inertia>{{ config('app.name', 'ParrotNest') }}</title>
 
         <!-- Fonts -->
