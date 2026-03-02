@@ -172,7 +172,7 @@ export default function Welcome({
                                 whileInView="visible"
                                 viewport={{ once: true, margin: "-50px" }}
                                 variants={staggerContainer}
-                                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
                             >
                                 {featuredParrots.map((parrot) => (
                                     <motion.div
@@ -181,7 +181,7 @@ export default function Welcome({
                                         className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition group"
                                         whileHover={{ y: -5 }}
                                     >
-                                        <div className="h-64 bg-gray-100 overflow-hidden relative">
+                                        <div className="h-48 bg-gray-100 overflow-hidden relative">
                                             {parrot.images &&
                                             parrot.images.length > 0 ? (
                                                 <img
@@ -214,16 +214,16 @@ export default function Welcome({
                                                 </span>
                                             </div>
                                         </div>
-                                        <div className="p-6">
-                                            <div className="mb-4">
-                                                <h3 className="text-xl font-bold text-gray-900 mb-1">
+                                        <div className="p-4">
+                                            <div className="mb-3">
+                                                <h3 className="text-lg font-bold text-gray-900 mb-1">
                                                     {parrot.name}
                                                 </h3>
                                                 <p className="text-emerald-600 text-sm font-medium">
                                                     {parrot.species?.name}
                                                 </p>
                                             </div>
-                                            <p className="text-gray-600 mb-6 line-clamp-2 text-sm">
+                                            <p className="text-gray-600 mb-4 line-clamp-2 text-sm">
                                                 {parrot.description}
                                             </p>
                                             <div className="flex justify-between items-center">

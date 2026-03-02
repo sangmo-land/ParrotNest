@@ -175,14 +175,14 @@ export default function Index({ auth, parrots, species, filters, flash }) {
                         </button>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-6">
                         {parrots.data.map((parrot) => (
                             <div
                                 key={parrot.id}
-                                className="group bg-white rounded-[2rem] overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] transition-all duration-500 transform hover:-translate-y-2 flex flex-col border border-stone-100"
+                                className="group bg-white rounded-2xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] transition-all duration-500 transform hover:-translate-y-1 flex flex-col border border-stone-100"
                             >
                                 {/* Image Container */}
-                                <div className="relative aspect-[4/5] overflow-hidden bg-stone-100">
+                                <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
                                     <Link href={route("parrots.show", parrot)}>
                                         {parrot.images &&
                                         parrot.images.length > 0 ? (
@@ -204,16 +204,16 @@ export default function Index({ auth, parrots, species, filters, flash }) {
                                     </Link>
 
                                     {/* Availability Badge */}
-                                    <div className="absolute top-4 left-4 z-10">
-                                        <span className="bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest text-stone-800 shadow-lg flex items-center gap-2 border border-white/50">
-                                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <div className="absolute top-3 left-3 z-10">
+                                        <span className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-widest text-stone-800 shadow-lg flex items-center gap-1.5 border border-white/50">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                                             Available
                                         </span>
                                     </div>
 
                                     {/* Price Badge Overlay (Bottom Right) */}
-                                    <div className="absolute bottom-4 right-4 z-10">
-                                        <span className="bg-stone-900/90 backdrop-blur-md text-white px-4 py-2 rounded-xl text-lg font-bold shadow-lg border border-white/10 group-hover:bg-[#D4AF37] transition-colors duration-300">
+                                    <div className="absolute bottom-3 right-3 z-10">
+                                        <span className="bg-stone-900/90 backdrop-blur-md text-white px-3 py-1.5 rounded-lg text-sm font-bold shadow-lg border border-white/10 group-hover:bg-[#D4AF37] transition-colors duration-300">
                                             $
                                             {Number(
                                                 parrot.adoption_fee,
@@ -226,12 +226,12 @@ export default function Index({ auth, parrots, species, filters, flash }) {
                                 </div>
 
                                 {/* Content */}
-                                <div className="p-8 flex flex-col flex-1 relative">
-                                    <div className="mb-6 text-center">
-                                        <p className="text-sm font-bold uppercase tracking-[0.2em] text-emerald-600 mb-2">
+                                <div className="p-4 flex flex-col flex-1 relative">
+                                    <div className="mb-3 text-center">
+                                        <p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-600 mb-1">
                                             {parrot.species?.name}
                                         </p>
-                                        <h2 className="text-3xl font-serif font-bold text-stone-900 group-hover:text-[#D4AF37] transition-colors mb-4 leading-none">
+                                        <h2 className="text-lg font-serif font-bold text-stone-900 group-hover:text-[#D4AF37] transition-colors mb-2 leading-tight">
                                             <Link
                                                 href={route(
                                                     "parrots.show",
@@ -241,11 +241,11 @@ export default function Index({ auth, parrots, species, filters, flash }) {
                                                 {parrot.name}
                                             </Link>
                                         </h2>
-                                        <div className="w-12 h-1 bg-stone-100 mx-auto rounded-full group-hover:bg-[#D4AF37]/30 transition-colors duration-500"></div>
+                                        <div className="w-8 h-0.5 bg-stone-100 mx-auto rounded-full group-hover:bg-[#D4AF37]/30 transition-colors duration-500"></div>
                                     </div>
 
                                     {/* Trait Grid */}
-                                    <div className="grid grid-cols-2 gap-3 mb-8">
+                                    <div className="grid grid-cols-2 gap-2 mb-4">
                                         <div className="flex items-center gap-3 p-3 rounded-2xl bg-stone-50 border border-stone-100 hover:border-[#D4AF37]/30 transition-colors">
                                             <span className="text-2xl filter drop-shadow-sm">
                                                 {parrot.gender === "Male"
@@ -334,7 +334,7 @@ export default function Index({ auth, parrots, species, filters, flash }) {
                                     <div className="mt-auto">
                                         <Link
                                             href={route("parrots.show", parrot)}
-                                            className="block w-full py-4 bg-stone-900 text-white text-center font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-[#D4AF37] transition-all transform active:scale-95 shadow-lg shadow-stone-200 hover:shadow-[#D4AF37]/30 relative overflow-hidden group/btn"
+                                            className="block w-full py-2.5 bg-stone-900 text-white text-center font-bold uppercase tracking-widest text-[10px] rounded-lg hover:bg-[#D4AF37] transition-all transform active:scale-95 shadow-lg shadow-stone-200 hover:shadow-[#D4AF37]/30 relative overflow-hidden group/btn"
                                         >
                                             <span className="relative z-10">
                                                 Meet {parrot.name}
