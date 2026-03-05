@@ -32,6 +32,12 @@ class ProductForm
                     ->required()
                     ->numeric()
                     ->prefix('$'),
+                TextInput::make('previous_price')
+                    ->label('Original Price (before discount)')
+                    ->numeric()
+                    ->prefix('$')
+                    ->default(null)
+                    ->helperText('Set higher than current price to show a sale/discount on the card. Leave empty for no discount.'),
 FileUpload::make('images')
                     ->image()
 ->multiple()

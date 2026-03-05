@@ -393,6 +393,11 @@ export default function Shop({ auth, products, categories, filters }) {
 
                                                             {/* Product Tags - Top Left */}
                                                             <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 max-w-[70%]">
+                                                                {product.previous_price && parseFloat(product.previous_price) > parseFloat(product.price) && (
+                                                                    <span className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm">
+                                                                        -{Math.round(((parseFloat(product.previous_price) - parseFloat(product.price)) / parseFloat(product.previous_price)) * 100)}%
+                                                                    </span>
+                                                                )}
                                                                 {product.free_delivery && (
                                                                     <span className="bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm">
                                                                         Free
@@ -791,6 +796,11 @@ export default function Shop({ auth, products, categories, filters }) {
                                                         <span className="bg-white/90 backdrop-blur-sm text-emerald-800 text-[10px] sm:text-xs font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full uppercase">
                                                             {product.category}
                                                         </span>
+                                                        {product.previous_price && parseFloat(product.previous_price) > parseFloat(product.price) && (
+                                                            <span className="bg-red-600 text-white text-[10px] sm:text-xs font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full">
+                                                                -{Math.round(((parseFloat(product.previous_price) - parseFloat(product.price)) / parseFloat(product.previous_price)) * 100)}%
+                                                            </span>
+                                                        )}
                                                         {product.free_delivery && (
                                                             <span className="bg-emerald-500 text-white text-[10px] sm:text-xs font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full hidden sm:inline-block">
                                                                 Free Delivery
@@ -1288,6 +1298,11 @@ export default function Shop({ auth, products, categories, filters }) {
 
                                             {/* Tags */}
                                             <div className="flex flex-wrap gap-2 mb-4">
+                                                {selectedProduct.previous_price && parseFloat(selectedProduct.previous_price) > parseFloat(selectedProduct.price) && (
+                                                    <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                                                        {Math.round(((parseFloat(selectedProduct.previous_price) - parseFloat(selectedProduct.price)) / parseFloat(selectedProduct.previous_price)) * 100)}% OFF
+                                                    </span>
+                                                )}
                                                 {selectedProduct.free_delivery && (
                                                     <span className="bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">
                                                         Free Delivery
