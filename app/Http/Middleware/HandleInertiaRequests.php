@@ -36,6 +36,7 @@ class HandleInertiaRequests extends Middleware
             ],
 'flash' => [
             'message' => fn () => $request->session()->get('message'),
+            'success' => fn () => $request->session()->get('success'),
             'adoption_success' => fn () => $request->session()->get('adoption_success'),
             ],
 'contact' => \App\Models\Contact::first(),

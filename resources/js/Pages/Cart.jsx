@@ -1,4 +1,4 @@
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, Link, router, usePage } from "@inertiajs/react";
 import PublicNavbar from "@/Components/PublicNavbar";
 import Footer from "@/Components/Footer";
 import { useState, useEffect } from "react";
@@ -17,6 +17,7 @@ export default function Cart({ auth }) {
     const [cart, setCart] = useState([]);
     const [isCheckingOut, setIsCheckingOut] = useState(false);
     const [checkoutComplete, setCheckoutComplete] = useState(false);
+    const [orderNumber, setOrderNumber] = useState('');
     const [isBuyNow, setIsBuyNow] = useState(false);
     const [customerInfo, setCustomerInfo] = useState({
         name: auth?.user?.name || "",
@@ -96,26 +97,34 @@ export default function Cart({ auth }) {
     // Handle checkout
     const handleCheckout = (e) => {
         e.preventDefault();
-        
-        // Simulate checkout process
         setIsCheckingOut(true);
-        
-        setTimeout(() => {
-            // In a real app, you'd send this to your backend
-            console.log("Order placed:", {
-                items: cart,
-                customer: customerInfo,
-                total: total,
-            });
-            
-            // Clear cart/buy-now item and show success
-            if (isBuyNow) {
-                localStorage.removeItem('parrotnest_buynow');
-            }
-            clearCart();
-            setIsCheckingOut(false);
-            setCheckoutComplete(true);
-        }, 2000);
+
+        router.post('/orders', {
+            customer_name: customerInfo.name,
+            customer_email: customerInfo.email,
+            customer_phone: customerInfo.phone,
+            address: customerInfo.address,
+            city: customerInfo.city,
+            notes: customerInfo.notes,
+            items: cart.map(item => ({ id: item.id, quantity: item.quantity })),
+        }, {
+            preserveScroll: true,
+            onSuccess: (page) => {
+                const number = page.props.flash?.success;
+                if (number) {
+                    setOrderNumber(number);
+                }
+                if (isBuyNow) {
+                    localStorage.removeItem('parrotnest_buynow');
+                }
+                clearCart();
+                setIsCheckingOut(false);
+                setCheckoutComplete(true);
+            },
+            onError: () => {
+                setIsCheckingOut(false);
+            },
+        });
     };
 
     // Checkout complete view
@@ -138,6 +147,11 @@ export default function Cart({ auth }) {
                             <h1 className="text-3xl font-bold text-gray-900 mb-4">
                                 Order Placed!
                             </h1>
+                            {orderNumber && (
+                                <p className="text-emerald-700 font-semibold mb-2">
+                                    Order #{orderNumber}
+                                </p>
+                            )}
                             <p className="text-gray-600 mb-8">
                                 Thank you for your order! We'll contact you shortly to confirm
                                 your purchase and arrange delivery.

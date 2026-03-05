@@ -8,6 +8,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SitemapController;
 use App\Models\Parrot;
 use App\Models\Species;
@@ -66,6 +67,7 @@ Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index'
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 Route::get('/shop', [ProductController::class, 'index'])->name('shop');
 Route::get('/cart', function() { return Inertia::render('Cart'); })->name('cart');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 Route::get('/contact', function() { return Inertia::render('ContactUs'); })->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/subscribe', [NewsletterController::class, 'subscribe'])->name('subscribe');
