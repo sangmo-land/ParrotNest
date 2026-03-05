@@ -17,6 +17,7 @@ export default function Cart({ auth }) {
     const [cart, setCart] = useState([]);
     const [isCheckingOut, setIsCheckingOut] = useState(false);
     const [checkoutComplete, setCheckoutComplete] = useState(false);
+    const [isBuyNow, setIsBuyNow] = useState(false);
     const [customerInfo, setCustomerInfo] = useState({
         name: auth?.user?.name || "",
         email: auth?.user?.email || "",
@@ -26,20 +27,31 @@ export default function Cart({ auth }) {
         notes: "",
     });
 
-    // Load cart from localStorage
+    // Load cart or buy-now item from localStorage
     useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('buyNow')) {
+            const buyNowItem = localStorage.getItem('parrotnest_buynow');
+            if (buyNowItem) {
+                setIsBuyNow(true);
+                setCart([JSON.parse(buyNowItem)]);
+                return;
+            }
+        }
         const saved = localStorage.getItem("parrotnest_cart");
         if (saved) {
             setCart(JSON.parse(saved));
         }
     }, []);
 
-    // Save cart to localStorage
+    // Save cart to localStorage (skip in buy-now mode)
     useEffect(() => {
-        localStorage.setItem("parrotnest_cart", JSON.stringify(cart));
-        // Dispatch custom event to notify navbar of cart update
-        window.dispatchEvent(new Event("cartUpdated"));
-    }, [cart]);
+        if (!isBuyNow) {
+            localStorage.setItem("parrotnest_cart", JSON.stringify(cart));
+            // Dispatch custom event to notify navbar of cart update
+            window.dispatchEvent(new Event("cartUpdated"));
+        }
+    }, [cart, isBuyNow]);
 
     // Helper to resolve image URLs
     const getImageUrl = (images) => {
@@ -96,7 +108,10 @@ export default function Cart({ auth }) {
                 total: total,
             });
             
-            // Clear cart and show success
+            // Clear cart/buy-now item and show success
+            if (isBuyNow) {
+                localStorage.removeItem('parrotnest_buynow');
+            }
             clearCart();
             setIsCheckingOut(false);
             setCheckoutComplete(true);
@@ -144,7 +159,7 @@ export default function Cart({ auth }) {
 
     return (
         <>
-            <Head title="Shopping Cart - ParrotNest" />
+            <Head title={isBuyNow ? "Checkout - ParrotNest" : "Shopping Cart - ParrotNest"} />
             <div className="bg-gray-50 min-h-screen flex flex-col font-sans">
                 <PublicNavbar auth={auth} />
 
@@ -159,7 +174,7 @@ export default function Cart({ auth }) {
                             Continue Shopping
                         </Link>
                         <h1 className="text-4xl font-extrabold font-montserrat">
-                            Shopping Cart
+                            {isBuyNow ? "Checkout" : "Shopping Cart"}
                         </h1>
                     </div>
                 </div>

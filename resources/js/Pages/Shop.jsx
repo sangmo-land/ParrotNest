@@ -223,10 +223,10 @@ export default function Shop({ auth, products, categories, filters }) {
         }, 2000);
     };
 
-    // Buy now: add to cart and go to cart page
+    // Buy now: go directly to checkout with this product
     const buyNow = (product) => {
-        addToCart(product);
-        router.visit('/cart');
+        localStorage.setItem('parrotnest_buynow', JSON.stringify({ ...product, quantity: 1 }));
+        router.visit('/cart?buyNow=1');
     };
 
     return (
