@@ -648,7 +648,7 @@ export default function Shop({ auth, products, categories, filters }) {
                                                     </span>
                                                 </div>
 
-                                                <div className="flex items-center justify-between mt-auto">
+                                                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between mt-auto gap-2">
                                                     <div className="flex flex-col">
                                                         <span className="text-2xl font-bold text-emerald-600">
                                                             $
@@ -673,6 +673,7 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                 </span>
                                                             )}
                                                     </div>
+                                                    <div className="flex flex-col sm:flex-row gap-2">
                                                     {(() => {
                                                         const cartItem =
                                                             cart.find(
@@ -697,7 +698,7 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                         product,
                                                                     );
                                                                 }}
-                                                                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors duration-300 ${
+                                                                className={`flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors duration-300 ${
                                                                     justAdded
                                                                         ? "bg-emerald-600 text-white"
                                                                         : "bg-amber-500 text-white hover:bg-amber-600"
@@ -711,8 +712,7 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                 ) : (
                                                                     <>
                                                                         <RiShoppingCartLine className="w-4 h-4" />
-                                                                        Add to
-                                                                        Cart
+                                                                        Add to Cart
                                                                         {isInCart && (
                                                                             <span className="ml-1 bg-white/20 px-1.5 rounded-full text-xs">
                                                                                 {
@@ -732,12 +732,13 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                     e.preventDefault();
                                                                     buyNow(product);
                                                                 }}
-                                                                className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors duration-300 bg-emerald-600 text-white hover:bg-emerald-700"
+                                                                className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors duration-300 bg-emerald-600 text-white hover:bg-emerald-700"
                                                             >
                                                                 Buy Now
                                                             </button>
                                                         );
                                                     })()}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </motion.div>
@@ -1064,6 +1065,7 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                     </span>
                                                                 )}
                                                         </div>
+                                                        <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
                                                         <button
                                                             onClick={(e) => {
                                                                 e.preventDefault();
@@ -1105,6 +1107,7 @@ export default function Shop({ auth, products, categories, filters }) {
                                                         >
                                                             Buy Now
                                                         </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </motion.div>
