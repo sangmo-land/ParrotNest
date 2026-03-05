@@ -110,6 +110,18 @@ export default function PublicNavbar({ auth }) {
                         >
                             <FaTiktok size={18} />
                         </a>
+                        <Link
+                            href="/cart"
+                            className="relative text-emerald-700 hover:text-emerald-500 transition-colors"
+                            aria-label="Shopping Cart"
+                        >
+                            <RiShoppingCartLine size={18} />
+                            {cartCount > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                                    {cartCount}
+                                </span>
+                            )}
+                        </Link>
                     </div>
                     <Link
                         href="/donate"
@@ -178,6 +190,18 @@ export default function PublicNavbar({ auth }) {
                                 >
                                     <FaTiktok size={20} />
                                 </a>
+                                <Link
+                                    href="/cart"
+                                    className="relative text-emerald-700 hover:text-emerald-500 transform hover:scale-110 transition-all duration-300 ml-1"
+                                    aria-label="Shopping Cart"
+                                >
+                                    <RiShoppingCartLine size={22} />
+                                    {cartCount > 0 && (
+                                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                                            {cartCount}
+                                        </span>
+                                    )}
+                                </Link>
                             </div>
 
                             <div className="text-right hidden xl:block">
@@ -255,6 +279,18 @@ export default function PublicNavbar({ auth }) {
                                 >
                                     <FaTiktok size={18} />
                                 </a>
+                                <Link
+                                    href="/cart"
+                                    className="relative text-emerald-700 hover:text-emerald-500 transition-colors"
+                                    aria-label="Shopping Cart"
+                                >
+                                    <RiShoppingCartLine size={18} />
+                                    {cartCount > 0 && (
+                                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                                            {cartCount}
+                                        </span>
+                                    )}
+                                </Link>
                             </div>
 
                             <Link
