@@ -223,6 +223,12 @@ export default function Shop({ auth, products, categories, filters }) {
         }, 2000);
     };
 
+    // Buy now: add to cart and go to cart page
+    const buyNow = (product) => {
+        addToCart(product);
+        router.visit('/cart');
+    };
+
     return (
         <>
             <SEO
@@ -714,6 +720,19 @@ export default function Shop({ auth, products, categories, filters }) {
                                                             </button>
                                                         );
                                                     })()}
+                                                    {(() => {
+                                                        return (
+                                                            <button
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    buyNow(product);
+                                                                }}
+                                                                className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors duration-300 bg-emerald-600 text-white hover:bg-emerald-700"
+                                                            >
+                                                                Buy Now
+                                                            </button>
+                                                        );
+                                                    })()}
                                                 </div>
                                             </div>
                                         </motion.div>
@@ -1067,6 +1086,15 @@ export default function Shop({ auth, products, categories, filters }) {
                                                                 </>
                                                             )}
                                                         </button>
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                buyNow(product);
+                                                            }}
+                                                            className="flex items-center justify-center gap-1 sm:gap-2 px-2.5 py-1.5 sm:px-5 sm:py-2.5 rounded-lg sm:rounded-xl font-semibold text-xs sm:text-sm transition-colors duration-300 flex-shrink-0 bg-emerald-600 text-white hover:bg-emerald-700"
+                                                        >
+                                                            Buy Now
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </motion.div>
@@ -1357,6 +1385,23 @@ export default function Shop({ auth, products, categories, filters }) {
                                                         Add to Cart
                                                     </>
                                                 )}
+                                            </button>
+
+                                            {/* Buy Now Button */}
+                                            <button
+                                                onClick={() => {
+                                                    buyNow(selectedProduct);
+                                                }}
+                                                disabled={
+                                                    selectedProduct.stock === 0
+                                                }
+                                                className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-lg transition-colors duration-300 mt-3 ${
+                                                    selectedProduct.stock === 0
+                                                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                                                        : "bg-emerald-600 text-white hover:bg-emerald-700"
+                                                }`}
+                                            >
+                                                Buy Now
                                             </button>
 
                                             {/* Share Section */}
