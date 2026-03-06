@@ -110,40 +110,6 @@ export default function PublicNavbar({ auth }) {
                         >
                             <FaTiktok size={18} />
                         </a>
-                        <div className="relative group">
-                            <button
-                                className="relative text-emerald-700 hover:text-emerald-500 transition-colors cursor-pointer"
-                                aria-label="Shop"
-                            >
-                                <RiShoppingCartLine size={18} />
-                                {cartCount > 0 && (
-                                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                                        {cartCount}
-                                    </span>
-                                )}
-                            </button>
-                            <div className="absolute right-0 w-52 mt-2 bg-white/95 backdrop-blur-sm text-gray-800 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50 border border-emerald-100 overflow-hidden">
-                                <Link
-                                    href="/shop"
-                                    className="flex items-center gap-2 px-4 py-3 text-sm font-semibold hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-200 border-b border-gray-100/50"
-                                >
-                                    <RiStore2Line className="w-4 h-4 text-emerald-600" />
-                                    Browse Shop
-                                </Link>
-                                <Link
-                                    href="/cart"
-                                    className="flex items-center gap-2 px-4 py-3 text-sm font-semibold hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-200"
-                                >
-                                    <RiShoppingCartLine className="w-4 h-4 text-emerald-600" />
-                                    View Cart
-                                    {cartCount > 0 && (
-                                        <span className="ml-auto bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-full">
-                                            {cartCount}
-                                        </span>
-                                    )}
-                                </Link>
-                            </div>
-                        </div>
                     </div>
                     <Link
                         href="/donate"
@@ -365,6 +331,41 @@ export default function PublicNavbar({ auth }) {
                             >
                                 <RiHeartLine className="w-6 h-6" />
                             </Link>
+
+                            <div className="relative group">
+                                <button
+                                    className="relative text-emerald-700 hover:text-emerald-500 transition-colors p-2 cursor-pointer"
+                                    aria-label="Shop"
+                                >
+                                    <RiShoppingCartLine size={22} />
+                                    {cartCount > 0 && (
+                                        <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                                            {cartCount}
+                                        </span>
+                                    )}
+                                </button>
+                                <div className="absolute right-0 w-52 mt-2 bg-white/95 backdrop-blur-sm text-gray-800 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50 border border-emerald-100 overflow-hidden">
+                                    <Link
+                                        href="/shop"
+                                        className="flex items-center gap-2 px-4 py-3 text-sm font-semibold hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-200 border-b border-gray-100/50"
+                                    >
+                                        <RiStore2Line className="w-4 h-4 text-emerald-600" />
+                                        Browse Shop
+                                    </Link>
+                                    <Link
+                                        href="/cart"
+                                        className="flex items-center gap-2 px-4 py-3 text-sm font-semibold hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-200"
+                                    >
+                                        <RiShoppingCartLine className="w-4 h-4 text-emerald-600" />
+                                        View Cart
+                                        {cartCount > 0 && (
+                                            <span className="ml-auto bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-full">
+                                                {cartCount}
+                                            </span>
+                                        )}
+                                    </Link>
+                                </div>
+                            </div>
 
                             <button
                                 onClick={() => setIsOpen(!isOpen)}
