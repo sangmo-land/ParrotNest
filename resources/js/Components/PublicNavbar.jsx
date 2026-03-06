@@ -11,8 +11,10 @@ export default function PublicNavbar({ auth }) {
     const [isOpen, setIsOpen] = useState(false);
     const [cartCount, setCartCount] = useState(0);
     const [shopMenuOpen, setShopMenuOpen] = useState(false);
+    const [mobileCartOpen, setMobileCartOpen] = useState(false);
     const shopMenuRef = useRef(null);
     const shopMenuMobileRef = useRef(null);
+    const mobileCartRef = useRef(null);
 
     // Load cart count from localStorage
     useEffect(() => {
@@ -55,6 +57,10 @@ export default function PublicNavbar({ auth }) {
             // Close only if clicking outside both refs
             if (!isInsideDesktop && !isInsideMobile) {
                 setShopMenuOpen(false);
+            }
+
+            if (!mobileCartRef.current?.contains(event.target)) {
+                setMobileCartOpen(false);
             }
         };
 
@@ -260,7 +266,7 @@ export default function PublicNavbar({ auth }) {
                         </div>
 
                         {/* Mobile Menu Button */}
-                        <div className="lg:hidden flex items-center gap-2">
+                        <div className="lg:hidden flex items-center gap-1">
                             <div className="hidden sm:flex items-center gap-2 mr-1">
                                 <a
                                     href="https://www.facebook.com/share/1KKHsfGFMA/?mibextid=wwXIfr"
@@ -332,8 +338,9 @@ export default function PublicNavbar({ auth }) {
                                 <RiHeartLine className="w-6 h-6" />
                             </Link>
 
-                            <div className="relative group">
+                            <div className="relative" ref={mobileCartRef}>
                                 <button
+                                    onClick={() => setMobileCartOpen(!mobileCartOpen)}
                                     className="relative text-emerald-700 hover:text-emerald-500 transition-colors p-2 cursor-pointer"
                                     aria-label="Shop"
                                 >
@@ -344,7 +351,8 @@ export default function PublicNavbar({ auth }) {
                                         </span>
                                     )}
                                 </button>
-                                <div className="absolute right-0 w-52 mt-2 bg-white/95 backdrop-blur-sm text-gray-800 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50 border border-emerald-100 overflow-hidden">
+                                {mobileCartOpen && (
+                                <div className="absolute right-0 w-52 mt-2 bg-white/95 backdrop-blur-sm text-gray-800 rounded-xl shadow-2xl z-50 border border-emerald-100 overflow-hidden">
                                     <Link
                                         href="/shop"
                                         className="flex items-center gap-2 px-4 py-3 text-sm font-semibold hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-200 border-b border-gray-100/50"
@@ -365,6 +373,7 @@ export default function PublicNavbar({ auth }) {
                                         )}
                                     </Link>
                                 </div>
+                                )}
                             </div>
 
                             <button
