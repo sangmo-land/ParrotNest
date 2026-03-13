@@ -42,10 +42,9 @@ protected static function boot()
 parent::boot();
 
 static::updating(function ($product) {
-// If price is changing and is different from current price
-if ($product->isDirty('price')) {
+// Auto-set previous_price when price changes, but only if previous_price wasn't manually set
+if ($product->isDirty('price') && !$product->isDirty('previous_price')) {
 $originalPrice = $product->getOriginal('price');
-// Only set previous_price if the price actually changed to a different value
 if ($originalPrice !== null && $originalPrice != $product->price) {
 $product->previous_price = $originalPrice;
 }
